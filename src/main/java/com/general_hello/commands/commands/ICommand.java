@@ -1,11 +1,12 @@
 package com.general_hello.commands.commands;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public interface ICommand {
-    void handle(CommandContext ctx) throws InterruptedException, IOException;
+    void handle(CommandContext ctx) throws InterruptedException, IOException, SQLException;
 
     String getName();
 
