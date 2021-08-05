@@ -2,6 +2,7 @@ package com.general_hello.commands;
 
 import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.Database.SQLiteDataSource;
+import com.general_hello.commands.Database.commands.commands.Entertainments.EntertainmentListener;
 import com.general_hello.commands.commands.VoiceCall.AudioStorage;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import me.duncte123.botcommons.messaging.EmbedUtils;
@@ -61,6 +62,7 @@ public class Bot {
         )
                 .enableCache(CacheFlag.VOICE_STATE)
                 .addEventListeners(new Listener(waiter), waiter)
+                .addEventListener(new EntertainmentListener())
                 .setActivity(Activity.watching("u?help"))
                 .setStatus(OnlineStatus.ONLINE)
                 .setChunkingFilter(ChunkingFilter.ALL) // enable member chunking for all guilds
