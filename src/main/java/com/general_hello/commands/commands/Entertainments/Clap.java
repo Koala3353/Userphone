@@ -4,7 +4,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class Clap {
 	static void clap(GuildMessageReceivedEvent event, String []args){
-		//test 4
+		//test 5
 		String message = "👏";
 		for(int i = 1; i < args.length; i++) {
 			message = message + args[i] + "👏";
