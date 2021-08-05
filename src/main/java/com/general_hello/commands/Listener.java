@@ -353,7 +353,7 @@ public class Listener extends ListenerAdapter {
                         arrow + " Reads all the messages you sent to the bot.\n" +
                         arrow + " Reads all the calls you made.\n" +
                         arrow + " Reads your user name, profile picture, nitro status, and user id.\n" +
-                        arrow + " Reads all the permissions you have on that server."
+                        arrow + " Reads all the permissions you have on that server." +
                         arrow + " Listens to everything you say during voicecalls.\n");
                 event.getChannel().sendMessageEmbeds(em.build()).setActionRow(
                         Button.primary("0000:yes", "Accept").withEmoji(Emoji.fromEmote("verify", Long.parseLong("803768813110951947"), true))
@@ -626,7 +626,7 @@ public class Listener extends ListenerAdapter {
 
 
         event.getJDA().shutdown();
-        SQLiteDataSource.HikariDataSource.close();
+        SQLiteDataSource.ds.close();
         BotCommons.shutdown(event.getJDA());
     }
 }
