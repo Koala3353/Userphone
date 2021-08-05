@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class Colour {
-
 	static void colour(GuildMessageReceivedEvent event, String []args){
 		if(args.length == 1) {
 			Random rand = new Random();
