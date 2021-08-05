@@ -6,31 +6,31 @@ public class EntertainmentListener extends ListenerAdapter{
 		String prefix = PrefixStoring.PREFIXES.computeIfAbsent(guildID, DatabaseManager.INSTANCE::getPrefix);
 		String args = event.getMessage().getContentRaw();
 		if(args.toLowerCase().startsWith(prefix + "clap ")) {
-			Clap.clap(event);
+			Clap.clap(event, args);
 			return;
 		}
 		if(args.toLowerCase().startsWith(prefix + "colour ")) {
-			Colour.colour(event);
+			Colour.colour(event, args);
 			return;
 		}
 		if(args.toLowerCase().startsWith(prefix + "echo ")) {
-			Echo.echo(event);
+			Echo.echo(event, args);
 			return;
 		}
 		if(args.toLowerCase().startsWith(prefix + "eightball ")) {
-			Eightball.eightball(event);
+			Eightball.eightball(event, args);
 			return;
 		}
 		if(args.toLowerCase().startsWith(prefix + "poll ")) {
-			Poll.poll(event);
+			Poll.poll(event, args);
 			return;
 		}
 		if(args.toLowerCase().startsWith(prefix + "read ")) {
-			Read.read(event);
+			Read.read(event, args);
 			return;
 		}
 		if(args.toLowerCase().startsWith(prefix + "rps ")) {
-			RPS.rps(event);
+			RPS.rps(event, args);
 			return;
 		}
 	}
