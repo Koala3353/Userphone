@@ -18,7 +18,7 @@ public class EntertainmentListener extends ListenerAdapter{
 			return;
 		}
 		if(args.toLowerCase().startsWith(prefix + "eightball ")) {
-			Eightball.eightball(event, args);
+			EightBall.eightball(event, args);
 			return;
 		}
 		if(args.toLowerCase().startsWith(prefix + "poll ")) {
