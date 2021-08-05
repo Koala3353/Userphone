@@ -1,6 +1,7 @@
 package com.general_hello.commands.commands.RankingSystem;
 
-/*import net.dv8tion.jda.api.entities.Guild;
+import com.general_hello.commands.Database.SQLiteDataSource;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.utils.data.DataObject;
 import org.slf4j.Logger;
@@ -14,8 +15,10 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -64,8 +67,6 @@ public class RankingSystem
      * @return relative XP needed to level up
      */
 
-/*
-import javax.annotation.Nonnull;
 
 public static long getXPToLevelUp(int currentLevel)
     {
@@ -73,13 +74,13 @@ public static long getXPToLevelUp(int currentLevel)
         return (long) x;
     }
 
-    */
-/**
+
+    /**
      * returns the current level
      *
      * @param totalXP total xp
      * @return the level
-     *//*
+     */
 
     public static int getLevel(long totalXP)
     {
@@ -96,14 +97,12 @@ public static long getXPToLevelUp(int currentLevel)
         }
 
     }
-
-    */
 /**
      * returns the total xp needed to reach a certain level
      *
      * @param level the level
      * @return total xp needed to reach that level
-     *//*
+     */
 
     public static long getTotalXPNeeded(int level)
     {
@@ -117,7 +116,7 @@ public static long getXPToLevelUp(int currentLevel)
 
     public static long getTotalXP(@Nonnull Connection connection, long guildID, long userID)
     {
-        try (var ps = connection.prepareStatement("SELECT * FROM levels WHERE guildID = ? AND userID = ?"))
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM levels WHERE guildID = ? AND userID = ?"))
         {
             ps.setLong(1, guildID);
             ps.setLong(2, userID);
@@ -134,11 +133,10 @@ public static long getXPToLevelUp(int currentLevel)
         }
     }
 
-    public static long getTotalXP(long guildID, long userID)
-    {
-        Connection connection = Database.getConnectionFromPool();
+    public static long getTotalXP(long guildID, long userID) throws SQLException {
+        Connection connection = SQLiteDataSource.getConnection();
         if (connection == null) return -1L;
-        try (var ps = connection.prepareStatement("SELECT * FROM levels WHERE guildID = ? AND userID = ?"))
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM levels WHERE guildID = ? AND userID = ?"))
         {
             ps.setLong(1, guildID);
             ps.setLong(2, userID);
@@ -158,15 +156,14 @@ public static long getXPToLevelUp(int currentLevel)
         }
     }
 
-    public static void addXP(long guildID, long userID, long addedAmount, String name, String discriminator)
-    {
-        Connection connection = Database.getConnectionFromPool();
+    public static void addXP(long guildID, long userID, long addedAmount, String name, String discriminator) throws SQLException {
+        Connection connection = SQLiteDataSource.getConnection();
         if (connection == null)
         {
             LOGGER.error("Could not get connection from db pool!", new SQLException("Connection == null!"));
             return;
         }
-        try (var ps = connection.prepareStatement("INSERT INTO levels (guildID, userID, totalXP, name, discriminator) values (?,?,?,?,?) ON DUPLICATE KEY UPDATE totalXP = ?, name = ?, discriminator = ?"))
+        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO levels (guildID, userID, totalXP, name, discriminator) values (?,?,?,?,?) ON DUPLICATE KEY UPDATE totalXP = ?, name = ?, discriminator = ?"))
         {
             long totalXP = getTotalXP(connection, guildID, userID) + addedAmount;
             ps.setLong(1, guildID);
@@ -189,7 +186,7 @@ public static long getXPToLevelUp(int currentLevel)
 
     public static void addXP(@Nonnull Connection connection, long guildID, long userID, long addedAmount, String name, String discriminator)
     {
-        try (var ps = connection.prepareStatement("INSERT INTO levels (guildID, userID, totalXP, name, discriminator) values (?,?,?,?,?) ON DUPLICATE KEY UPDATE totalXP = ?, name = ?, discriminator = ?"))
+        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO levels (guildID, userID, totalXP, name, discriminator) values (?,?,?,?,?) ON DUPLICATE KEY UPDATE totalXP = ?, name = ?, discriminator = ?"))
         {
             long totalXP = getTotalXP(connection, guildID, userID) + addedAmount;
             ps.setLong(1, guildID);
@@ -207,15 +204,14 @@ public static long getXPToLevelUp(int currentLevel)
         }
     }
 
-    public static void setXP(long guildID, long userID, long setAmount, String name, String discriminator)
-    {
-        Connection connection = Database.getConnectionFromPool();
+    public static void setXP(long guildID, long userID, long setAmount, String name, String discriminator) throws SQLException {
+        Connection connection = SQLiteDataSource.getConnection();
         if (connection == null)
         {
             LOGGER.error("Could not get connection from db pool!", new SQLException("Connection == null!"));
             return;
         }
-        try (var ps = connection.prepareStatement("INSERT INTO levels (guildID, userID, totalXP, name, discriminator) values (?,?,?,?,?) ON DUPLICATE KEY UPDATE totalXP = ?, name = ?, discriminator = ?"))
+        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO levels (guildID, userID, totalXP, name, discriminator) values (?,?,?,?,?) ON DUPLICATE KEY UPDATE totalXP = ?, name = ?, discriminator = ?"))
         {
             ps.setLong(1, guildID);
             ps.setLong(2, userID);
@@ -237,7 +233,7 @@ public static long getXPToLevelUp(int currentLevel)
 
     public static void setXP(@Nonnull Connection connection, long guildID, long userID, long setAmount, String name, String discriminator)
     {
-        try (var ps = connection.prepareStatement("INSERT INTO levels (guildID, userID, totalXP, name, discriminator) values (?,?,?,?,?) ON DUPLICATE KEY UPDATE totalXP = ?, name = ?, discriminator = ?"))
+        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO levels (guildID, userID, totalXP, name, discriminator) values (?,?,?,?,?) ON DUPLICATE KEY UPDATE totalXP = ?, name = ?, discriminator = ?"))
         {
             ps.setLong(1, guildID);
             ps.setLong(2, userID);
@@ -254,11 +250,10 @@ public static long getXPToLevelUp(int currentLevel)
         }
     }
 
-    public static String getPreferredCard(@Nonnull User user)
-    {
-        Connection connection = Database.getConnectionFromPool();
+    public static String getPreferredCard(@Nonnull User user) throws SQLException {
+        Connection connection = SQLiteDataSource.getConnection();
         if (connection == null) return "card1";
-        try (var ps = connection.prepareStatement("SELECT * FROM wildcardSettings WHERE userID = ?"))
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM wildcardSettings WHERE userID = ?"))
         {
             ps.setLong(1, user.getIdLong());
             ResultSet rs = ps.executeQuery();
@@ -273,11 +268,10 @@ public static long getXPToLevelUp(int currentLevel)
         }
     }
 
-    public static void setPreferredCard(@Nonnull User user, @Nonnull String card)
-    {
-        Connection connection = Database.getConnectionFromPool();
+    public static void setPreferredCard(@Nonnull User user, @Nonnull String card) throws SQLException {
+        Connection connection = SQLiteDataSource.getConnection();
         if (connection == null) return;
-        try (var ps = connection.prepareStatement("INSERT INTO wildcardSettings (userID, card) VALUES (?,?) ON DUPLICATE KEY UPDATE card = ?"))
+        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO wildcardSettings (userID, card) VALUES (?,?) ON DUPLICATE KEY UPDATE card = ?"))
         {
             ps.setLong(1, user.getIdLong());
             ps.setString(2, card);
@@ -294,7 +288,7 @@ public static long getXPToLevelUp(int currentLevel)
 
     public static String getPreferredCard(@Nonnull Connection connection, @Nonnull User user)
     {
-        try (var ps = connection.prepareStatement("SELECT * FROM wildcardSettings WHERE userID = ?"))
+        try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM wildcardSettings WHERE userID = ?"))
         {
             ps.setLong(1, user.getIdLong());
             ResultSet rs = ps.executeQuery();
@@ -308,7 +302,7 @@ public static long getXPToLevelUp(int currentLevel)
 
     public static void setPreferredCard(@Nonnull Connection connection, @Nonnull User user, @Nonnull String card)
     {
-        try (var ps = connection.prepareStatement("INSERT INTO wildcardSettings (userID, card) VALUES (?,?) ON DUPLICATE KEY UPDATE card = ?"))
+        try (PreparedStatement ps = connection.prepareStatement("INSERT INTO wildcardSettings (userID, card) VALUES (?,?) ON DUPLICATE KEY UPDATE card = ?"))
         {
             ps.setLong(1, user.getIdLong());
             ps.setString(2, card);
@@ -323,24 +317,24 @@ public static long getXPToLevelUp(int currentLevel)
     {
         try
         {
-            var avatar = ImageIO.read(new URL(user.getEffectiveAvatarUrl() + "?size=" + RAW_AVATAR_SIZE));
+            BufferedImage avatar = ImageIO.read(new URL(user.getEffectiveAvatarUrl() + "?size=" + RAW_AVATAR_SIZE));
 
             // make the avatar round
-            var roundAvatar = new BufferedImage(RAW_AVATAR_SIZE, RAW_AVATAR_SIZE, BufferedImage.TYPE_INT_ARGB);
-            var roundAvatarG = roundAvatar.createGraphics();
+            BufferedImage roundAvatar = new BufferedImage(RAW_AVATAR_SIZE, RAW_AVATAR_SIZE, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D roundAvatarG = roundAvatar.createGraphics();
             roundAvatarG.setColor(Color.white);
             roundAvatarG.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             roundAvatarG.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             roundAvatarG.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
             roundAvatarG.fillArc(0, 0, RAW_AVATAR_SIZE, RAW_AVATAR_SIZE, 0, 360);
-            var rawAvatarSize = RAW_AVATAR_SIZE - RAW_AVATAR_BORDER_SIZE * 2;
+            int rawAvatarSize = RAW_AVATAR_SIZE - RAW_AVATAR_BORDER_SIZE * 2;
             roundAvatarG.setClip(new Ellipse2D.Float(RAW_AVATAR_BORDER_SIZE, RAW_AVATAR_BORDER_SIZE, rawAvatarSize, rawAvatarSize));
             roundAvatarG.drawImage(avatar, RAW_AVATAR_BORDER_SIZE, RAW_AVATAR_BORDER_SIZE, rawAvatarSize, rawAvatarSize, null);
             roundAvatarG.dispose();
 
             // downscale the avatar to get rid of sharp edges
-            var downscaledAvatar = new BufferedImage(AVATAR_SIZE, AVATAR_SIZE, BufferedImage.TYPE_INT_ARGB);
-            var downscaledAvatarG = downscaledAvatar.createGraphics();
+            BufferedImage downscaledAvatar = new BufferedImage(AVATAR_SIZE, AVATAR_SIZE, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D downscaledAvatarG = downscaledAvatar.createGraphics();
             downscaledAvatarG.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             downscaledAvatarG.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             downscaledAvatarG.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
@@ -349,17 +343,17 @@ public static long getXPToLevelUp(int currentLevel)
 
             // prepare level card
             String card = getPreferredCard(user);
-            var rankCard = new BufferedImage(CARD_WIDTH, CARD_HEIGHT, BufferedImage.TYPE_INT_ARGB);
-            var g = rankCard.createGraphics();
+            BufferedImage rankCard = new BufferedImage(CARD_WIDTH, CARD_HEIGHT, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g = rankCard.createGraphics();
 
-            var background = RankingSystem.class.getResourceAsStream("/assets/wildcards/" + card + ".png");
+            InputStream background = RankingSystem.class.getResourceAsStream("/assets/wildcards/" + card + ".png");
             if (background != null)
             {
-                var image = makeRoundedCorner(ImageIO.read(background), 60);
-                var width = image.getWidth();
-                var height = image.getHeight();
-                var drawWidth = 0;
-                var drawHeight = 0;
+                BufferedImage image = makeRoundedCorner(ImageIO.read(background), 60);
+                int width = image.getWidth();
+                int height = image.getHeight();
+                int drawWidth = 0;
+                int drawHeight = 0;
                 if (width > height)
                 {
                     drawWidth = width;
@@ -382,26 +376,26 @@ public static long getXPToLevelUp(int currentLevel)
             g.setFont(FONT.deriveFont(FONT_SIZE).deriveFont(Font.BOLD));
             g.setColor(Color.white);
             g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            var userString = user.getName();
-            var leftAvatarAlign = AVATAR_SIZE + BORDER_SIZE * 2;
+            String userString = user.getName();
+            int leftAvatarAlign = AVATAR_SIZE + BORDER_SIZE * 2;
             g.drawString(userString, leftAvatarAlign, CARD_HEIGHT - BORDER_SIZE * 2 - XP_BAR_HEIGHT);
 
             // draw discriminator
-            var nameWidth = g.getFontMetrics().stringWidth(userString);
+            int nameWidth = g.getFontMetrics().stringWidth(userString);
             g.setFont(g.getFont().deriveFont(DISCRIMINATOR_FONT_SIZE).deriveFont(Font.BOLD));
             g.setColor(g.getColor().darker().darker());
             g.drawString("#" + user.getDiscriminator(), AVATAR_SIZE + BORDER_SIZE * 2 + nameWidth, CARD_HEIGHT - BORDER_SIZE * 2 - XP_BAR_HEIGHT);
 
             // draw xp
-            var totalXP = getTotalXP(guild.getIdLong(), user.getIdLong());
-            var currentLevel = getLevel(totalXP);
-            var neededXP = getXPToLevelUp(currentLevel);
-            var currentXP = totalXP - getTotalXPNeeded(currentLevel);
+            long totalXP = getTotalXP(guild.getIdLong(), user.getIdLong());
+            int currentLevel = getLevel(totalXP);
+            long neededXP = getXPToLevelUp(currentLevel);
+            long currentXP = totalXP - getTotalXPNeeded(currentLevel);
             // draw level
             Color c = getColor(card);
             g.setFont(g.getFont().deriveFont(FONT_SIZE).deriveFont(Font.BOLD));
             g.setColor(Color.white);
-            var levelString = "Level " + currentLevel;
+            String levelString = "Level " + currentLevel;
             g.drawString(levelString, CARD_WIDTH - BORDER_SIZE - g.getFontMetrics().stringWidth(levelString), CARD_HEIGHT - BORDER_SIZE * 2 - XP_BAR_HEIGHT);
             g.setColor(c);
             // draw empty xp bar
@@ -423,15 +417,15 @@ public static long getXPToLevelUp(int currentLevel)
             g.drawString("Rank", CARD_WIDTH - BORDER_SIZE - rankWidth - g.getFontMetrics().stringWidth("Rank") - 10, 70);
             g.setFont(g.getFont().deriveFont(FONT_SIZE / 2).deriveFont(Font.BOLD));
             g.setColor(Color.white);
-            var xpString = formatXP(currentXP) + " / " + formatXP(neededXP) + " XP";
+            String xpString = formatXP(currentXP) + " / " + formatXP(neededXP) + " XP";
             int xpXPos = ((leftAvatarAlign + CARD_WIDTH - BORDER_SIZE) / 2) - (g.getFontMetrics().stringWidth(xpString) / 2);
             g.drawString(xpString, xpXPos, CARD_HEIGHT - BORDER_SIZE - 18);
             g.dispose();
 
-            var baos = new ByteArrayOutputStream();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(rankCard, "png", baos);
             return baos.toByteArray();
-        } catch (IOException e)
+        } catch (IOException | SQLException e)
         {
             LOGGER.error("Error while generating level cards", e);
         }
@@ -485,11 +479,10 @@ public static long getXPToLevelUp(int currentLevel)
         return output;
     }
 
-    public static ArrayList<RankedUser> getTopTen(long guildID)
-    {
+    public static ArrayList<RankedUser> getTopTen(long guildID) throws SQLException {
         String sql = "SELECT * FROM levels WHERE guildID = ? ORDER by totalXP DESC LIMIT 10";
-        Connection connection = Database.getConnectionFromPool();
-        try (var ps = connection.prepareStatement(sql))
+        Connection connection = SQLiteDataSource.getConnection();
+        try (PreparedStatement ps = connection.prepareStatement(sql))
         {
             ps.setLong(1, guildID);
             ResultSet rs = ps.executeQuery();
@@ -514,13 +507,12 @@ public static long getXPToLevelUp(int currentLevel)
     }
 
 
-    public static int getRank(long guildID, long userID)
-    {
+    public static int getRank(long guildID, long userID) throws SQLException {
         String qry = "SELECT 0, FIND_IN_SET(totalXP, (SELECT GROUP_CONCAT(DISTINCT totalXP ORDER BY totalXP DESC) FROM levels ))" +
                 " AS rank FROM levels WHERE guildID = ? AND userID = ?";
-        Connection connection = Database.getConnectionFromPool();
+        Connection connection = SQLiteDataSource.getConnection();
         if (connection == null) return -1;
-        try (var ps = connection.prepareStatement(qry))
+        try (PreparedStatement ps = connection.prepareStatement(qry))
         {
             ps.setLong(1, guildID);
             ps.setLong(2, userID);
@@ -553,4 +545,4 @@ public static long getXPToLevelUp(int currentLevel)
     }
 
 
-}*/
+}
