@@ -1,7 +1,7 @@
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class Echo extends ListenerAdapter {
+public class Echo {
 	static void echo(GuildMessageReceivedEvent event, String []args){
 		if(event.getChannel().getSlowmode() >= 5) {
 			event.getChannel().sendTyping().queue();
