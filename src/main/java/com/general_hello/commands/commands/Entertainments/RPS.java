@@ -1,10 +1,16 @@
-import java.util.Random;
+package com.general_hello.commands.commands.Entertainments;
 
+import com.general_hello.commands.Database.DatabaseManager;
+import com.general_hello.commands.commands.PrefixStoring;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
+import java.util.Random;
 
 public class RPS {
 	static void rps(GuildMessageReceivedEvent event, String []args){
+		final long guildID = event.getGuild().getIdLong();
+		String prefix = PrefixStoring.PREFIXES.computeIfAbsent(guildID, DatabaseManager.INSTANCE::getPrefix);
+
 		if (args[0].toLowerCase().contains((prefix + "rps")) && !event.getAuthor().isBot()) {
 			Random rand = new Random();
 			int c = rand.nextInt(3);

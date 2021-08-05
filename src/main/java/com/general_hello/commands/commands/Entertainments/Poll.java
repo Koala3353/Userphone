@@ -1,9 +1,10 @@
+package com.general_hello.commands.commands.Entertainments;
+
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class Poll {
-	static void poll(GuildMessageReceivedEvent event, String []args){
+	static void poll(GuildMessageReceivedEvent event){
 		String [] args = event.getMessage().getContentRaw().split("\\s+");
 		event.getMessage().addReaction("✅").queue();
 		event.getMessage().addReaction("❌").queue();

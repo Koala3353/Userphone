@@ -1,7 +1,8 @@
-import java.util.Random;
+package com.general_hello.commands.commands.Entertainments;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
+import java.util.Random;
 
 public class EightBall {
 	static void eightball(GuildMessageReceivedEvent event, String []args){

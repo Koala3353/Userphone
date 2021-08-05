@@ -1,9 +1,10 @@
-import java.util.Random;
-import java.awt.Color;
+package com.general_hello.commands.commands.Entertainments;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
+import java.awt.*;
+import java.util.Random;
 
 public class Colour {
 	static void colour(GuildMessageReceivedEvent event, String []args){
@@ -28,7 +29,7 @@ public class Colour {
 				.setDescription("Hex: #" + args[1] + "\nRGB: " + rgb)
 				.setColor(Integer.parseInt(args[1], 16));
 			event.getChannel().sendTyping().queue();
-			event.getChannel().sendMessage(Color.build()).queue();
+			event.getChannel().sendMessageEmbeds(Color.build()).queue();
 		}else {
 			args[1] = args[1].replaceAll(",", "");
 			args[2] = args[2].replaceAll(",", "");

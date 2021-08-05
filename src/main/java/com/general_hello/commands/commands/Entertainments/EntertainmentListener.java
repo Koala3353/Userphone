@@ -1,39 +1,45 @@
+package com.general_hello.commands.commands.Entertainments;
+
+import com.general_hello.commands.Database.DatabaseManager;
+import com.general_hello.commands.commands.PrefixStoring;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class EntertainmentListener extends ListenerAdapter{
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+		long guildID = event.getGuild().getIdLong();
 		String prefix = PrefixStoring.PREFIXES.computeIfAbsent(guildID, DatabaseManager.INSTANCE::getPrefix);
-		String args = event.getMessage().getContentRaw();
-		if(args.toLowerCase().startsWith(prefix + "clap ")) {
+		String[] args = event.getMessage().getContentRaw().split("\\s+");
+
+		if(args[0].equalsIgnoreCase(prefix + "clap ")) {
 			Clap.clap(event, args);
 			return;
 		}
-		if(args.toLowerCase().startsWith(prefix + "colour ")) {
+		if(args[0].equalsIgnoreCase(prefix + "colour ")) {
 			Colour.colour(event, args);
 			return;
 		}
-		if(args.toLowerCase().startsWith(prefix + "echo ")) {
+		if(args[0].equalsIgnoreCase(prefix + "echo ")) {
 			Echo.echo(event, args);
 			return;
 		}
-		if(args.toLowerCase().startsWith(prefix + "eightball ")) {
+		if(args[0].equalsIgnoreCase(prefix + "eightball ")) {
 			EightBall.eightball(event, args);
 			return;
 		}
-		if(args.toLowerCase().startsWith(prefix + "poll ")) {
-			Poll.poll(event, args);
+		if(args[0].equalsIgnoreCase(prefix + "poll ")) {
+			Poll.poll(event);
 			return;
 		}
-		if(args.toLowerCase().startsWith(prefix + "newpoll ")) {
-			Poll.poll(event, args);
+		if(args[0].equalsIgnoreCase(prefix + "newpoll ")) {
+			Poll.newpoll(event, args);
 			return;
 		}
-		if(args.toLowerCase().startsWith(prefix + "read ")) {
+		if(args[0].equalsIgnoreCase(prefix + "read ")) {
 			Read.read(event, args);
 			return;
 		}
-		if(args.toLowerCase().startsWith(prefix + "rps ")) {
+		if(args[0].equalsIgnoreCase(prefix + "rps ")) {
 			RPS.rps(event, args);
 			return;
 		}

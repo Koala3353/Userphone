@@ -2,7 +2,7 @@ package com.general_hello.commands;
 
 import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.Database.SQLiteDataSource;
-import com.general_hello.commands.Database.commands.commands.Entertainments.EntertainmentListener;
+import com.general_hello.commands.commands.Entertainments.EntertainmentListener;
 import com.general_hello.commands.commands.VoiceCall.AudioStorage;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import me.duncte123.botcommons.messaging.EmbedUtils;
@@ -62,7 +62,7 @@ public class Bot {
         )
                 .enableCache(CacheFlag.VOICE_STATE)
                 .addEventListeners(new Listener(waiter), waiter)
-                .addEventListener(new EntertainmentListener())
+                .addEventListeners(new EntertainmentListener())
                 .setActivity(Activity.watching("u?help"))
                 .setStatus(OnlineStatus.ONLINE)
                 .setChunkingFilter(ChunkingFilter.ALL) // enable member chunking for all guilds
@@ -103,8 +103,8 @@ public class Bot {
         // Send the new set of commands to discord, this will override any existing global commands with the new set provided here
         commands.queue();
 
-        for(int i = 0; i < AudioStorage.audio.length; i++) {
-            AudioStorage.audio[i] = new AudioStorage.Audio(new ConcurrentLinkedQueue<>(), "empty", "", new ConcurrentLinkedQueue<>(), "", "", false);
+        for(int i = 0; i < AudioStorage.audio.size(); i++) {
+            AudioStorage.audio.set(i, new AudioStorage.Audio(new ConcurrentLinkedQueue<>(), "empty", "", new ConcurrentLinkedQueue<>(), "", "", false));
         }
     }
     public static void main(String[] args) throws LoginException {
@@ -194,7 +194,7 @@ public class Bot {
             if (s.equalsIgnoreCase("stop")) {
                 System.out.println("Thank you for using UBCL have a great day!");
                 jda.shutdown();
-                SQLiteDataSource.HikariDataSource.close();
+                SQLiteDataSource.ds.close();
                 break;
             }
         }
