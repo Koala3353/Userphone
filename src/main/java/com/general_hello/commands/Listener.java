@@ -38,6 +38,7 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
@@ -586,7 +587,7 @@ public class Listener extends ListenerAdapter {
         if (raw.startsWith(prefix)) {
             try {
                 manager.handle(event, prefix);
-            } catch (InterruptedException | IOException e) {
+            } catch (InterruptedException | IOException | SQLException e) {
                 e.printStackTrace();
             }
         }

@@ -9,6 +9,7 @@ import com.general_hello.commands.commands.Info.AboutCommand;
 import com.general_hello.commands.commands.Info.InfoServerCommand;
 import com.general_hello.commands.commands.Info.InfoUserCommand;
 import com.general_hello.commands.commands.MiniGames.ConnectFourRequest;
+import com.general_hello.commands.commands.RankingSystem.Rank;
 import com.general_hello.commands.commands.Register.RegisterCommand;
 import com.general_hello.commands.commands.Settings.SettingsCommand;
 import com.general_hello.commands.commands.VoiceCall.onCallAnonCommand;
@@ -20,6 +21,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import javax.annotation.Nullable;
 import java.awt.*;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -58,6 +60,9 @@ public class CommandManager {
         addCommand(new onCallCommand());
         addCommand(new onLeaveCommand());
         addCommand(new onCallAnonCommand());
+
+        //ranks
+        addCommand(new Rank());
     }
 
     private void addCommand(ICommand cmd) {
@@ -90,7 +95,7 @@ public class CommandManager {
     }
 
 
-    void handle(GuildMessageReceivedEvent event, String prefix) throws InterruptedException, IOException {
+    void handle(GuildMessageReceivedEvent event, String prefix) throws InterruptedException, IOException, SQLException {
         String[] split = event.getMessage().getContentRaw()
                 .replaceFirst("(?i)" + Pattern.quote(prefix), "")
                 .split("\\s+");
