@@ -25,6 +25,10 @@ public class EntertainmentListener extends ListenerAdapter{
 			Poll.poll(event, args);
 			return;
 		}
+		if(args.toLowerCase().startsWith(prefix + "newpoll ")) {
+			Poll.poll(event, args);
+			return;
+		}
 		if(args.toLowerCase().startsWith(prefix + "read ")) {
 			Read.read(event, args);
 			return;
