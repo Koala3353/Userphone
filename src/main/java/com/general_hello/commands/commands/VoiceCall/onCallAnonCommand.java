@@ -47,8 +47,8 @@ public class onCallAnonCommand implements ICommand {
         Guild guild = vcchannel.getGuild();
         String guildID = guild.getId();
         String channelID = message.getChannel().getId();
-        for(int i = 0; i < AudioStorage.audio.length; i++) {
-            AudioStorage.Audio audio = AudioStorage.audio[i];
+        for(int i = 0; i < AudioStorage.audio.size(); i++) {
+            AudioStorage.Audio audio = AudioStorage.audio.get(i);
             if(audio.connected == false) {
                 if(!audio.client1ID.equals("empty")) {
                     audio.client2ID = guildID;

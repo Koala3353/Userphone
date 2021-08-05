@@ -21,20 +21,20 @@ public class AudioHandler2 implements AudioSendHandler, AudioReceiveHandler {
     @Override
     public void handleCombinedAudio(CombinedAudio combinedAudio) {
         byte[] data = combinedAudio.getAudioData(1.0f);
-        AudioStorage.audio[port].client2.add(data);
+        AudioStorage.audio.get(port).client2.add(data);
     }
 
 
     @Override
     public boolean canProvide() {
-        return !AudioStorage.audio[port].client2.isEmpty();
+        return !AudioStorage.audio.get(port).client2.isEmpty();
     }
 
     @Override
     public ByteBuffer provide20MsAudio() {
         while(disconnected) {System.out.print("");}
         try {
-            AudioStorage.Audio audio = AudioStorage.audio[port];
+            AudioStorage.Audio audio = AudioStorage.audio.get(port);
             if(audio.connected == false && audio.client1ID.equals("empty") && audio.client2ID.equals("")) {
                 sendMessage(Bot.jda.getTextChannelById(audio.message2ID), "Uhoh, the call was disconnected.");
                 Bot.jda.getGuildById(audio.client2ID).getAudioManager().setReceivingHandler(null);
@@ -47,13 +47,12 @@ public class AudioHandler2 implements AudioSendHandler, AudioReceiveHandler {
                 audio.client2ID = "";
                 System.out.println("2");
                 sendMessage(Bot.jda.getTextChannelById(audio.message2ID), "Uh oh, the call was disconnected.");
-                // Needs to be fixed, will spam the message
                 Bot.jda.getGuildById(audio.client2ID).getAudioManager().setReceivingHandler(null);
                 Bot.jda.getGuildById(audio.client2ID).getAudioManager().setSendingHandler(null);
                 disconnected = true;
             }
         }catch(Exception e) {}
-        byte[] data = AudioStorage.audio[port].client1.poll();
+        byte[] data = AudioStorage.audio.get(port).client1.poll();
         return data == null ? null : ByteBuffer.wrap(data);
 
     }

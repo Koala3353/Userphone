@@ -1,9 +1,10 @@
 package com.general_hello.commands.commands.VoiceCall;
 
+import java.util.ArrayList;
 import java.util.Queue;
 
 public class AudioStorage {
-    public static Audio[] audio = new Audio[2000];
+    public static ArrayList<Audio> audio = new ArrayList<>();
 
     public static class Audio {
         public Queue<byte[]> client1;
