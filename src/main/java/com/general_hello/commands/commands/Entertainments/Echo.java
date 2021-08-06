@@ -3,7 +3,6 @@ package com.general_hello.commands.commands.Entertainments;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 public class Echo {
-	//test 2
 	static void echo(GuildMessageReceivedEvent event, String []args){
 		if(event.getChannel().getSlowmode() >= 5) {
 			event.getChannel().sendTyping().queue();
