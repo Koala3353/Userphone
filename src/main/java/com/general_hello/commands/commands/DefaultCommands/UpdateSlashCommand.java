@@ -14,6 +14,7 @@ public class UpdateSlashCommand implements ICommand
     @Override
     public void handle(CommandContext ctx) throws InterruptedException, IOException, SQLException {
         SlashCommandHandler.updateCommands((x) -> System.out.println(MCColor.translate("&aQueued "+x.size()+" commands!")), Throwable::printStackTrace);
+        ctx.getChannel().sendMessage("Updated the slash commands!").queue();
     }
 
     @Override

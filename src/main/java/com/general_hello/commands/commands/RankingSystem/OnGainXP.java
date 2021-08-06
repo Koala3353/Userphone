@@ -1,7 +1,9 @@
 package com.general_hello.commands.commands.RankingSystem;
 
+import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.Database.SQLiteDataSource;
 import com.general_hello.commands.commands.Guild.GuildData;
+import com.general_hello.commands.commands.PrefixStoring;
 import com.general_hello.commands.commands.Utils.Util;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -22,16 +24,14 @@ public class OnGainXP extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event)
     {
+        final long guildID = event.getGuild().getIdLong();
+        String prefix = PrefixStoring.PREFIXES.computeIfAbsent(guildID, DatabaseManager.INSTANCE::getPrefix);
+
         if (event.getAuthor().isBot() || event.isWebhookMessage() || event.getMessage().getType().isSystem()) return;
-        try {
-            if (event.getMessage().getContentRaw().startsWith(GuildManager.getGuildData(event.getGuild()).getPrefix()))
-                return;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        if (event.getMessage().getContentRaw().startsWith(prefix))
+            return;
 
         long userID = event.getAuthor().getIdLong();
-            long guildID = event.getGuild().getIdLong();
             if (timeout.containsKey(userID))
             {
                 long lastXPAdditionAgo = System.currentTimeMillis() - timeout.get(userID);
@@ -56,6 +56,7 @@ public class OnGainXP extends ListenerAdapter {
                     {
                         try {
                             XPAlertCommand.sendXPAlert(event.getMember(), level + 1, event.getChannel());
+                            System.out.println("Plus Xp!");
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }

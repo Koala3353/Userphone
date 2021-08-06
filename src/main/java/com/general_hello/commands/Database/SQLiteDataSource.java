@@ -62,8 +62,7 @@ public class SQLiteDataSource implements DatabaseManager {
                     " totalXP BIGINT," +
                     " name VARCHAR(256)," +
                     " discriminator VARCHAR(4)," +
-                    " PRIMARY KEY(guildID, userID))" +
-                    " CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+                    " PRIMARY KEY(guildID, userID))");
 
             statement.execute("CREATE TABLE IF NOT EXISTS xpAlerts (guildID BIGINT PRIMARY KEY, " +
                     "mode VARCHAR(128))");
