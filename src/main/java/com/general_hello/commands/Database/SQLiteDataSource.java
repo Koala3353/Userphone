@@ -67,6 +67,8 @@ public class SQLiteDataSource implements DatabaseManager {
 
             statement.execute("CREATE TABLE IF NOT EXISTS xpAlerts (guildID BIGINT PRIMARY KEY, " +
                     "mode VARCHAR(128))");
+
+            statement.execute("CREATE TABLE IF NOT EXISTS guildSettings (guildID BIGINT PRIMARY KEY, data JSON CHECK (JSON_VALID(data)))");
             
             LOGGER.info("Table initialised");
         } catch (SQLException e) {
