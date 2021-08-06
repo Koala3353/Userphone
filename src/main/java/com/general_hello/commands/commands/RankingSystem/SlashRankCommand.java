@@ -1,6 +1,6 @@
 package com.general_hello.commands.commands.RankingSystem;
 
-import com.general_hello.commands.SlashCommand;
+import com.general_hello.commands.SlashCommands.SlashCommand;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
@@ -53,6 +53,6 @@ public class SlashRankCommand extends SlashCommand {
                 return;
             }
             commandHook.sendMessage("").addFile(levelCard, "card.png").queue();
-        }
+         }
     }
 }

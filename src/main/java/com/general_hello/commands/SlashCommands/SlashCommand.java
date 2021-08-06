@@ -1,4 +1,4 @@
-package com.general_hello.commands;
+package com.general_hello.commands.SlashCommands;
 
 import com.general_hello.commands.commands.RankingSystem.SlashCommandContext;
 import net.dv8tion.jda.api.Permission;
@@ -84,7 +84,7 @@ public abstract class SlashCommand
         return isGlobal;
     }
 
-    public void Global(boolean global)
+    public void global(boolean global)
     {
         isGlobal = global;
     }

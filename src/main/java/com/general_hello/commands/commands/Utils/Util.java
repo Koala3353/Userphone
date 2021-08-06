@@ -1,4 +1,4 @@
-package com.general_hello.commands.commands.RankingSystem;
+package com.general_hello.commands.commands.Utils;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.entities.Message;

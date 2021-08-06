@@ -2,7 +2,13 @@ package com.general_hello.commands;
 
 import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.Database.SQLiteDataSource;
+import com.general_hello.commands.OtherEvents.OnButtonClick;
+import com.general_hello.commands.OtherEvents.OnPrivateMessage;
+import com.general_hello.commands.OtherEvents.OnSelectionMenu;
+import com.general_hello.commands.OtherEvents.OtherEvents;
+import com.general_hello.commands.SlashCommands.OnSlashCommand;
 import com.general_hello.commands.commands.Entertainments.EntertainmentListener;
+import com.general_hello.commands.commands.RankingSystem.OnGainXP;
 import com.general_hello.commands.commands.VoiceCall.AudioStorage;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import me.duncte123.botcommons.messaging.EmbedUtils;
@@ -13,12 +19,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.interactions.commands.Command;
-import net.dv8tion.jda.api.interactions.commands.OptionType;
-import net.dv8tion.jda.api.interactions.commands.build.CommandData;
-import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
 import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
@@ -26,7 +27,6 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import javax.security.auth.login.LoginException;
 import java.awt.*;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -63,45 +63,17 @@ public class Bot {
                 .enableCache(CacheFlag.VOICE_STATE)
                 .addEventListeners(new Listener(waiter), waiter)
                 .addEventListeners(new EntertainmentListener())
+                .addEventListeners(new OnSlashCommand())
+                .addEventListeners(new OnGainXP())
+                .addEventListeners(new OnButtonClick())
+                .addEventListeners(new OnPrivateMessage())
+                .addEventListeners(new OtherEvents())
+                .addEventListeners(new OnSelectionMenu())
                 .setActivity(Activity.watching("u?help"))
                 .setStatus(OnlineStatus.ONLINE)
                 .setChunkingFilter(ChunkingFilter.ALL) // enable member chunking for all guilds
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .build();
-
-        // These commands take up to an hour to be activated after creation/update/delete
-        CommandListUpdateAction commands = jda.updateCommands();
-
-        // Moderation commands with required options
-        commands.addCommands(
-                new CommandData("register", "Registers a user to the database."));
-
-        // Simple reply commands
-        commands.addCommands(
-                new CommandData("connect4", "Play a Connect4 game with another user")
-                        .addOptions(new OptionData(OptionType.USER, "user", "The user you will play with.")
-                                .setRequired(true))
-        );
-
-        int x = 0;
-
-        ArrayList<Command.Choice> choices = new ArrayList<>();
-        while (x < CommandManager.cmdNames.size()) {
-            System.out.println(CommandManager.cmdNames.get(x) + " added to choices!");
-            Command.Choice choice = new Command.Choice(CommandManager.cmdNames.get(x), x+1);
-            longToCommandName.put((long) (x+1), CommandManager.cmdNames.get(x));
-            choices.add(choice);
-            x++;
-        }
-
-        commands.addCommands(
-                new CommandData("help", "Sends the help message")
-                        .addOptions(new OptionData(OptionType.STRING, "command", "What subcommand you want to check the help on")
-                                .setRequired(false).addChoices(choices))
-        );
-
-        // Send the new set of commands to discord, this will override any existing global commands with the new set provided here
-        commands.queue();
 
         for(int i = 0; i < AudioStorage.audio.size(); i++) {
             AudioStorage.audio.set(i, new AudioStorage.Audio(new ConcurrentLinkedQueue<>(), "empty", "", new ConcurrentLinkedQueue<>(), "", "", false));

@@ -1,8 +1,12 @@
-package com.general_hello.commands;
+package com.general_hello.commands.SlashCommands;
 
+import com.general_hello.commands.Bot;
+import com.general_hello.commands.Config;
+import com.general_hello.commands.commands.DefaultCommands.HelpSlashCommand;
 import com.general_hello.commands.commands.RankingSystem.SlashCommandContext;
 import com.general_hello.commands.commands.RankingSystem.SlashRankCommand;
 import com.general_hello.commands.commands.RankingSystem.XPAlertCommand;
+import com.general_hello.commands.commands.Register.RegisterSlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
@@ -29,9 +33,9 @@ public class SlashCommandHandler
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(SlashCommandHandler.class);
 
-    public final List<SlashCommand> registeredCommands;
-    public final ConcurrentHashMap<Long, List<SlashCommand>> registeredGuildCommands;
-    private CommandListUpdateAction commandUpdateAction;
+    public static List<SlashCommand> registeredCommands;
+    public static ConcurrentHashMap<Long, List<SlashCommand>> registeredGuildCommands;
+    private static CommandListUpdateAction commandUpdateAction;
 
     public SlashCommandHandler()
     {
@@ -49,9 +53,11 @@ public class SlashCommandHandler
     {
         registerCommand(new SlashRankCommand());
         registerCommand(new XPAlertCommand());
+        registerCommand(new HelpSlashCommand());
+        registerCommand(new RegisterSlashCommand());
     }
 
-    public void updateCommands(Consumer<List<Command>> success, Consumer<Throwable> failure)
+    public static void updateCommands(Consumer<List<Command>> success, Consumer<Throwable> failure)
     {
         commandUpdateAction.queue(success, failure);
         for (Map.Entry<Long, List<SlashCommand>> entrySet : registeredGuildCommands.entrySet())
@@ -99,7 +105,7 @@ public class SlashCommandHandler
     }
 
 
-    public void handleSlashCommand(@NotNull SlashCommandEvent event, @Nullable Member member)
+    public static void handleSlashCommand(@NotNull SlashCommandEvent event, @Nullable Member member)
     {
         Runnable r = () ->
         {
@@ -214,7 +220,7 @@ public class SlashCommandHandler
                 StringBuilder path = new StringBuilder("/"+event.getCommandPath().replace("/", " "));
                 for(OptionMapping option : event.getOptions())
                 {
-                    path.append(" ").append(option.getName()).append(":").append("`").append(option.getAsString()).append("`");
+                     path.append(" ").append(option.getName()).append(":").append("`").append(option.getAsString()).append("`");
                 }
                 EmbedBuilder builder = new EmbedBuilder()
                         .setTitle("An error occurred while executing a slash-command!")
@@ -231,7 +237,7 @@ public class SlashCommandHandler
                         .flatMap(c -> c.sendMessageEmbeds(builder.build()))
                         .queue();
 
-                event.reply("An unknown error occured! The owner of the bot has been notified of this!").setEphemeral(true).queue(s -> {}, ex -> {});
+                event.reply("An unknown error occurred! The owner of the bot has been notified of this!").setEphemeral(true).queue(s -> {}, ex -> {});
             }
         };
     }

@@ -1,7 +1,8 @@
 package com.general_hello.commands.commands.RankingSystem;
 
 import com.general_hello.commands.Database.SQLiteDataSource;
-import com.general_hello.commands.SlashCommand;
+import com.general_hello.commands.SlashCommands.SlashCommand;
+import com.general_hello.commands.commands.Utils.Util;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;

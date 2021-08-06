@@ -63,6 +63,9 @@ public class CommandManager {
 
         //ranks
         addCommand(new Rank());
+
+        //update slash command
+        addCommand(new UpdateSlashCommand());
     }
 
     private void addCommand(ICommand cmd) {
