@@ -2,10 +2,7 @@ package com.general_hello.commands;
 
 import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.Database.SQLiteDataSource;
-import com.general_hello.commands.OtherEvents.OnButtonClick;
-import com.general_hello.commands.OtherEvents.OnPrivateMessage;
-import com.general_hello.commands.OtherEvents.OnSelectionMenu;
-import com.general_hello.commands.OtherEvents.OtherEvents;
+import com.general_hello.commands.OtherEvents.*;
 import com.general_hello.commands.SlashCommands.OnSlashCommand;
 import com.general_hello.commands.commands.Entertainments.EntertainmentListener;
 import com.general_hello.commands.commands.RankingSystem.OnGainXP;
@@ -40,11 +37,11 @@ public class Bot {
 
     private Bot() throws LoginException {
         DatabaseManager.INSTANCE.getPrefix(-1);
-        WebUtils.setUserAgent("Plenary");
+        WebUtils.setUserAgent("Userphone");
         EmbedUtils.setEmbedBuilder(
                 () -> new EmbedBuilder()
                         .setColor(Color.cyan)
-                        .setFooter("+help")
+                        .setFooter("u?help")
         );
 
         EventWaiter waiter = new EventWaiter();
@@ -69,6 +66,7 @@ public class Bot {
                 .addEventListeners(new OnPrivateMessage())
                 .addEventListeners(new OtherEvents())
                 .addEventListeners(new OnSelectionMenu())
+                .addEventListeners(new onCallMessageReceived())
                 .setActivity(Activity.watching("u?help"))
                 .setStatus(OnlineStatus.ONLINE)
                 .setChunkingFilter(ChunkingFilter.ALL) // enable member chunking for all guilds
@@ -79,7 +77,12 @@ public class Bot {
             AudioStorage.audio.set(i, new AudioStorage.Audio(new ConcurrentLinkedQueue<>(), "empty", "", new ConcurrentLinkedQueue<>(), "", "", false));
         }
     }
+
     public static void main(String[] args) throws LoginException {
+        commandPrompt();
+    }
+
+    public static void commandPrompt() throws LoginException {
         boolean question = false;
         boolean question1 = false;
         TextChannel textChannel = null;

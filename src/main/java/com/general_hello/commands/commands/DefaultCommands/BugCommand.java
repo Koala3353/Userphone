@@ -20,7 +20,7 @@ public class BugCommand implements ICommand {
         embedBuilder.setFooter("We will contact you shortly");
         embedBuilder.addField("Kindly fill the form in the link below", Config.get("bug_link"), false);
 
-        ctx.getChannel().sendMessage(embedBuilder.build()).queue();
+        ctx.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
 
         JDA jda = ctx.getJDA();
         User user = jda.retrieveUserById(Config.get("owner_id")).complete();

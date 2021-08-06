@@ -3,6 +3,7 @@ package com.general_hello.commands.SlashCommands;
 import com.general_hello.commands.Bot;
 import com.general_hello.commands.Config;
 import com.general_hello.commands.commands.DefaultCommands.HelpSlashCommand;
+import com.general_hello.commands.commands.DefaultCommands.PingSlashCommand;
 import com.general_hello.commands.commands.RankingSystem.SlashCommandContext;
 import com.general_hello.commands.commands.RankingSystem.SlashRankCommand;
 import com.general_hello.commands.commands.RankingSystem.XPAlertCommand;
@@ -52,6 +53,7 @@ public class SlashCommandHandler
     public void registerAllCommands()
     {
         registerCommand(new SlashRankCommand());
+        registerCommand(new PingSlashCommand());
         registerCommand(new XPAlertCommand());
         registerCommand(new HelpSlashCommand());
         registerCommand(new RegisterSlashCommand());
