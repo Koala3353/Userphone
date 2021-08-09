@@ -1,6 +1,7 @@
 package com.general_hello.commands.commands.DefaultCommands;
 
-import com.general_hello.commands.*;
+import com.general_hello.commands.Config;
+import com.general_hello.commands.Listener;
 import com.general_hello.commands.SlashCommands.SlashCommand;
 import com.general_hello.commands.commands.ICommand;
 import com.general_hello.commands.commands.Info.InfoUserCommand;
@@ -15,7 +16,6 @@ import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
-import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.interactions.components.Button;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,25 +23,14 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.*;
 import java.sql.SQLException;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 
 public class HelpSlashCommand extends SlashCommand
 {
     public HelpSlashCommand()
     {
-        int x = 0;
-
-        ArrayList<SubcommandData> choices = new ArrayList<>();
-        while (x < CommandManager.cmdNames.size()) {
-            System.out.println(CommandManager.cmdNames.get(x) + " added to choices!");
-            SubcommandData choice = new SubcommandData(CommandManager.cmdNames.get(x), String.valueOf(x+1));
-            Bot.longToCommandName.put((long) (x+1), CommandManager.cmdNames.get(x));
-            choices.add(choice);
-            x++;
-        }
 
         setCommandData(new CommandData("help", "Sends the help message")
-                .addOptions(new OptionData(OptionType.STRING, "command", "What subcommand you want to check the help on")).addSubcommands(choices)
+                .addOptions(new OptionData(OptionType.STRING, "command", "What subcommand you want to check the help on"))
         );
         setRunnableInDM(false);
 
@@ -82,7 +71,7 @@ public class HelpSlashCommand extends SlashCommand
             ).queue();
         } else {
 
-            ICommand command = Listener.manager.getCommand(Bot.longToCommandName.get(commandName.getAsLong()));
+            ICommand command = Listener.manager.getCommand(commandName.getAsString());
 
             if (command == null) {
                 event.reply("Nothing found for " + commandName).setEphemeral(true).queue();

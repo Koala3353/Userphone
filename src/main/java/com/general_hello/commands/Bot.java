@@ -67,6 +67,7 @@ public class Bot {
                 .addEventListeners(new OtherEvents())
                 .addEventListeners(new OnSelectionMenu())
                 .addEventListeners(new onCallMessageReceived())
+                .addEventListeners(new OnReadyEvent())
                 .setActivity(Activity.watching("u?help"))
                 .setStatus(OnlineStatus.ONLINE)
                 .setChunkingFilter(ChunkingFilter.ALL) // enable member chunking for all guilds

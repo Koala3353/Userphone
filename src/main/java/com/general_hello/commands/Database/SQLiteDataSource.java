@@ -35,40 +35,48 @@ public class SQLiteDataSource implements DatabaseManager {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        config.setMaximumPoolSize(20);
-        config.setConnectionTimeout(300000);
-        config.setConnectionTimeout(120000);
-        config.setLeakDetectionThreshold(60000);
 
         ds = new HikariDataSource(config);
 
         try (final Statement statement = getConnection().createStatement()) {
             final String defaultPrefix = Config.get("prefix");
 
-            // language=SQLite
-            statement.execute("CREATE TABLE IF NOT EXISTS guild_settings (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "guild_id VARCHAR(20) NOT NULL," +
-                    "prefix VARCHAR(255) NOT NULL DEFAULT '" + defaultPrefix + "'" +
-                    ");");
+            String[] commands = new String[]{
+                    "CREATE TABLE IF NOT EXISTS guild_settings (" +
+                            "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                            "guild_id VARCHAR(20) NOT NULL," +
+                            "prefix VARCHAR(255) NOT NULL DEFAULT '" + defaultPrefix + "'" +
+                            ");",
+                    "CREATE TABLE IF NOT EXISTS UserData ( UserId INTEGER NOT NULL, " +
+                            "UserName TEXT NOT NULL, " +
+                            "UserProfilePicLink TEXT, " +
+                            "PRIMARY KEY(UserId) ) WITHOUT ROWID",
+                    "CREATE TABLE IF NOT EXISTS levels (guildID BIGINT," +
+                            " userID BIGINT," +
+                            " totalXP BIGINT," +
+                            " name VARCHAR(256)," +
+                            " discriminator VARCHAR(4)," +
+                            " PRIMARY KEY(guildID, userID))",
+                    "CREATE TABLE IF NOT EXISTS xpAlerts (guildID BIGINT PRIMARY KEY, " +
+                            "mode VARCHAR(128))",
+                    "CREATE TABLE IF NOT EXISTS guildSettings (guildID BIGINT PRIMARY KEY, data JSON CHECK (JSON_VALID(data)))",
 
-            statement.execute("CREATE TABLE IF NOT EXISTS UserData ( UserId INTEGER NOT NULL, " +
-                    "UserName TEXT NOT NULL, " +
-                    "UserProfilePicLink TEXT, " +
-                    "PRIMARY KEY(UserId) ) WITHOUT ROWID");
-            
-            statement.execute("CREATE TABLE IF NOT EXISTS levels (guildID BIGINT," +
-                    " userID BIGINT," +
-                    " totalXP BIGINT," +
-                    " name VARCHAR(256)," +
-                    " discriminator VARCHAR(4)," +
-                    " PRIMARY KEY(guildID, userID))");
+                    "CREATE TABLE IF NOT EXISTS wildcardSettings (userID BIGINT PRIMARY KEY, card VARCHAR(128) NOT NULL)"
+            };
 
-            statement.execute("CREATE TABLE IF NOT EXISTS xpAlerts (guildID BIGINT PRIMARY KEY, " +
-                    "mode VARCHAR(128))");
+            Connection connection = getConnection();
 
-            statement.execute("CREATE TABLE IF NOT EXISTS guildSettings (guildID BIGINT PRIMARY KEY, data JSON CHECK (JSON_VALID(data)))");
-            
+            if (connection == null) return;
+
+            try {
+                for (String command : commands) {
+                    PreparedStatement ps = connection.prepareStatement(command);
+                    ps.execute();
+                    ps.close();
+                }
+            } catch (Exception e) {
+                LOGGER.error("Could not run command", e);
+            }
             LOGGER.info("Table initialised");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -172,6 +180,7 @@ public class SQLiteDataSource implements DatabaseManager {
             preparedStatement.setString(3, profilePictureLink);
 
             preparedStatement.executeUpdate();
+            preparedStatement.close();
 
             System.out.println("Added the user to the database successfully!");
         } catch (SQLException e) {

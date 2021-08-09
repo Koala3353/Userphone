@@ -53,8 +53,8 @@ public class RankingSystem
     {
         try
         {
-            FONT = Font.createFont(Font.TRUETYPE_FONT, RankingSystem.class.getResourceAsStream("/assets/fonts/NotoSans.ttf"));
-            colorData = DataObject.fromJson(RankingSystem.class.getResourceAsStream("/assets/wildcards/ColorInfo.json"));
+            FONT = Font.createFont(Font.TRUETYPE_FONT, RankingSystem.class.getResourceAsStream("/resources/NotoSans.ttf"));
+            colorData = DataObject.fromJson(RankingSystem.class.getResourceAsStream("/assets/ColorInfo.json"));
         } catch (FontFormatException | IOException e)
         {
             LOGGER.error("Couldn't load font from resources", e);
@@ -347,7 +347,7 @@ public static long getXPToLevelUp(int currentLevel)
             BufferedImage rankCard = new BufferedImage(CARD_WIDTH, CARD_HEIGHT, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g = rankCard.createGraphics();
 
-            InputStream background = RankingSystem.class.getResourceAsStream("/assets/wildcards/" + card + ".png");
+            InputStream background = RankingSystem.class.getResourceAsStream("/resources/" + card + ".png");
             if (background != null)
             {
                 BufferedImage image = makeRoundedCorner(ImageIO.read(background), 60);

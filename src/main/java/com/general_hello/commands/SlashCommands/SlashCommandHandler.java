@@ -44,19 +44,19 @@ public class SlashCommandHandler
         registeredGuildCommands = new ConcurrentHashMap<>();
     }
 
-    public void initialize()
+    public static void initialize()
     {
         commandUpdateAction = Bot.jda.updateCommands();
         registerAllCommands();
     }
 
-    public void registerAllCommands()
+    public static void registerAllCommands()
     {
         registerCommand(new SlashRankCommand());
         registerCommand(new PingSlashCommand());
         registerCommand(new XPAlertCommand());
-        registerCommand(new HelpSlashCommand());
         registerCommand(new RegisterSlashCommand());
+        registerCommand(new HelpSlashCommand());
     }
 
     public static void updateCommands(Consumer<List<Command>> success, Consumer<Throwable> failure)
@@ -79,7 +79,7 @@ public class SlashCommandHandler
         }
     }
 
-    private void registerCommand(SlashCommand command)
+    private static void registerCommand(SlashCommand command)
     {
         if (!command.isGlobal())
         {

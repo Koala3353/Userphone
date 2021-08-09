@@ -23,23 +23,23 @@ public class EntertainmentListener extends ListenerAdapter{
 			Echo.echo(event, args);
 			return;
 		}
-		if(args[0].equalsIgnoreCase(prefix + "eightball ")) {
+		if(args[0].equalsIgnoreCase(prefix + "eightball")) {
 			EightBall.eightball(event, args);
 			return;
 		}
-		if(args[0].equalsIgnoreCase(prefix + "poll ")) {
+		if(args[0].equalsIgnoreCase(prefix + "poll")) {
 			Poll.poll(event);
 			return;
 		}
-		if(args[0].equalsIgnoreCase(prefix + "newpoll ")) {
+		if(args[0].equalsIgnoreCase(prefix + "newpoll")) {
 			Poll.newpoll(event, args);
 			return;
 		}
-		if(args[0].equalsIgnoreCase(prefix + "read ")) {
+		if(args[0].equalsIgnoreCase(prefix + "read")) {
 			Read.read(event, args);
 			return;
 		}
-		if(args[0].equalsIgnoreCase(prefix + "rps ")) {
+		if(args[0].equalsIgnoreCase(prefix + "rps")) {
 			RPS.rps(event, args);
 			return;
 		}

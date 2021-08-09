@@ -20,7 +20,6 @@ import com.general_hello.commands.commands.Settings.SettingsCommand;
 import com.general_hello.commands.commands.Uno.ChallengeCommand;
 import com.general_hello.commands.commands.Uno.DrawCommand;
 import com.general_hello.commands.commands.Uno.PlayCardCommand;
-import com.general_hello.commands.commands.VoiceCall.onCallAnonCommand;
 import com.general_hello.commands.commands.VoiceCall.onCallCommand;
 import com.general_hello.commands.commands.VoiceCall.onLeaveCommand;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
@@ -67,7 +66,6 @@ public class CommandManager {
         //voice call commands
         addCommand(new onCallCommand());
         addCommand(new onLeaveCommand());
-        addCommand(new onCallAnonCommand());
 
         //ranks
         addCommand(new Rank());
