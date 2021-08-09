@@ -1,18 +1,19 @@
 package com.general_hello.commands;
 
-import com.general_hello.commands.commands.Blackjack.*;
+
 import com.general_hello.commands.commands.Call.HangupCommand;
 import com.general_hello.commands.commands.Call.JoinCallQueueCommand;
 import com.general_hello.commands.commands.CommandContext;
 import com.general_hello.commands.commands.DefaultCommands.*;
-import com.general_hello.commands.commands.Games.GuessNumberCommand;
-import com.general_hello.commands.commands.Games.HangManCommand;
-import com.general_hello.commands.commands.Games.TriviaCommand;
+import com.general_hello.commands.commands.GroupOfGames.Blackjack.*;
+import com.general_hello.commands.commands.GroupOfGames.Games.GuessNumberCommand;
+import com.general_hello.commands.commands.GroupOfGames.Games.HangManCommand;
+import com.general_hello.commands.commands.GroupOfGames.Games.TriviaCommand;
+import com.general_hello.commands.commands.GroupOfGames.MiniGames.ConnectFourRequest;
 import com.general_hello.commands.commands.ICommand;
 import com.general_hello.commands.commands.Info.AboutCommand;
 import com.general_hello.commands.commands.Info.InfoServerCommand;
 import com.general_hello.commands.commands.Info.InfoUserCommand;
-import com.general_hello.commands.commands.MiniGames.ConnectFourRequest;
 import com.general_hello.commands.commands.RankingSystem.Rank;
 import com.general_hello.commands.commands.Register.RegisterCommand;
 import com.general_hello.commands.commands.Settings.SettingsCommand;
@@ -76,7 +77,6 @@ public class CommandManager {
 
         //games
         GameHandler gameHandler = new GameHandler();
-
 
         //uno
         addCommand(new DrawCommand(gameHandler));

@@ -1,4 +1,4 @@
-package com.general_hello.commands.commands.Entertainments;
+package com.general_hello.commands.commands.GroupOfGames.Entertainments;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 

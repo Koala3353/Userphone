@@ -1,4 +1,4 @@
-package com.general_hello.commands.commands.Blackjack;
+package com.general_hello.commands.commands.GroupOfGames.Blackjack;
 
 import com.general_hello.commands.commands.Uno.UnoGame;
 

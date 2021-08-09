@@ -1,4 +1,4 @@
-package com.general_hello.commands.commands.Entertainments;
+package com.general_hello.commands.commands.GroupOfGames.Entertainments;
 
 import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.commands.PrefixStoring;

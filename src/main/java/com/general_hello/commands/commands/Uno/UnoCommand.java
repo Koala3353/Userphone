@@ -1,7 +1,7 @@
 package com.general_hello.commands.commands.Uno;
 
-import com.general_hello.commands.commands.Blackjack.BlackjackCommand;
-import com.general_hello.commands.commands.Blackjack.GameHandler;
+import com.general_hello.commands.commands.GroupOfGames.Blackjacks.BlackJack.BlackjackCommand;
+import com.general_hello.commands.commands.GroupOfGames.Blackjacks.BlackJack.GameHandler;
 import com.general_hello.commands.commands.CommandContext;
 import com.general_hello.commands.commands.ICommand;
 import com.general_hello.commands.commands.Utils.MoneyData;

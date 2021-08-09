@@ -1,4 +1,4 @@
-package com.general_hello.commands.commands.Games;
+package com.general_hello.commands.commands.GroupOfGames.Games;
 
 
 import com.general_hello.commands.Database.FilePath;

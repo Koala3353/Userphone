@@ -1,4 +1,4 @@
-package com.general_hello.commands.commands.Blackjack;
+package com.general_hello.commands.commands.GroupOfGames.Blackjack;
 
 public class Card {
     public enum Value {

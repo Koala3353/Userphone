@@ -2,7 +2,7 @@ package com.general_hello.commands;
 
 import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.Database.SQLiteDataSource;
-import com.general_hello.commands.commands.Games.TriviaCommand;
+import com.general_hello.commands.commands.GroupOfGames.Games.TriviaCommand;
 import com.general_hello.commands.commands.GetData;
 import com.general_hello.commands.commands.PrefixStoring;
 import com.general_hello.commands.commands.Settings.SettingsData;

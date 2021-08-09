@@ -2,8 +2,8 @@ package com.general_hello.commands.commands.Uno;
 
 
 import com.general_hello.commands.Database.DatabaseManager;
-import com.general_hello.commands.commands.Blackjack.GameHandler;
 import com.general_hello.commands.commands.CommandContext;
+import com.general_hello.commands.commands.GroupOfGames.Blackjack.GameHandler;
 import com.general_hello.commands.commands.ICommand;
 import com.general_hello.commands.commands.PrefixStoring;
 import com.general_hello.commands.commands.Utils.MoneyData;

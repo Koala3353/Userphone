@@ -4,7 +4,7 @@ import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.Database.SQLiteDataSource;
 import com.general_hello.commands.OtherEvents.*;
 import com.general_hello.commands.SlashCommands.OnSlashCommand;
-import com.general_hello.commands.commands.Entertainments.EntertainmentListener;
+import com.general_hello.commands.commands.GroupOfGames.Entertainments.EntertainmentListener;
 import com.general_hello.commands.commands.RankingSystem.OnGainXP;
 import com.general_hello.commands.commands.VoiceCall.AudioStorage;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;

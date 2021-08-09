@@ -1,4 +1,4 @@
-package com.general_hello.commands.commands.MiniGames;
+package com.general_hello.commands.commands.GroupOfGames.MiniGames;
 
 import com.general_hello.commands.commands.CommandContext;
 import com.general_hello.commands.commands.Emoji.Emoji;

@@ -1,4 +1,4 @@
-package com.general_hello.commands.commands.MiniGames;
+package com.general_hello.commands.commands.GroupOfGames.MiniGames;
 
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;

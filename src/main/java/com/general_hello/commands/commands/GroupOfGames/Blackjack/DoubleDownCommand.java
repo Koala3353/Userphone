@@ -1,4 +1,4 @@
-package com.general_hello.commands.commands.Blackjack;
+package com.general_hello.commands.commands.GroupOfGames.Blackjack;
 
 import com.general_hello.commands.commands.CommandContext;
 import com.general_hello.commands.commands.ICommand;
@@ -29,7 +29,7 @@ public class DoubleDownCommand implements ICommand {
                                 DecimalFormat formatter = new DecimalFormat("#,###.00");
                                 eb.addField("Credits", String.format("You now have %s credits", formatter.format(credits)), false);
                             }
-                            m.editMessageEmbeds(eb.build()).queue();
+                            m.editMessage(eb.build()).queue();
                         });
                     } else {
                         e.getChannel().sendMessage("You have not enough credits").queue();
