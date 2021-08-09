@@ -1,8 +1,8 @@
 package com.general_hello.commands.commands.Uno;
 
-import com.general_hello.commands.commands.GroupOfGames.Blackjacks.BlackJack.BlackjackCommand;
-import com.general_hello.commands.commands.GroupOfGames.Blackjacks.BlackJack.GameHandler;
 import com.general_hello.commands.commands.CommandContext;
+import com.general_hello.commands.commands.GroupOfGames.Blackjack.BlackjackCommand;
+import com.general_hello.commands.commands.GroupOfGames.Blackjack.GameHandler;
 import com.general_hello.commands.commands.ICommand;
 import com.general_hello.commands.commands.Utils.MoneyData;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -48,7 +48,7 @@ public class UnoCommand implements ICommand {
             eb.setDescription(String.format("This game requires a %d credits bet.\nThe winner receives the sum of all bets", bet));
         eb.addField("Players", "No Players yet", false);
         eb.setFooter("React with \uD83D\uDD90️ to join, ▶️ to start and ❌ to cancel the game");
-        e.getChannel().sendMessage(eb.build()).queue(m -> {
+        e.getChannel().sendMessageEmbeds(eb.build()).queue(m -> {
             unogame.setMessageID(m.getIdLong());
             m.addReaction("\uD83D\uDD90️").queue();
             m.addReaction("▶️").queue();

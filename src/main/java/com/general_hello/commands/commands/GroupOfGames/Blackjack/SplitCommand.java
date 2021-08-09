@@ -34,7 +34,7 @@ public class SplitCommand implements ICommand {
                             eb.addField("Credits", String.format("You now have %s credits", formatter.format(credits)), false);
                             GameHandler.removeBlackJackGame(e.getAuthor().getIdLong());
                         }
-                        m.editMessage(eb.build()).queue();
+                        m.editMessageEmbeds(eb.build()).queue();
                     });
                 } else {
                     e.getChannel().sendMessage("You have not enough credits").queue();

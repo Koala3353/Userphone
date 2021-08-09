@@ -57,7 +57,7 @@ public class TriviaCommand implements ICommand {
         embedBuilder.addField("Question:", msg, false);
         embedBuilder.setColor(Color.cyan);
         embedBuilder.setFooter("A correct answer will give you \uD83E\uDE99 500");
-        ctx.getChannel().sendMessage(embedBuilder.build()).queue();
+        ctx.getChannel().sendMessageEmbeds(embedBuilder.build()).queue();
         storeAnswer.put(ctx.getAuthor(), splitString[1]);
         storeUser.add(ctx.getAuthor());
     }

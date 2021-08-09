@@ -44,7 +44,7 @@ public class BlackjackCommand implements ICommand {
                         DecimalFormat formatter = new DecimalFormat("#,###.00");
                         eb.addField("Credits", String.format("You now have %s credits", formatter.format(credits)), false);
                     }
-                    e.getChannel().sendMessage(eb.build()).queue(m -> {
+                    e.getChannel().sendMessageEmbeds(eb.build()).queue(m -> {
                         if (!bjg.hasEnded()) bjg.setMessageId(m.getIdLong());
                     });
                 } else {

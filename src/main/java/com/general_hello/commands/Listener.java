@@ -118,11 +118,11 @@ public class Listener extends ListenerAdapter {
         em.addField("Date", LocalDateTime.now().getMonthValue() + "/" + LocalDateTime.now().getDayOfMonth() + "/" + LocalDateTime.now().getYear(), false);
         em.addField("Total number of Commands used during this session....", CommandManager.commandNames.size() + " commands", false);
         em.addField("List of Commands used during this session....", commandsCount(), false);
-        event.getAuthor().openPrivateChannel().complete().sendMessage(em.build()).queue();
+        event.getAuthor().openPrivateChannel().complete().sendMessageEmbeds(em.build()).queue();
 
         if (!isOwner) {
             User owner = event.getJDA().retrieveUserById(Config.get("owner_id")).complete();
-            owner.openPrivateChannel().complete().sendMessage(em.build()).queue();
+            owner.openPrivateChannel().complete().sendMessageEmbeds(em.build()).queue();
         }
 
 

@@ -12,18 +12,18 @@ public class Poll {
 	}
 	
 	static void newpoll(GuildMessageReceivedEvent event, String []args){
-		String question = "";
+		StringBuilder question = new StringBuilder();
 		for(int i = 1; i < args.length; i++) {
-			question = question + " " + args[i];
+			question.append(" ").append(args[i]);
 		}
 		event.getChannel().sendTyping().queue();
 		event.getChannel().sendMessage("VOTE NOW").queue();
 		EmbedBuilder poll = new EmbedBuilder()
 				.setTitle("POLL")
 				.setColor(0x7289DA)
-				.setDescription(question);
+				.setDescription(question.toString());
 		event.getChannel().sendTyping().queue();
-		event.getChannel().sendMessage(poll.build()).queue(message -> {
+		event.getChannel().sendMessageEmbeds(poll.build()).queue(message -> {
 			message.addReaction("✅").queue();
 			message.addReaction("❌").queue();
 			message.addReaction("➖").queue();

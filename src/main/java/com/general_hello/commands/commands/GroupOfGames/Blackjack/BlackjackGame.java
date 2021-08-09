@@ -221,5 +221,5 @@ public class BlackjackGame {
             eb.addField("Commands", String.format(prefix + "stand : see dealer cards\n" + prefix + "hit : take another card%s%s", canDouble() ? "\n" + prefix + "double : double bet and take last card" : "", canSplit() && !hasSplit ? "\n" + prefix + "split : split your cards" : ""), false);
         }
         return eb;
-    };
+    }
 }

@@ -5,11 +5,11 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 public class Clap {
 
 	static void clap(GuildMessageReceivedEvent event, String []args){
-		String message = "👏";
+		StringBuilder message = new StringBuilder("👏");
 		for(int i = 1; i < args.length; i++) {
-			message = message + args[i] + "👏";
+			message.append(args[i]).append("👏");
 		}
 		event.getChannel().sendTyping().queue();
-		event.getChannel().sendMessage(message).queue();
+		event.getChannel().sendMessage(message.toString()).queue();
 	}
 }

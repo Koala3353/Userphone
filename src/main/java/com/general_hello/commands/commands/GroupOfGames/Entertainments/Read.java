@@ -36,7 +36,7 @@ public class Read {
 							.setTitle("Recieved a file! \nBytes read:")
 							.setColor(0x7289DA)
 							.setDescription(s);
-					event.getChannel().sendMessage(text.build()).queue();
+					event.getChannel().sendMessageEmbeds(text.build()).queue();
 				} catch (InterruptedException | ExecutionException | IOException e) {
 					e.printStackTrace();
 				} catch (Exception e) {

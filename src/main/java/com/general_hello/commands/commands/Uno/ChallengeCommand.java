@@ -1,6 +1,7 @@
 package com.general_hello.commands.commands.Uno;
 
 import com.general_hello.commands.commands.CommandContext;
+import com.general_hello.commands.commands.GroupOfGames.Blackjack.GameHandler;
 import com.general_hello.commands.commands.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -64,8 +65,8 @@ public class ChallengeCommand implements ICommand {
                 }
                 TextChannel skippedchannel = guild.getTextChannelById(skippedHand.getChannelId());
                 TextChannel playedChannel = guild.getTextChannelById(playedHand.getChannelId());
-                skippedchannel.sendMessage(eb1.build()).queue();
-                playedChannel.sendMessage(eb2.build()).queue();
+                skippedchannel.sendMessageEmbeds(eb1.build()).queue();
+                playedChannel.sendMessageEmbeds(eb2.build()).queue();
                 EmbedBuilder eb = unoGame.createEmbed(skippedHand.getPlayerId());
                 eb.setColor(color);
                 skippedchannel.sendFile(getCardsImage(skippedHand.getCards()), "hand.png").embed(eb.build()).queue(newmessage -> skippedHand.setMessageId(newmessage.getIdLong()));

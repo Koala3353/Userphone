@@ -45,7 +45,7 @@ public class DrawCommand implements ICommand {
                         UnoHand hand = unoGame.getPlayerHand(e.getMember().getIdLong());
                         TextChannel channel = guild.getTextChannelById(hand.getChannelId());
                         deb.setTitle(String.format("You drew a %s", newCard.toString()));
-                        channel.sendMessage(deb.build()).queue();
+                        channel.sendMessageEmbeds(deb.build()).queue();
                         return;
                     }
                 } else {
@@ -65,27 +65,27 @@ public class DrawCommand implements ICommand {
                             EmbedBuilder eb2 = new EmbedBuilder();
                             eb2.setColor(color);
                             eb2.setTitle(String.format("You had to draw 2 cards because %s played a %s", hands.get(turn).getPlayerName(), newCard.toString()));
-                            channel.sendMessage(eb2.build()).queue();
-                            channel.sendFile(ImageHandler.getCardsImage(hand.getCards()), "hand.png").embed(eb.build()).queueAfter(1, TimeUnit.SECONDS, newmessage -> hand.setMessageId(newmessage.getIdLong()));
+                            channel.sendMessageEmbeds(eb2.build()).queue();
+                            channel.sendFile(ImageHandler.getCardsImage(hand.getCards()), "hand.png").setEmbeds(eb.build()).queueAfter(1, TimeUnit.SECONDS, newmessage -> hand.setMessageId(newmessage.getIdLong()));
                         } else {
                             channel.retrieveMessageById(hand.getMessageId()).queue(message -> {
                                 EmbedBuilder eb = unoGame.createEmbed(player);
                                 eb.setColor(color);
-                                message.editMessage(eb.build()).queue();
+                                message.editMessageEmbeds(eb.build()).queue();
                                 if (hands.get(newturn).getPlayerId() == player) {
                                     EmbedBuilder eb2 = new EmbedBuilder();
                                     eb2.setTitle("It's your turn!");
                                     eb2.setColor(color);
-                                    channel.sendMessage(eb2.build()).queue();
+                                    channel.sendMessageEmbeds(eb2.build()).queue();
                                 }
                             });
                         }
 
                     } else {
-                        channel.sendMessage(deb.build()).queue();
+                        channel.sendMessageEmbeds(deb.build()).queue();
                         EmbedBuilder eb = unoGame.createEmbed(player);
                         eb.setColor(guild.getSelfMember().getColor());
-                        channel.sendFile(ImageHandler.getCardsImage(hand.getCards()), "hand.png").embed(eb.build()).queue(newmessage -> hand.setMessageId(newmessage.getIdLong()));
+                        channel.sendFile(ImageHandler.getCardsImage(hand.getCards()), "hand.png").setEmbeds(eb.build()).queue(newmessage -> hand.setMessageId(newmessage.getIdLong()));
 
                     }
                 }

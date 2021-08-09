@@ -57,7 +57,7 @@ public class PlayCardCommand implements ICommand {
                                 EmbedBuilder eb = unoGame.createEmbed(player);
                                 eb.setColor(color);
                                 if (unoGame.isFinished()) {
-                                    message.editMessage(eb.build()).queue();
+                                    message.editMessageEmbeds(eb.build()).queue();
                                     EmbedBuilder eb2 = new EmbedBuilder();
                                     int size = hands.size() - 1;
                                     int bet = unoGame.getBet();
@@ -71,19 +71,19 @@ public class PlayCardCommand implements ICommand {
 
                                     if (bet != 0) MoneyData.money.put(e.getAuthor(), (monet - 1)  * credits);
                                     eb2.setColor(color);
-                                    channel.sendMessage(eb2.build()).queue();
+                                    channel.sendMessageEmbeds(eb2.build()).queue();
                                     channel.delete().queueAfter(1, TimeUnit.MINUTES);
                                 } else if (newturn == finalI) {
-                                    message.editMessage(eb.build()).queue();
+                                    message.editMessageEmbeds(eb.build()).queue();
                                     EmbedBuilder eb2 = new EmbedBuilder();
                                     eb2.setTitle("It's your turn!");
                                     eb2.setColor(color);
-                                    channel.sendMessage(eb2.build()).queue();
+                                    channel.sendMessageEmbeds(eb2.build()).queue();
                                 } else if (isBetween(unoGame, turn, finalI) && (card.getValue() == UnoCard.Value.PLUSFOUR || card.getValue() == UnoCard.Value.PLUSTWO)) {
                                     EmbedBuilder eb2 = new EmbedBuilder();
                                     eb2.setColor(color);
                                     eb2.setTitle(String.format("You had to draw %d cards because %s played a %s", card.getValue() == UnoCard.Value.PLUSTWO ? 2 : 4, hands.get(turn).getPlayerName(), card.toString()));
-                                    channel.sendMessage(eb2.build()).queue();
+                                    channel.sendMessageEmbeds(eb2.build()).queue();
                                     channel.sendFile(ImageHandler.getCardsImage(hand.getCards()), "hand.png").embed(eb.build()).queueAfter(1, TimeUnit.SECONDS, newmessage -> hand.setMessageId(newmessage.getIdLong()));
                                 } else {
                                     message.editMessage(eb.build()).queue();
@@ -93,7 +93,7 @@ public class PlayCardCommand implements ICommand {
                             if (!unoGame.isFinished()) {
                                 EmbedBuilder eb = unoGame.createEmbed(player);
                                 eb.setColor(guild.getSelfMember().getColor());
-                                channel.sendFile(ImageHandler.getCardsImage(hand.getCards()), "hand.png").embed(eb.build()).queue(newmessage -> hand.setMessageId(newmessage.getIdLong()));
+                                channel.sendFile(ImageHandler.getCardsImage(hand.getCards()), "hand.png").setEmbeds(eb.build()).queue(newmessage -> hand.setMessageId(newmessage.getIdLong()));
                             } else {
                                 EmbedBuilder eb2 = new EmbedBuilder();
                                 int size = hands.size() - 1;
@@ -101,7 +101,7 @@ public class PlayCardCommand implements ICommand {
                                 eb2.setTitle(String.format("You played a **%s** and won, you won **%d** credits", card.toString(), credits));
                                 final Double money = MoneyData.money.get(e.getAuthor());
                                 MoneyData.money.put(e.getAuthor(), money+credits);
-                                channel.sendMessage(eb2.build()).queue();
+                                channel.sendMessageEmbeds(eb2.build()).queue();
                                 guild.getTextChannelById(unoGame.getChannelID()).retrieveMessageById(unoGame.getMessageID()).queue(m -> {
                                     EmbedBuilder eb = new EmbedBuilder(m.getEmbeds().get(0));
                                     eb.setTitle("The game of uno has concluded");

@@ -114,12 +114,12 @@ public class HangMan implements Game{
         e.getChannel().sendMessageEmbeds(me).queue();
         embedend.clearFields();
 
-        String aword = "";
+        StringBuilder aword = new StringBuilder();
 
         ArrayList<String> words = word.get(user);
         for(String w : words)
         {
-            aword += w + " ";
+            aword.append(w).append(" ");
         }
         e.getChannel().sendMessage("The word was : `" + aword +"`").queue();
         clear(user);
@@ -155,7 +155,7 @@ public class HangMan implements Game{
             int countmiss = 0;
             for(int i = 0; i < word.size(); i ++)
             {
-                if(letter.equals(word.get(i)))
+                if(letter.equals(word.get(event.getAuthor()).get(i)))
                 {
                     right.set(i, letter);
                 }
@@ -197,7 +197,7 @@ public class HangMan implements Game{
         embedend.addField("\uD83E\uDE99 " + (80000 + rewardbonus) + " more if you're Pro was added to your account", null, false);
         embedend.setFooter(e.getAuthor().getName() + " is the winner!", null);
         MessageEmbed me = embedend.build();
-        e.getChannel().sendMessage(me).queue();
+        e.getChannel().sendMessageEmbeds(me).queue();
 
         final Double aDouble = MoneyData.money.get(e.getAuthor());
         MoneyData.money.put(e.getAuthor(), aDouble + 80000);
@@ -224,18 +224,18 @@ public class HangMan implements Game{
 
     public void print(User user) //Print out the result
     {
-        String missedletter = "";
+        StringBuilder missedletter = new StringBuilder();
 
         ArrayList<String> missed = miss.get(user);
         for(String s : missed)
         {
-            missedletter += s + ", ";
+            missedletter.append(s).append(", ");
         }
 
-        if("".equals(missedletter))
-            missedletter = "Missed Letters: None";
+        if("".equals(missedletter.toString()))
+            missedletter = new StringBuilder("Missed Letters: None");
         else
-            missedletter = "Missed Letters: " + missedletter.substring(0,missedletter.length()-2).toUpperCase();
+            missedletter = new StringBuilder("Missed Letters: " + missedletter.substring(0, missedletter.length() - 2).toUpperCase());
 
         embedgame.setColor(Color.green);
         embedgame.setTitle("\uD83C\uDFAE Current Man (Hanged!?)", null);
@@ -252,14 +252,14 @@ public class HangMan implements Game{
 
     public void printRightLetter(User user)
     {
-        String rightletter = "`";
+        StringBuilder rightletter = new StringBuilder("`");
         ArrayList<String> right = rights.get(user);
         for(String s : right)
         {
-            rightletter += s + " ";
+            rightletter.append(s).append(" ");
         }
-        rightletter += "`";
-        e.getChannel().sendMessage(rightletter).queue();
+        rightletter.append("`");
+        e.getChannel().sendMessage(rightletter.toString()).queue();
     }
 
     public String printHangMan(User user)
@@ -267,15 +267,6 @@ public class HangMan implements Game{
         String hangman;
         switch(miss.get(user).size())
         {
-            case 0:
-                hangman =   "```_____________   \n"
-                        + "|           |   \n"
-                        + "|               \n"
-                        + "|               \n"
-                        + "|                \n"
-                        + "|                \n"
-                        + "|                \n"
-                        + "___              ```\n";
             case 1:
                 hangman =   "```_____________   \n"
                         + "|           |   \n"
