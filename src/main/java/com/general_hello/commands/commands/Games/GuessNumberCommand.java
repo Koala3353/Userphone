@@ -3,12 +3,15 @@ package com.general_hello.commands.commands.Games;
 import com.general_hello.commands.Listener;
 import com.general_hello.commands.commands.CommandContext;
 import com.general_hello.commands.commands.ICommand;
+import net.dv8tion.jda.api.entities.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
+
 public class GuessNumberCommand implements ICommand {
 
-    private GuessNumber gn;
+    private final HashMap<User, GuessNumber> guessNumberHashMap = new HashMap<>();
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
 
     @Override
@@ -16,17 +19,21 @@ public class GuessNumberCommand implements ICommand {
         if(ctx.getArgs().isEmpty())
         {
             ctx.getChannel().sendMessage("Invalid Input").queue();
+            return;
         }
 
         else if(ctx.getArgs().size() == 0 || (ctx.getArgs().size() > 0 && "start".equals(ctx.getArgs().get(0))))
         {
-            gn = new GuessNumber(ctx.getEvent());
+            guessNumberHashMap.put(ctx.getAuthor(), new GuessNumber(ctx.getEvent()));
+            return;
         }
 
-        else if(ctx.getArgs().size() > 0 && "end".equals(ctx.getArgs().get(0)))
+        GuessNumber gn = this.guessNumberHashMap.get(ctx.getAuthor());
+
+        if(ctx.getArgs().size() > 0 && "end".equals(ctx.getArgs().get(0)))
         {
-            gn.endGame();
-            ctx.getChannel().sendMessage("Game ended! The number was " + gn.getNumber() + ".").queue();
+            gn.endGame(ctx.getAuthor());
+            ctx.getChannel().sendMessage("Game ended! The number was " + gn.getNumber(ctx.getAuthor()) + ".").queue();
         }
 
         else

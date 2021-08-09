@@ -5,13 +5,17 @@ import com.general_hello.commands.Listener;
 import com.general_hello.commands.commands.CommandContext;
 import com.general_hello.commands.commands.ICommand;
 import com.general_hello.commands.commands.PrefixStoring;
+import net.dv8tion.jda.api.entities.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
 
 public class HangManCommand implements ICommand {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
-    HangMan game;
+    public static HashMap<User, HangMan> userHangManHashMap = new HashMap<>();
+
     @Override
     public void handle(CommandContext ctx) {
         final long guildID = ctx.getGuild().getIdLong();
@@ -20,18 +24,22 @@ public class HangManCommand implements ICommand {
         if(ctx.getArgs().size() == 0)
         {
             ctx.getChannel().sendMessage(getHelp(prefix)).queue();
+            return;
         }
 
         else if(ctx.getArgs().size() > 0 && "start".equals(ctx.getArgs().get(0)))
         {
             LOGGER.info(this.getClass().getName(), "HangMan Started.");
-            game = new HangMan(ctx.getEvent());
+            userHangManHashMap.put(ctx.getAuthor(), new HangMan(ctx.getEvent()));
+            return;
         }
 
-        else if(ctx.getArgs().size() > 0 && "end".equals(ctx.getArgs().get(0)))
+        HangMan game = userHangManHashMap.get(ctx.getAuthor());
+
+        if(ctx.getArgs().size() > 0 && "end".equals(ctx.getArgs().get(0)))
         {
-            if(ctx.getAuthor() == HangMan.starter)
-                game.endGame();
+            if(HangMan.starter.contains(ctx.getAuthor()))
+                game.endGame(ctx.getAuthor());
             else
                 ctx.getChannel().sendMessage("🛑 Only the game starter can end the game.").queue();
         }

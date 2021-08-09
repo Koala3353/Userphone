@@ -4,7 +4,7 @@ import com.general_hello.commands.commands.Blackjack.BlackjackCommand;
 import com.general_hello.commands.commands.Blackjack.GameHandler;
 import com.general_hello.commands.commands.CommandContext;
 import com.general_hello.commands.commands.ICommand;
-import com.general_hello.commands.commands.Money.MoneyData;
+import com.general_hello.commands.commands.Utils.MoneyData;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;

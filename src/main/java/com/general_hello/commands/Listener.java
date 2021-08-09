@@ -2,9 +2,11 @@ package com.general_hello.commands;
 
 import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.Database.SQLiteDataSource;
+import com.general_hello.commands.commands.Games.TriviaCommand;
 import com.general_hello.commands.commands.GetData;
 import com.general_hello.commands.commands.PrefixStoring;
 import com.general_hello.commands.commands.Settings.SettingsData;
+import com.general_hello.commands.commands.Utils.MoneyData;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import me.duncte123.botcommons.BotCommons;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -20,7 +22,9 @@ import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class Listener extends ListenerAdapter {
     public static CommandManager manager;
@@ -125,5 +129,30 @@ public class Listener extends ListenerAdapter {
         event.getJDA().shutdown();
         SQLiteDataSource.ds.close();
         BotCommons.shutdown(event.getJDA());
+    }
+
+    public static void trivia(GuildMessageReceivedEvent event) {
+        if (TriviaCommand.storeUser.contains(event.getAuthor())) {
+            final String answer = event.getMessage().getContentRaw();
+
+            String[] split = TriviaCommand.storeAnswer.get(event.getAuthor()).toLowerCase()
+                    .split("\\s+");
+            List<String> args = Arrays.asList(split).subList(1, split.length);
+
+            if (args.contains(answer.toLowerCase())) {
+                event.getChannel().sendMessage("Correct answer!!!!\n" +
+                        "You got \uD83E\uDE99 5,000 for getting the correct answer").queue();
+                final Double money = MoneyData.money.get(event.getAuthor());
+                MoneyData.money.put(event.getAuthor(), money + 5000);
+            } else {
+                EmbedBuilder e = new EmbedBuilder();
+                e.setTitle("Incorrect answer");
+                e.setFooter("A correct answer gives you \uD83E\uDE99 5,000");
+                e.addField("The correct answer is " + TriviaCommand.storeAnswer.get(event.getAuthor()).toUpperCase(), "Better luck next time", false);
+                event.getChannel().sendMessageEmbeds(e.build()).queue();
+            }
+            TriviaCommand.storeUser.remove(event.getAuthor());
+            TriviaCommand.storeAnswer.remove(event.getAuthor());
+        }
     }
 }

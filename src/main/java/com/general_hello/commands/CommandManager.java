@@ -1,9 +1,13 @@
 package com.general_hello.commands;
 
+import com.general_hello.commands.commands.Blackjack.*;
 import com.general_hello.commands.commands.Call.HangupCommand;
 import com.general_hello.commands.commands.Call.JoinCallQueueCommand;
 import com.general_hello.commands.commands.CommandContext;
 import com.general_hello.commands.commands.DefaultCommands.*;
+import com.general_hello.commands.commands.Games.GuessNumberCommand;
+import com.general_hello.commands.commands.Games.HangManCommand;
+import com.general_hello.commands.commands.Games.TriviaCommand;
 import com.general_hello.commands.commands.ICommand;
 import com.general_hello.commands.commands.Info.AboutCommand;
 import com.general_hello.commands.commands.Info.InfoServerCommand;
@@ -12,6 +16,9 @@ import com.general_hello.commands.commands.MiniGames.ConnectFourRequest;
 import com.general_hello.commands.commands.RankingSystem.Rank;
 import com.general_hello.commands.commands.Register.RegisterCommand;
 import com.general_hello.commands.commands.Settings.SettingsCommand;
+import com.general_hello.commands.commands.Uno.ChallengeCommand;
+import com.general_hello.commands.commands.Uno.DrawCommand;
+import com.general_hello.commands.commands.Uno.PlayCardCommand;
 import com.general_hello.commands.commands.VoiceCall.onCallAnonCommand;
 import com.general_hello.commands.commands.VoiceCall.onCallCommand;
 import com.general_hello.commands.commands.VoiceCall.onLeaveCommand;
@@ -66,6 +73,29 @@ public class CommandManager {
 
         //update slash command
         addCommand(new UpdateSlashCommand());
+
+        //games
+        GameHandler gameHandler = new GameHandler();
+
+
+        //uno
+        addCommand(new DrawCommand(gameHandler));
+        addCommand(new ChallengeCommand());
+        addCommand(new PlayCardCommand(gameHandler));
+
+        //minigames
+        addCommand(new HangManCommand());
+        addCommand(new TriviaCommand());
+        addCommand(new GuessNumberCommand());
+
+        //blackjack
+        //TODO: MAKE BLACK JACK TO BUTTONS INSTEAD OF COMMANDS
+        addCommand(new BlackjackCommand(gameHandler));
+        addCommand(new DoubleDownCommand());
+        addCommand(new HitCommand());
+        addCommand(new SplitCommand());
+        addCommand(new StandCommand());
+
     }
 
     private void addCommand(ICommand cmd) {

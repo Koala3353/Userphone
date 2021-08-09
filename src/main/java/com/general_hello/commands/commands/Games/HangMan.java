@@ -2,8 +2,7 @@ package com.general_hello.commands.commands.Games;
 
 
 import com.general_hello.commands.Listener;
-import com.general_hello.commands.commands.Money.MoneyData;
-import com.general_hello.commands.commands.Pro.ProData;
+import com.general_hello.commands.commands.Utils.MoneyData;
 import com.general_hello.commands.commands.Utils.UtilNum;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -17,28 +16,29 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class HangMan implements Game{
 
     private static GuildMessageReceivedEvent e;
-    private static EmbedBuilder embedstart = new EmbedBuilder();
-    private static EmbedBuilder embedend = new EmbedBuilder();
-    private static EmbedBuilder embedgame = new EmbedBuilder();
-    public static User starter;
+    private static final EmbedBuilder embedstart = new EmbedBuilder();
+    private static final EmbedBuilder embedend = new EmbedBuilder();
+    private static final EmbedBuilder embedgame = new EmbedBuilder();
+    public static ArrayList<User> starter;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
     private static String letter;
-    private static ArrayList<String> word = new ArrayList<String>();
-    private static ArrayList<String> guessed = new ArrayList<String>(); //All guesses
-    private static ArrayList<String> missed = new ArrayList<String>(); //Wrong guesses
-    private static ArrayList<String> right = new ArrayList<String>(); //Right guesses
+    private static HashMap<User, ArrayList<String>> word = new HashMap<>();
+    private static HashMap<User, ArrayList<String>> guess = new HashMap<>(); //All guesses
+    private static HashMap<User, ArrayList<String>> miss = new HashMap<>(); //Wrong guesses
+    private static HashMap<User, ArrayList<String>> rights = new HashMap<>(); //Right guesses
 
     private static final int limit = 7;
 
     public static String hangman = "```_____________   \n"
             + "|           |   \n"
-            + "|          " + "😲" + "  \n"
+            + "|          " + "😨" + "  \n"
             + "|           |   \n"
             + "|          /|\\  \n"
             + "|          / \\  \n"
@@ -49,13 +49,13 @@ public class HangMan implements Game{
     {
         e = event;
 
-        starter = e.getAuthor();
+        starter.add(e.getAuthor());
 
-        startGame();
+        startGame(event.getAuthor());
     }
 
     @Override
-    public void startGame()
+    public void startGame(User user)
     {
 
         try {
@@ -74,14 +74,20 @@ public class HangMan implements Game{
             System.out.println(ranword);
 
             //Clear Last GAME's data
-            clear();
+            clear(user);
+
+            ArrayList<String> words = new ArrayList<>();
+            ArrayList<String> rightsss = new ArrayList<>();
 
             //Initialize
             for(int i = 0; i < ranword.length(); i ++)
             {
-                word.add(ranword.substring(i,i+1));
-                right.add("_");
+                words.add(ranword.substring(i,i+1));
+                rightsss.add("_");
             }
+
+            word.put(user, words);
+            rights.put(user, rightsss);
 
         } catch (IOException ioe) {
             LOGGER.info(this.getClass().getName(), "BufferReader at startGame()");
@@ -89,32 +95,34 @@ public class HangMan implements Game{
 
         embedstart.setColor(Color.green);
         embedstart.addField("🎮 Hang Man: Game Started!",
-                "Starter: " + starter.getAsMention()
+                "Starter: " + user
                         + "\nWord length: " + word.size()
                         + "\n" + hangman, true);
         MessageEmbed me = embedstart.build();
-        e.getChannel().sendMessage(me).queue();
+        e.getChannel().sendMessageEmbeds(me).queue();
         embedstart.clearFields();
 
-        printRightLetter();
+        printRightLetter(user);
     }
 
     @Override
-    public void endGame() { //End the GAME
+    public void endGame(User user) { //End the GAME
         embedend.setColor(Color.green);
         embedend.setTitle( "🎮 Hang Man: Game Ended!", null);
         embedend.setFooter(e.getAuthor().getName() + " ended the game.", null);
         MessageEmbed me = embedend.build();
-        e.getChannel().sendMessage(me).queue();
+        e.getChannel().sendMessageEmbeds(me).queue();
         embedend.clearFields();
 
         String aword = "";
-        for(String w : word)
+
+        ArrayList<String> words = word.get(user);
+        for(String w : words)
         {
             aword += w + " ";
         }
         e.getChannel().sendMessage("The word was : `" + aword +"`").queue();
-        clear();
+        clear(user);
     }
 
     @Override
@@ -132,6 +140,10 @@ public class HangMan implements Game{
         else
         {
             letter = in.get(0);
+            ArrayList<String> guessed = guess.get(event.getAuthor());
+            ArrayList<String> right = rights.get(event.getAuthor());
+            ArrayList<String> missed = miss.get(event.getAuthor());
+
             if(!guessed.contains(letter))
                 guessed.add(letter);
             else
@@ -159,28 +171,27 @@ public class HangMan implements Game{
 
                 if(missed.size() >= limit)
                 {
-                    endGame();
+                    endGame(event.getAuthor());
                     return;
                 }
             }
 
-            boolean end = checkWin();
-            if(!end) print();
+            boolean end = checkWin(event.getAuthor());
+            if(!end) print(event.getAuthor());
         }
     }
 
-    public boolean checkWin() //Check for winner
+    public boolean checkWin(User user) //Check for winner
     {
+        ArrayList<String> right = rights.get(user);
+
         for(int i = 0; i < word.size(); i++)
         {
-            if(!right.get(i).equals(word.get(i)))
+            if(!right.get(i).equals(word.get(user).get(i)))
                 return false;
         }
 
         int rewardbonus = 0;
-        if (ProData.isPro.get(e.getAuthor())) {
-            rewardbonus += 400;
-        }
         embedend.setColor(Color.green);
         embedend.setTitle("\uD83C\uDFAE Hang Man: Game finished!", null);
         embedend.addField("\uD83E\uDE99 " + (80000 + rewardbonus) + " more if you're Pro was added to your account", null, false);
@@ -193,7 +204,9 @@ public class HangMan implements Game{
         embedend.clearFields();
 
         StringBuilder aword = new StringBuilder();
-        for(String w : word)
+
+        ArrayList<String> words = word.get(user);
+        for(String w : words)
         {
             aword.append(w).append(" ");
         }
@@ -201,18 +214,19 @@ public class HangMan implements Game{
         return true;
     }
 
-    public void clear() //Clear all arraylist.
+    public void clear(User user) //Clear all arraylist.
     {
-        guessed.clear();
-        missed.clear();
-        word.clear();
-        right.clear();
+        guess.remove(user);
+        miss.remove(user);
+        word.remove(user);
+        rights.remove(user);
     }
 
-    public void print() //Print out the result
+    public void print(User user) //Print out the result
     {
         String missedletter = "";
 
+        ArrayList<String> missed = miss.get(user);
         for(String s : missed)
         {
             missedletter += s + ", ";
@@ -225,20 +239,21 @@ public class HangMan implements Game{
 
         embedgame.setColor(Color.green);
         embedgame.setTitle("\uD83C\uDFAE Current Man (Hanged!?)", null);
-        embedgame.setDescription(missedletter + "\n" + printHangMan());
+        embedgame.setDescription(missedletter + "\n" + printHangMan(user));
         embedgame.setFooter("Guessed by " + e.getAuthor().getName(), e.getAuthor().getAvatarUrl());
 
         MessageEmbed me = embedgame.build();
-        e.getChannel().sendMessage(me).queue();
+        e.getChannel().sendMessageEmbeds(me).queue();
         embedgame.clearFields();
 
-        printRightLetter();
+        printRightLetter(user);
 
     }
 
-    public void printRightLetter()
+    public void printRightLetter(User user)
     {
         String rightletter = "`";
+        ArrayList<String> right = rights.get(user);
         for(String s : right)
         {
             rightletter += s + " ";
@@ -247,10 +262,10 @@ public class HangMan implements Game{
         e.getChannel().sendMessage(rightletter).queue();
     }
 
-    public String printHangMan()
+    public String printHangMan(User user)
     {
         String hangman;
-        switch(missed.size())
+        switch(miss.get(user).size())
         {
             case 0:
                 hangman =   "```_____________   \n"
@@ -264,7 +279,7 @@ public class HangMan implements Game{
             case 1:
                 hangman =   "```_____________   \n"
                         + "|           |   \n"
-                        + "|          " + "😲" + "  \n"
+                        + "|          " + "😀" + "  \n"
                         + "|               \n"
                         + "|                \n"
                         + "|                \n"
@@ -274,7 +289,7 @@ public class HangMan implements Game{
             case 2:
                 hangman =   "```_____________   \n"
                         + "|           |   \n"
-                        + "|           " + "😲" + "  \n"
+                        + "|           " + "😋" + "  \n"
                         + "|           |   \n"
                         + "|                \n"
                         + "|                \n"
@@ -314,7 +329,7 @@ public class HangMan implements Game{
             case 6:
                 hangman =   "```_____________   \n"
                         + "|           |   \n"
-                        + "|           " + "😲" + "  \n"
+                        + "|           " + "😶" + "  \n"
                         + "|           |   \n"
                         + "|          /|\\   \n"
                         + "|          /     \n"
@@ -324,7 +339,7 @@ public class HangMan implements Game{
             case 7:
                 hangman =   "```_____________   \n"
                         + "|           |   \n"
-                        + "|           " + "😲" + "  \n"
+                        + "|           " + "😐" + "  \n"
                         + "|           |   \n"
                         + "|          /|\\   \n"
                         + "|          / \\   \n"
