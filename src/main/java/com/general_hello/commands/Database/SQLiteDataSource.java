@@ -129,7 +129,8 @@ public class SQLiteDataSource implements DatabaseManager {
 
     @Override
     public String getName(long userId) {
-        try (final PreparedStatement preparedStatement = getConnection()
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection
                 // language=SQLite
                 .prepareStatement("SELECT UserName FROM UserData WHERE UserId = ?")) {
 
@@ -149,9 +150,8 @@ public class SQLiteDataSource implements DatabaseManager {
 
     @Override
     public String getProfilePictureLink(long userId) {
-        try (final PreparedStatement preparedStatement = getConnection()
-                // language=SQLite
-                .prepareStatement("SELECT UserProfilePicLink FROM UserData WHERE UserId = ?")) {
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT UserProfilePicLink FROM UserData WHERE UserId = ?")) {
 
             preparedStatement.setString(1, String.valueOf(userId));
 

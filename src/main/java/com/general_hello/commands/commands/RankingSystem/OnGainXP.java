@@ -50,6 +50,7 @@ public class OnGainXP extends ListenerAdapter {
                     long currentXP = currentTotalXP - RankingSystem.getTotalXPNeeded(level);
                     long xpLeft = RankingSystem.getXPToLevelUp(level);
                     int xpAmount = 15 + new Random().nextInt(11);
+                    System.out.println("Plus XP!");
                     RankingSystem.addXP(connection, guildID, userID, xpAmount, event.getAuthor().getName(), event.getAuthor().getDiscriminator());
                     Util.closeQuietly(connection);
                     if (xpAmount + currentXP >= xpLeft)

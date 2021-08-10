@@ -30,6 +30,12 @@ public class GetData {
 
     private void retrieveData(Long userId, GuildMessageReceivedEvent ctx) {
         String name = DatabaseManager.INSTANCE.getName(userId);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         String profilePicture = DatabaseManager.INSTANCE.getProfilePictureLink(userId);
 
         if (name != null) {
@@ -42,8 +48,13 @@ public class GetData {
 
     private void retrieveData(Long userId, CommandContext ctx) {
         String name = DatabaseManager.INSTANCE.getName(userId);
-        String profilePicture = DatabaseManager.INSTANCE.getProfilePictureLink(userId);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
+        String profilePicture = DatabaseManager.INSTANCE.getProfilePictureLink(userId);
         if (name != null) {
             User userById = ctx.getJDA().getUserById(userId);
             UserPhoneUser user = new UserPhoneUser(name, userById, profilePicture);
@@ -54,8 +65,13 @@ public class GetData {
 
     private void retrieveData(Long userId, SlashCommandEvent ctx) {
         String name = DatabaseManager.INSTANCE.getName(userId);
-        String profilePicture = DatabaseManager.INSTANCE.getProfilePictureLink(userId);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
+        String profilePicture = DatabaseManager.INSTANCE.getProfilePictureLink(userId);
         if (name != null) {
             User userById = ctx.getJDA().getUserById(userId);
             UserPhoneUser user = new UserPhoneUser(name, userById, profilePicture);

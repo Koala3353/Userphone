@@ -7,6 +7,7 @@ import com.general_hello.commands.commands.DefaultCommands.PingSlashCommand;
 import com.general_hello.commands.commands.RankingSystem.SlashCommandContext;
 import com.general_hello.commands.commands.RankingSystem.SlashRankCommand;
 import com.general_hello.commands.commands.RankingSystem.XPAlertCommand;
+import com.general_hello.commands.commands.RankingSystem.XPRoleRewardCommand;
 import com.general_hello.commands.commands.Register.RegisterSlashCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -57,6 +58,7 @@ public class SlashCommandHandler
         registerCommand(new XPAlertCommand());
         registerCommand(new RegisterSlashCommand());
         registerCommand(new HelpSlashCommand());
+        registerCommand(new XPRoleRewardCommand());
     }
 
     public static void updateCommands(Consumer<List<Command>> success, Consumer<Throwable> failure)

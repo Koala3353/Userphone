@@ -105,7 +105,7 @@ public class Emoji {
     public final static String NOTES = EmojiParser.parseToUnicode(":notes:");
 
     //custom emoji
-    public final static String DISCORD_BOT = "<a:discord_bot:862895574960701440>";
+    public final static String DISCORD_BOT = "<:discord_bot:862895574960701440>";
     public final static String NITRO = "<a:nitro:870863947241230396>";
     public final static String BABY_YODA = EmojiParser.parseToUnicode("<a:babyyoda:866105061665669140>");
     public final static String LIKE = EmojiParser.parseToUnicode("<a:like:866105060140646410>");
@@ -120,6 +120,7 @@ public class Emoji {
     public final static String LOADING = EmojiParser.parseToUnicode("<a:loading:870870083285712896>");
     public final static String ARROW_POINTING_RIGHT = EmojiParser.parseToUnicode("<a:arrow_1:862525611465113640>");
     public final static String ARROW_POINTING_LEFT = EmojiParser.parseToUnicode("<a:arrow_2:862525611443879966>");
+    public final static String USER_COIN = EmojiParser.parseToUnicode("<:userphonecoin:872996023570661397>");
 
     /* Server Emotes */
     public final static String GUILD_ONLINE = "🟢";

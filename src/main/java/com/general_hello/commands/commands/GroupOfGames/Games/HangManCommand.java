@@ -9,7 +9,9 @@ import net.dv8tion.jda.api.entities.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class HangManCommand implements ICommand {
 
@@ -65,5 +67,12 @@ public class HangManCommand implements ICommand {
         return "Play Hangman with anyone\n" +
                 "Usage: `" + prefix + "hm`\n" +
                 "Options: `start | [letter] | end | null`";
+    }
+
+    @Override
+    public List<String> getAliases() {
+        ArrayList<String> aliases = new ArrayList<>();
+        aliases.add("hangman");
+        return aliases;
     }
 }
