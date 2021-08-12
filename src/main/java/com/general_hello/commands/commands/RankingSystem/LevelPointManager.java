@@ -90,6 +90,7 @@ public class LevelPointManager{
                 return;
             }
             gM.put(member, OffsetDateTime.now());
+            accessMap.put(member.getGuild(), gM);
 
             Thread.sleep(100);
             GetData.setLevelPoints(member, GetData.getLevelPoints(member) + POINTS_PER_MESSAGE);
