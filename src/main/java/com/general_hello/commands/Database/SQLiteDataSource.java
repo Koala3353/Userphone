@@ -51,17 +51,10 @@ public class SQLiteDataSource implements DatabaseManager {
                             "UserName TEXT NOT NULL, " +
                             "UserProfilePicLink TEXT, " +
                             "PRIMARY KEY(UserId) ) WITHOUT ROWID",
-                    "CREATE TABLE IF NOT EXISTS levels (guildID BIGINT," +
-                            " userID BIGINT," +
-                            " totalXP BIGINT," +
-                            " name VARCHAR(256)," +
-                            " discriminator VARCHAR(4)," +
-                            " PRIMARY KEY(guildID, userID))",
-                    "CREATE TABLE IF NOT EXISTS xpAlerts (guildID BIGINT PRIMARY KEY, " +
-                            "mode VARCHAR(128))",
-                    "CREATE TABLE IF NOT EXISTS guildSettings (guildID BIGINT PRIMARY KEY, data JSON CHECK (JSON_VALID(data)))",
-
-                    "CREATE TABLE IF NOT EXISTS wildcardSettings (userID BIGINT PRIMARY KEY, card VARCHAR(128) NOT NULL)"
+                    "CREATE TABLE IF NOT EXISTS XPSystemUser (" +
+                            "userId INTEGER UNIQUE," +
+                            "xpPoints INTEGER DEFAULT 0" +
+                            ");"
             };
 
             Connection connection = getConnection();
@@ -146,6 +139,55 @@ public class SQLiteDataSource implements DatabaseManager {
         }
 
         return null;
+    }
+
+    @Override
+    public Integer getXpPoints(long userId) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection
+                     // language=SQLite
+                     .prepareStatement("SELECT xpPoints FROM XPSystemUser WHERE userId = ?")) {
+
+            preparedStatement.setString(1, String.valueOf(userId));
+
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("xpPoints");
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try (Connection connection = getConnection();
+             PreparedStatement insertStatement = connection
+                // language=SQLite
+                .prepareStatement("INSERT INTO XPSystemUser(userId) VALUES(?)")) {
+
+            insertStatement.setString(1, String.valueOf(userId));
+
+            insertStatement.execute();
+        }
+
+        return 0;
+    }
+
+    @Override
+    public void setXpPoints(long userId, long xpPoints) {
+        try (final PreparedStatement preparedStatement = getConnection()
+                // language=SQLite
+                .prepareStatement("UPDATE XPSystemUser SET xpPoints=? WHERE UserId=?"
+                )) {
+
+            int xpPoints1 = (int) xpPoints;
+            preparedStatement.setString(2, String.valueOf(userId));
+            preparedStatement.setInt(1, xpPoints1);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

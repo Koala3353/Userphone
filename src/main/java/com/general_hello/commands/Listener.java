@@ -2,9 +2,10 @@ package com.general_hello.commands;
 
 import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.Database.SQLiteDataSource;
-import com.general_hello.commands.commands.GroupOfGames.Games.TriviaCommand;
 import com.general_hello.commands.commands.GetData;
+import com.general_hello.commands.commands.GroupOfGames.Games.TriviaCommand;
 import com.general_hello.commands.commands.PrefixStoring;
+import com.general_hello.commands.commands.RankingSystem.LevelPointManager;
 import com.general_hello.commands.commands.Settings.SettingsData;
 import com.general_hello.commands.commands.Utils.MoneyData;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
@@ -22,6 +23,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +33,7 @@ public class Listener extends ListenerAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
     public static HashMap<String, Integer> count = new HashMap<>();
     public static JDA jda;
+    public static ArrayList<Long> blackListDbCheck = new ArrayList<>();
 
     public Listener(EventWaiter waiter) {
         manager = new CommandManager(waiter);
@@ -38,8 +41,8 @@ public class Listener extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        GetData getData = new GetData();
-        getData.checkIfContainsData(event.getAuthor(), event);
+        //TODO: DELETE THIS LATER
+        LevelPointManager.trackGuild(event.getGuild());
 
         EmbedBuilder em;
 
@@ -47,9 +50,14 @@ public class Listener extends ListenerAdapter {
             return;
         }
 
+        //add xp :D
+        LevelPointManager.feed(event.getMember());
+
         final long guildID = event.getGuild().getIdLong();
         String prefix = PrefixStoring.PREFIXES.computeIfAbsent(guildID, DatabaseManager.INSTANCE::getPrefix);
         String raw = event.getMessage().getContentRaw();
+
+        trivia(event);
 
         if (event.getMessage().getContentRaw().equals(prefix + "commands")) {
             if (event.getAuthor().getId().equals(Config.get("owner_id"))) {
@@ -86,6 +94,16 @@ public class Listener extends ListenerAdapter {
 
         if (raw.startsWith(prefix)) {
             try {
+                if (!blackListDbCheck.contains(event.getAuthor().getIdLong())) {
+                    GetData getData = new GetData();
+                    int i = getData.checkIfContainsData(event.getAuthor(), event);
+
+                    if (i == -1) {
+                        blackListDbCheck.add(event.getAuthor().getIdLong());
+                    }
+                }
+
+                System.out.println("YEET");
                 manager.handle(event, prefix);
             } catch (InterruptedException | IOException | SQLException e) {
                 e.printStackTrace();

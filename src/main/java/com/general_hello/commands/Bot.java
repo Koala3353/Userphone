@@ -6,7 +6,6 @@ import com.general_hello.commands.OtherEvents.*;
 import com.general_hello.commands.SlashCommands.OnSlashCommand;
 import com.general_hello.commands.SlashCommands.SlashCommandHandler;
 import com.general_hello.commands.commands.GroupOfGames.Entertainments.EntertainmentListener;
-import com.general_hello.commands.commands.RankingSystem.OnGainXP;
 import com.general_hello.commands.commands.Utils.MCColor;
 import com.general_hello.commands.commands.VoiceCall.AudioStorage;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
@@ -63,7 +62,6 @@ public class Bot {
                 .addEventListeners(new Listener(waiter), waiter)
                 .addEventListeners(new EntertainmentListener())
                 .addEventListeners(new OnSlashCommand())
-                .addEventListeners(new OnGainXP())
                 .addEventListeners(new OnButtonClick())
                 .addEventListeners(new OnPrivateMessage())
                 .addEventListeners(new OtherEvents())

@@ -1,6 +1,5 @@
-package com.general_hello.commands.commands.RankingSystem;
+package com.general_hello.commands.SlashCommands;
 
-import com.general_hello.commands.commands.Guild.GuildData;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -9,10 +8,10 @@ import net.dv8tion.jda.api.requests.restaction.interactions.ReplyAction;
 
 import javax.annotation.CheckReturnValue;
 import java.awt.*;
-import java.sql.SQLException;
 import java.util.Arrays;
 
-public class SlashCommandContext {
+public class SlashCommandContext
+{
 
     public static final String DENY = "\uD83D\uDEAB";
     public static final String ERROR = "❌";
@@ -21,48 +20,63 @@ public class SlashCommandContext {
 
     private final SlashCommandEvent event;
 
-    public SlashCommandContext(SlashCommandEvent event) {
+    public SlashCommandContext(SlashCommandEvent event)
+    {
         this.event = event;
-         this.language = "en_US";
+        if (event.getGuild() != null)
+        {
+                this.language = "en_US";
+        } else
+        {
+            language = "en_US";
+        }
+
+
     }
 
-    public GuildData getGuildData() throws SQLException {
-        return this.event.getGuild() == null ? null : GuildManager.getGuildData(this.event.getGuild());
-    }
 
-    public void sendSimpleEmbed(CharSequence content) {
+    public void sendSimpleEmbed(CharSequence content)
+    {
         EmbedBuilder builder = new EmbedBuilder()
                 .setColor(0x452350)
                 .setDescription(content);
         event.replyEmbeds(builder.build()).queue();
     }
 
-    public MessageEmbed getSimpleEmbed(CharSequence content) {
+    public MessageEmbed getSimpleEmbed(CharSequence content)
+    {
         return new EmbedBuilder()
                 .setColor(0x452350)
                 .setDescription(content)
                 .build();
     }
 
-    public ReplyAction reply(String content) {
+
+
+    public ReplyAction reply(String content)
+    {
         return event.reply(content).allowedMentions(Arrays.asList(Message.MentionType.CHANNEL, Message.MentionType.EMOTE, Message.MentionType.USER));
     }
 
-    public ReplyAction reply(Message message) {
+    public ReplyAction reply(Message message)
+    {
         return event.reply(message).allowedMentions(Arrays.asList(Message.MentionType.CHANNEL, Message.MentionType.EMOTE, Message.MentionType.USER));
     }
 
     @CheckReturnValue
-    public ReplyAction reply(MessageEmbed embed, MessageEmbed... embeds) {
+    public ReplyAction reply(MessageEmbed embed, MessageEmbed... embeds)
+    {
         return event.replyEmbeds(embed, embeds).allowedMentions(Arrays.asList(Message.MentionType.CHANNEL, Message.MentionType.EMOTE, Message.MentionType.USER));
     }
 
-    public ReplyAction replyFormat(String format, Object... args) {
+    public ReplyAction replyFormat(String format, Object... args)
+    {
         return event.replyFormat(format, args).allowedMentions(Arrays.asList(Message.MentionType.CHANNEL, Message.MentionType.EMOTE, Message.MentionType.USER));
     }
 
     @CheckReturnValue
-    public ReplyAction replyError(String content) {
+    public ReplyAction replyError(String content)
+    {
         EmbedBuilder builder = new EmbedBuilder()
                 .setColor(Color.RED)
                 .setDescription(ERROR + " " + content);
@@ -70,11 +84,5 @@ public class SlashCommandContext {
         return event.replyEmbeds(builder.build()).allowedMentions(Arrays.asList(Message.MentionType.CHANNEL, Message.MentionType.EMOTE, Message.MentionType.USER));
     }
 
-    public ReplyAction replyErrorFormat(String format, Object... args) {
-        EmbedBuilder builder = new EmbedBuilder()
-                .setColor(Color.RED)
-                .setDescription(ERROR + " " + String.format(format, args));
 
-        return event.replyEmbeds(builder.build()).allowedMentions(Arrays.asList(Message.MentionType.CHANNEL, Message.MentionType.EMOTE, Message.MentionType.USER));
-    }
 }

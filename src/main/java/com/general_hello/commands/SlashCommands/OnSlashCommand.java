@@ -1,6 +1,5 @@
 package com.general_hello.commands.SlashCommands;
 
-import com.general_hello.commands.Bot;
 import com.general_hello.commands.Config;
 import com.general_hello.commands.Listener;
 import com.general_hello.commands.commands.ICommand;
@@ -59,7 +58,7 @@ public class OnSlashCommand extends ListenerAdapter
                 ).queue();
             } else {
 
-                ICommand command = Listener.manager.getCommand(Bot.longToCommandName.get(commandName.getAsLong()));
+                ICommand command = Listener.manager.getCommand(commandName.getAsString());
 
                 if (command == null) {
                     event.reply("Nothing found for " + commandName).setEphemeral(true).queue();

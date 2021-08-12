@@ -4,11 +4,9 @@ import com.general_hello.commands.Bot;
 import com.general_hello.commands.Config;
 import com.general_hello.commands.commands.DefaultCommands.HelpSlashCommand;
 import com.general_hello.commands.commands.DefaultCommands.PingSlashCommand;
-import com.general_hello.commands.commands.RankingSystem.SlashCommandContext;
-import com.general_hello.commands.commands.RankingSystem.SlashRankCommand;
-import com.general_hello.commands.commands.RankingSystem.XPAlertCommand;
-import com.general_hello.commands.commands.RankingSystem.XPRoleRewardCommand;
+import com.general_hello.commands.commands.RankingSystem.ViewRankSlashCommand;
 import com.general_hello.commands.commands.Register.RegisterSlashCommand;
+import jdk.internal.jline.internal.Nullable;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
@@ -19,7 +17,6 @@ import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,12 +50,10 @@ public class SlashCommandHandler
 
     public static void registerAllCommands()
     {
-        registerCommand(new SlashRankCommand());
+        registerCommand(new ViewRankSlashCommand());
         registerCommand(new PingSlashCommand());
-        registerCommand(new XPAlertCommand());
         registerCommand(new RegisterSlashCommand());
         registerCommand(new HelpSlashCommand());
-        registerCommand(new XPRoleRewardCommand());
     }
 
     public static void updateCommands(Consumer<List<Command>> success, Consumer<Throwable> failure)
@@ -70,7 +65,7 @@ public class SlashCommandHandler
             List<SlashCommand> slashCommands = entrySet.getValue();
             if (guildID == null || slashCommands == null) continue;
             if (slashCommands.isEmpty()) continue;
-            Guild guild = Bot.jda.getShardManager().getGuildById(guildID);
+            Guild guild = Bot.jda.getGuildById(guildID);
             if (guild == null) continue;
             CommandListUpdateAction guildCommandUpdateAction = guild.updateCommands();
             for (SlashCommand cmd : slashCommands)

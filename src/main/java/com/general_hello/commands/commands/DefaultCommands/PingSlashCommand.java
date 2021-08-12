@@ -1,7 +1,7 @@
 package com.general_hello.commands.commands.DefaultCommands;
 
 import com.general_hello.commands.SlashCommands.SlashCommand;
-import com.general_hello.commands.commands.RankingSystem.SlashCommandContext;
+import com.general_hello.commands.SlashCommands.SlashCommandContext;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;

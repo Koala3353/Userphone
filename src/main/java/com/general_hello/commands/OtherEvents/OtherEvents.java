@@ -80,8 +80,8 @@ public class OtherEvents extends ListenerAdapter {
                 (OffsetDateTime.now().getSecond() - timeDisconnected.getSecond()) + " second(s) and " +
                 (timeDisconnected.getNano() /1000000) + " milliseconds due to connectivity issues!\n" +
                 "Response number: " + event.getResponseNumber()).setTimestamp(OffsetDateTime.now()).setFooter("The bot disconnected " + disconnectCount + " times already since the last restart!");
-        guildChannelById.sendMessage(em.build()).queue();
+        guildChannelById.sendMessageEmbeds(em.build()).queue();
         User owner_id = event.getJDA().getUserById(Config.get("owner_id"));
-        owner_id.openPrivateChannel().complete().sendMessage(em.build()).queue();
+        owner_id.openPrivateChannel().complete().sendMessageEmbeds(em.build()).queue();
     }
 }

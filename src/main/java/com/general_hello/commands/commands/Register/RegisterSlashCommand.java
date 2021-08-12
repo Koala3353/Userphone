@@ -1,9 +1,9 @@
 package com.general_hello.commands.commands.Register;
 
 import com.general_hello.commands.SlashCommands.SlashCommand;
+import com.general_hello.commands.SlashCommands.SlashCommandContext;
 import com.general_hello.commands.commands.GetData;
 import com.general_hello.commands.commands.Info.InfoUserCommand;
-import com.general_hello.commands.commands.RankingSystem.SlashCommandContext;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;

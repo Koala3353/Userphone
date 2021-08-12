@@ -14,7 +14,7 @@ import com.general_hello.commands.commands.ICommand;
 import com.general_hello.commands.commands.Info.AboutCommand;
 import com.general_hello.commands.commands.Info.InfoServerCommand;
 import com.general_hello.commands.commands.Info.InfoUserCommand;
-import com.general_hello.commands.commands.RankingSystem.Rank;
+import com.general_hello.commands.commands.RankingSystem.ViewRank;
 import com.general_hello.commands.commands.Register.RegisterCommand;
 import com.general_hello.commands.commands.Settings.SettingsCommand;
 import com.general_hello.commands.commands.Uno.ChallengeCommand;
@@ -67,9 +67,6 @@ public class CommandManager {
         addCommand(new onCallCommand());
         addCommand(new onLeaveCommand());
 
-        //ranks
-        addCommand(new Rank());
-
         //update slash command
         addCommand(new UpdateSlashCommand());
 
@@ -94,6 +91,8 @@ public class CommandManager {
         addCommand(new SplitCommand());
         addCommand(new StandCommand());
 
+        //rank
+        addCommand(new ViewRank());
     }
 
     private void addCommand(ICommand cmd) {
