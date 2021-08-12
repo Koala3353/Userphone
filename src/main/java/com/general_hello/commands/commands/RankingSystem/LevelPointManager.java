@@ -52,7 +52,8 @@ public class LevelPointManager{
             if(!accessMap.containsKey(member.getGuild())){
                 return;
             }
-            accessMap.get(member.getGuild()).put(member, OffsetDateTime.now());
+            OffsetDateTime min = OffsetDateTime.MIN;
+            accessMap.get(member.getGuild()).put(member, min);
         }
         catch(Exception ignore){
 
