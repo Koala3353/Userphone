@@ -78,12 +78,13 @@ public class LevelPointManager{
             if(!accessMap.containsKey(g)){
                 return;
             }
+
             ConcurrentHashMap<Member, OffsetDateTime> gM = accessMap.get(g);
             if(!gM.containsKey(member)){
                 trackMember(member);
             }
             OffsetDateTime last = gM.get(member);
-            if(OffsetDateTime.now().isAfter(last.plusSeconds(DELAY))){
+            if(OffsetDateTime.now().isBefore(last.plusSeconds(DELAY))){
                 System.out.println("Did not add xp to " + member.getEffectiveName() + " due to delay!");
                 return;
             }

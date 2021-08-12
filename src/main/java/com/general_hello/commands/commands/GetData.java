@@ -34,6 +34,10 @@ public class GetData {
     }
 
     public static long getLevelPoints(Member member) throws SQLException {
+        try {
+            Thread.sleep(500);
+        } catch (Exception ignored) {}
+
         return DatabaseManager.INSTANCE.getXpPoints(member.getIdLong());
     }
 
