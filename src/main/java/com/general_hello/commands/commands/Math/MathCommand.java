@@ -67,13 +67,13 @@ public class MathCommand implements ICommand {
 
     @Override
     public String getName() {
-        return "math";
+        return "calculator";
     }
 
     @Override
     public String getHelp(String prefix) {
         return "This command is for calculating math operations.\n"
-                + "Command Usage: `" + prefix + "math`\n"
+                + "Command Usage: `" + prefix + "calculator`\n"
                 + "Parameter: `[Math Operation]`\n"
                 + "Supported values: `pi, π, e, φ`\n";
     }

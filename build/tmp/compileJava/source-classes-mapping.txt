@@ -206,3 +206,13 @@ com/general_hello/commands/SlashCommands/SlashCommandHandler.java
  com.general_hello.commands.SlashCommands.SlashCommandHandler
 com/general_hello/commands/commands/RankingSystem/ViewRankSlashCommand.java
  com.general_hello.commands.commands.RankingSystem.ViewRankSlashCommand
+com/general_hello/commands/commands/Music/AudioManager.java
+ com.general_hello.commands.commands.Music.AudioManager
+com/general_hello/commands/commands/Music/GuildAudioPlayer.java
+ com.general_hello.commands.commands.Music.GuildAudioPlayer
+com/general_hello/commands/commands/Music/AudioScheduler.java
+ com.general_hello.commands.commands.Music.AudioScheduler
+com/general_hello/commands/commands/Music/CachedMessage.java
+ com.general_hello.commands.commands.Music.CachedMessage
+com/general_hello/commands/commands/Music/AudioPlayerSendHandler.java
+ com.general_hello.commands.commands.Music.AudioPlayerSendHandler

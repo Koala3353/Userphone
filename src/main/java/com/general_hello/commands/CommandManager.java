@@ -14,6 +14,7 @@ import com.general_hello.commands.commands.ICommand;
 import com.general_hello.commands.commands.Info.AboutCommand;
 import com.general_hello.commands.commands.Info.InfoServerCommand;
 import com.general_hello.commands.commands.Info.InfoUserCommand;
+import com.general_hello.commands.commands.Math.MathCommand;
 import com.general_hello.commands.commands.RankingSystem.ViewRank;
 import com.general_hello.commands.commands.Register.RegisterCommand;
 import com.general_hello.commands.commands.Settings.SettingsCommand;
@@ -52,6 +53,7 @@ public class CommandManager {
         addCommand(new InfoServerCommand());
         addCommand(new RegisterCommand());
         addCommand(new SetPrefixCommand());
+        addCommand(new MathCommand());
 
         //settings
         addCommand(new SettingsCommand());
