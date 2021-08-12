@@ -2,6 +2,7 @@ package com.general_hello.commands;
 
 import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.Database.SQLiteDataSource;
+import com.general_hello.commands.commands.GetData;
 import com.general_hello.commands.commands.GroupOfGames.Games.TriviaCommand;
 import com.general_hello.commands.commands.PrefixStoring;
 import com.general_hello.commands.commands.RankingSystem.LevelPointManager;
@@ -33,6 +34,7 @@ public class Listener extends ListenerAdapter {
     public static HashMap<String, Integer> count = new HashMap<>();
     public static JDA jda;
     public static ArrayList<Long> blackListDbCheck = new ArrayList<>();
+    private static boolean oof = true;
 
     public Listener(EventWaiter waiter) {
         manager = new CommandManager(waiter);
@@ -40,10 +42,13 @@ public class Listener extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        //TODO: DELETE THIS LATER
-        LevelPointManager.trackGuild(event.getGuild());
-
         EmbedBuilder em;
+
+        try {
+            GetData.getGuildSettings(event.getMember());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
         if (event.getAuthor().isBot() || event.isWebhookMessage()) {
             return;

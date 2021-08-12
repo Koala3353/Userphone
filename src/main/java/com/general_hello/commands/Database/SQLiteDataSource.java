@@ -54,6 +54,10 @@ public class SQLiteDataSource implements DatabaseManager {
                     "CREATE TABLE IF NOT EXISTS XPSystemUser (" +
                             "userId INTEGER UNIQUE," +
                             "xpPoints INTEGER DEFAULT 0" +
+                            ");",
+                    "CREATE TABLE IF NOT EXISTS GuildSettings (" +
+                            "XPSystem INTEGER DEFAULT 0," +
+                            "GuildId INTEGER" +
                             ");"
             };
 
@@ -183,6 +187,54 @@ public class SQLiteDataSource implements DatabaseManager {
             int xpPoints1 = (int) xpPoints;
             preparedStatement.setString(2, String.valueOf(userId));
             preparedStatement.setInt(1, xpPoints1);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Integer getGuildSettings(long guildId) throws SQLException {
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection
+                     // language=SQLite
+                     .prepareStatement("SELECT XPSystem FROM GuildSettings WHERE GuildId = ?")) {
+
+            preparedStatement.setString(1, String.valueOf(guildId));
+
+            try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("XPSystem");
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try (Connection connection = getConnection();
+             PreparedStatement insertStatement = connection
+                     // language=SQLite
+                     .prepareStatement("INSERT INTO GuildSettings(GuildId) VALUES(?)")) {
+
+            insertStatement.setString(1, String.valueOf(guildId));
+
+            insertStatement.execute();
+        }
+
+        return 0;
+    }
+
+    @Override
+    public void setGuildSettings(long guildId, long enabledOrDisabled) {
+        try (final PreparedStatement preparedStatement = getConnection()
+                // language=SQLite
+                .prepareStatement("UPDATE GuildSettings SET XPSystem=? WHERE GuildId=?"
+                )) {
+
+            preparedStatement.setString(2, String.valueOf(guildId));
+            preparedStatement.setString(1, String.valueOf(enabledOrDisabled));
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

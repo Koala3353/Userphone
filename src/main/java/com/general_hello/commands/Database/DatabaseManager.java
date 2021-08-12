@@ -15,4 +15,7 @@ public interface DatabaseManager {
     void newInfo(long userId, String userName, String profilePictureLink);
     void setProfilePictureLink(long userId, String link);
     void setName(long userId, String name);
+
+    Integer getGuildSettings(long guildId) throws SQLException;
+    void setGuildSettings(long guildId, long enabledOrDisabled);
 }

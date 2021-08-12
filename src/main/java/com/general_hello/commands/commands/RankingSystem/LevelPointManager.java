@@ -6,18 +6,18 @@ import net.dv8tion.jda.api.entities.Member;
 
 import java.sql.SQLException;
 import java.time.OffsetDateTime;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.HashMap;
 import java.util.function.Function;
 
 public class LevelPointManager{
 
     private static final int POINTS_PER_MESSAGE = 5;
     //in seconds
-    private static final int DELAY = 30;
+    private static final int DELAY = 1;
     private static final Function<Long, Long> CALCULATE_LEVEL = ep -> (long) (1 / (float) (8) * Math.sqrt(ep));
     private static final Function<Long, Long> CALCULATE_EP = level -> (long) 64 * (long) Math.pow(level, 2);
 
-    private static final ConcurrentHashMap<Guild, ConcurrentHashMap<Member, OffsetDateTime>> accessMap = new ConcurrentHashMap<>();
+    public static final HashMap<Guild, HashMap<Member, OffsetDateTime>> accessMap = new HashMap<>();
 
     public static long calculateLevel(Member member) throws SQLException {
         return calculateLevel(GetData.getLevelPoints(member));
@@ -40,7 +40,7 @@ public class LevelPointManager{
     }
 
     public static void trackGuild(Guild guild){
-        accessMap.put(guild, new ConcurrentHashMap<>());
+        accessMap.put(guild, new HashMap<>());
     }
 
     public static void unTrackGuild(Guild guild){
@@ -53,6 +53,7 @@ public class LevelPointManager{
                 return;
             }
             OffsetDateTime min = OffsetDateTime.MIN;
+
             accessMap.get(member.getGuild()).put(member, min);
         }
         catch(Exception ignore){
@@ -80,17 +81,24 @@ public class LevelPointManager{
                 return;
             }
 
-            ConcurrentHashMap<Member, OffsetDateTime> gM = accessMap.get(g);
+            HashMap<Member, OffsetDateTime> gM = accessMap.get(g);
             if(!gM.containsKey(member)){
+                System.out.println("Added member :)");
                 trackMember(member);
             }
             OffsetDateTime last = gM.get(member);
-            if(OffsetDateTime.now().isBefore(last.plusSeconds(DELAY))){
+            if(OffsetDateTime.now().isBefore(last.plusMinutes(DELAY))){
                 System.out.println("Did not add xp to " + member.getEffectiveName() + " due to delay!");
                 return;
             }
+
+            System.out.println(g.getName());
+
+            System.out.println(last.plusMinutes(DELAY));
             gM.put(member, OffsetDateTime.now());
-            accessMap.put(member.getGuild(), gM);
+            System.out.println(gM.get(member));
+            accessMap.remove(g);
+            accessMap.put(g, gM);
 
             Thread.sleep(100);
             GetData.setLevelPoints(member, GetData.getLevelPoints(member) + POINTS_PER_MESSAGE);
