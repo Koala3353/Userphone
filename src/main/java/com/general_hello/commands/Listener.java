@@ -2,7 +2,6 @@ package com.general_hello.commands;
 
 import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.Database.SQLiteDataSource;
-import com.general_hello.commands.commands.GetData;
 import com.general_hello.commands.commands.GroupOfGames.Games.TriviaCommand;
 import com.general_hello.commands.commands.PrefixStoring;
 import com.general_hello.commands.commands.RankingSystem.LevelPointManager;
@@ -94,16 +93,6 @@ public class Listener extends ListenerAdapter {
 
         if (raw.startsWith(prefix)) {
             try {
-                if (!blackListDbCheck.contains(event.getAuthor().getIdLong())) {
-                    GetData getData = new GetData();
-                    int i = getData.checkIfContainsData(event.getAuthor(), event);
-
-                    if (i == -1) {
-                        blackListDbCheck.add(event.getAuthor().getIdLong());
-                    }
-                }
-
-                System.out.println("YEET");
                 manager.handle(event, prefix);
             } catch (InterruptedException | IOException | SQLException e) {
                 e.printStackTrace();

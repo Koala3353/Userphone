@@ -3,7 +3,12 @@ package com.general_hello.commands.OtherEvents;
 import club.minnced.discord.webhook.WebhookClient;
 import club.minnced.discord.webhook.WebhookClientBuilder;
 import club.minnced.discord.webhook.send.WebhookMessageBuilder;
+import com.general_hello.commands.Database.DatabaseManager;
+import com.general_hello.commands.Listener;
 import com.general_hello.commands.commands.Call.QueueDatabase;
+import com.general_hello.commands.commands.Emoji.Emoji;
+import com.general_hello.commands.commands.GetData;
+import com.general_hello.commands.commands.PrefixStoring;
 import com.general_hello.commands.commands.Register.Data;
 import com.general_hello.commands.commands.User.UserPhoneUser;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -22,6 +27,22 @@ public class onCallMessageReceived extends ListenerAdapter {
     }
 
     public static void callReplyAndStuff(GuildMessageReceivedEvent event) {
+        final long guildID = event.getGuild().getIdLong();
+        String prefix = PrefixStoring.PREFIXES.computeIfAbsent(guildID, DatabaseManager.INSTANCE::getPrefix);
+
+        if (!Listener.blackListDbCheck.contains(event.getAuthor().getIdLong())) {
+            GetData getData = new GetData();
+            int i = getData.checkIfContainsData(event.getAuthor(), event);
+
+            if (i == -1) {
+                Listener.blackListDbCheck.add(event.getAuthor().getIdLong());
+                event.getChannel().sendMessage(event.getMember().getAsMention() + " " + Emoji.ERROR + " Kindly register first by doing `" + prefix + "register`" + " before joining the call!").queue();
+            }
+        } else {
+            return;
+        }
+
+        System.out.println("YEET");
         Integer callID = QueueDatabase.retrieveCallId.get(event.getChannel());
         ArrayList<TextChannel> callChannels = QueueDatabase.activeCall.get(callID);
         TextChannel channel1 = event.getChannel();

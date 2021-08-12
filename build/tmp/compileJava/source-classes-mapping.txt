@@ -25,8 +25,8 @@ com/general_hello/commands/commands/Emoji/Emoji.java
  com.general_hello.commands.commands.Emoji.Emoji$Unicode
 com/general_hello/commands/commands/GroupOfGames/Blackjack/SplitCommand.java
  com.general_hello.commands.commands.GroupOfGames.Blackjack.SplitCommand
-com/general_hello/commands/commands/GroupOfGames/Games/HangManCommand.java
- com.general_hello.commands.commands.GroupOfGames.Games.HangManCommand
+com/general_hello/commands/commands/DefaultCommands/UpdateSlashCommand.java
+ com.general_hello.commands.commands.DefaultCommands.UpdateSlashCommand
 com/general_hello/commands/commands/Utils/Util.java
  com.general_hello.commands.commands.Utils.Util
 com/general_hello/commands/commands/Uno/UnoCard.java
@@ -47,8 +47,8 @@ com/general_hello/commands/Database/FilePath.java
  com.general_hello.commands.Database.FilePath
 com/general_hello/commands/commands/GroupOfGames/MiniGames/ConnectFourRequest.java
  com.general_hello.commands.commands.GroupOfGames.MiniGames.ConnectFourRequest
-com/general_hello/commands/OtherEvents/onCallMessageReceived.java
- com.general_hello.commands.OtherEvents.onCallMessageReceived
+com/general_hello/commands/commands/RankingSystem/ViewRank.java
+ com.general_hello.commands.commands.RankingSystem.ViewRank
 com/general_hello/commands/commands/Uno/UnoHand.java
  com.general_hello.commands.commands.Uno.UnoHand
 com/general_hello/commands/commands/VoiceCall/onCallCommand.java
@@ -70,8 +70,8 @@ com/general_hello/commands/commands/VoiceCall/AudioHandler1.java
  com.general_hello.commands.commands.VoiceCall.AudioHandler1
 com/general_hello/commands/commands/Others/BadDesign.java
  com.general_hello.commands.commands.Others.BadDesign
-com/general_hello/commands/commands/DefaultCommands/HelpSlashCommand.java
- com.general_hello.commands.commands.DefaultCommands.HelpSlashCommand
+com/general_hello/commands/commands/RankingSystem/LevelPointManager.java
+ com.general_hello.commands.commands.RankingSystem.LevelPointManager
 com/general_hello/commands/commands/DefaultCommands/HelpCommand.java
  com.general_hello.commands.commands.DefaultCommands.HelpCommand
 com/general_hello/commands/commands/GroupOfGames/Blackjack/Card.java
@@ -84,8 +84,8 @@ com/general_hello/commands/commands/Utils/EmbedUtil.java
  com.general_hello.commands.commands.Utils.EmbedUtil
 com/general_hello/commands/commands/Uno/PlayCardCommand.java
  com.general_hello.commands.commands.Uno.PlayCardCommand
-com/general_hello/commands/commands/GroupOfGames/Games/HangMan.java
- com.general_hello.commands.commands.GroupOfGames.Games.HangMan
+com/general_hello/commands/SlashCommands/SlashCommandHandler.java
+ com.general_hello.commands.SlashCommands.SlashCommandHandler
 com/general_hello/commands/commands/DefaultCommands/PingSlashCommand.java
  com.general_hello.commands.commands.DefaultCommands.PingSlashCommand
 com/general_hello/commands/commands/Uno/UnoCommand.java
@@ -172,37 +172,37 @@ com/general_hello/commands/commands/DefaultCommands/UptimeCOmmand.java
  com.general_hello.commands.commands.DefaultCommands.UptimeCOmmand
 com/general_hello/commands/commands/Register/RegisterSlashCommand.java
  com.general_hello.commands.commands.Register.RegisterSlashCommand
-com/general_hello/commands/commands/GroupOfGames/Games/TriviaCommand.java
- com.general_hello.commands.commands.GroupOfGames.Games.TriviaCommand
-com/general_hello/commands/OtherEvents/OtherEvents.java
- com.general_hello.commands.OtherEvents.OtherEvents
-com/general_hello/commands/commands/GroupOfGames/Games/GuessNumberCommand.java
- com.general_hello.commands.commands.GroupOfGames.Games.GuessNumberCommand
-com/general_hello/commands/commands/Math/MathCommand.java
- com.general_hello.commands.commands.Math.MathCommand
-com/general_hello/commands/CommandManager.java
- com.general_hello.commands.CommandManager
-com/general_hello/commands/commands/Utils/ErrorUtils.java
- com.general_hello.commands.commands.Utils.ErrorUtils
 com/general_hello/commands/commands/RankingSystem/LevelPointCard.java
  com.general_hello.commands.commands.RankingSystem.LevelPointCard
  com.general_hello.commands.commands.RankingSystem.LevelPointCard$ColorSet
  com.general_hello.commands.commands.RankingSystem.LevelPointCard$Position
-com/general_hello/commands/commands/RankingSystem/LevelPointManager.java
- com.general_hello.commands.commands.RankingSystem.LevelPointManager
-com/general_hello/commands/Listener.java
- com.general_hello.commands.Listener
-com/general_hello/commands/commands/DefaultCommands/UpdateSlashCommand.java
- com.general_hello.commands.commands.DefaultCommands.UpdateSlashCommand
-com/general_hello/commands/commands/RankingSystem/ViewRank.java
- com.general_hello.commands.commands.RankingSystem.ViewRank
-com/general_hello/commands/SlashCommands/OnSlashCommand.java
- com.general_hello.commands.SlashCommands.OnSlashCommand
-com/general_hello/commands/OtherEvents/OnReadyEvent.java
- com.general_hello.commands.OtherEvents.OnReadyEvent
-com/general_hello/commands/SlashCommands/SlashCommandHandler.java
- com.general_hello.commands.SlashCommands.SlashCommandHandler
-com/general_hello/commands/Bot.java
- com.general_hello.commands.Bot
+com/general_hello/commands/commands/Utils/ErrorUtils.java
+ com.general_hello.commands.commands.Utils.ErrorUtils
 com/general_hello/commands/commands/RankingSystem/ViewRankSlashCommand.java
  com.general_hello.commands.commands.RankingSystem.ViewRankSlashCommand
+com/general_hello/commands/OtherEvents/OnReadyEvent.java
+ com.general_hello.commands.OtherEvents.OnReadyEvent
+com/general_hello/commands/commands/GroupOfGames/Games/GuessNumberCommand.java
+ com.general_hello.commands.commands.GroupOfGames.Games.GuessNumberCommand
+com/general_hello/commands/CommandManager.java
+ com.general_hello.commands.CommandManager
+com/general_hello/commands/commands/GroupOfGames/Games/HangMan.java
+ com.general_hello.commands.commands.GroupOfGames.Games.HangMan
+com/general_hello/commands/Listener.java
+ com.general_hello.commands.Listener
+com/general_hello/commands/OtherEvents/onCallMessageReceived.java
+ com.general_hello.commands.OtherEvents.onCallMessageReceived
+com/general_hello/commands/SlashCommands/OnSlashCommand.java
+ com.general_hello.commands.SlashCommands.OnSlashCommand
+com/general_hello/commands/commands/GroupOfGames/Games/HangManCommand.java
+ com.general_hello.commands.commands.GroupOfGames.Games.HangManCommand
+com/general_hello/commands/commands/Math/MathCommand.java
+ com.general_hello.commands.commands.Math.MathCommand
+com/general_hello/commands/commands/DefaultCommands/HelpSlashCommand.java
+ com.general_hello.commands.commands.DefaultCommands.HelpSlashCommand
+com/general_hello/commands/Bot.java
+ com.general_hello.commands.Bot
+com/general_hello/commands/OtherEvents/OtherEvents.java
+ com.general_hello.commands.OtherEvents.OtherEvents
+com/general_hello/commands/commands/GroupOfGames/Games/TriviaCommand.java
+ com.general_hello.commands.commands.GroupOfGames.Games.TriviaCommand
