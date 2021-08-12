@@ -11,7 +11,7 @@ import java.util.function.Function;
 
 public class LevelPointManager{
 
-    private static final int POINTS_PER_MESSAGE = 1;
+    private static final int POINTS_PER_MESSAGE = 5;
     //in seconds
     private static final int DELAY = 30;
     private static final Function<Long, Long> CALCULATE_LEVEL = ep -> (long) (1 / (float) (8) * Math.sqrt(ep));
