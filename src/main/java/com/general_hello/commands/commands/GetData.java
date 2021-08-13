@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class GetData {
-    private static ArrayList<Guild> blackListedGuild = new ArrayList<>();
+    public static ArrayList<Guild> blackListedGuild = new ArrayList<>();
     //get data from the db
 
     public int checkIfContainsData(User user, GuildMessageReceivedEvent ctx) {
@@ -58,6 +58,7 @@ public class GetData {
     }
 
     public static void getGuildSettings(Member member) throws SQLException {
+        if (member == null) return;
         if (blackListedGuild.contains(member.getGuild())) return;
 
         try {
@@ -78,6 +79,7 @@ public class GetData {
     }
 
     public static void setGuildSettings(Member user, long onOrOff) {
+        blackListedGuild.add(user.getGuild());
         DatabaseManager.INSTANCE.setGuildSettings(user.getGuild().getIdLong(), onOrOff);
     }
 

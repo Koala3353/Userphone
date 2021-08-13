@@ -1,6 +1,7 @@
 package com.general_hello.commands.commands.Register;
 
 import com.general_hello.commands.commands.CommandContext;
+import com.general_hello.commands.commands.GetData;
 import com.general_hello.commands.commands.ICommand;
 import com.general_hello.commands.commands.Info.InfoUserCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -11,6 +12,9 @@ import java.io.IOException;
 public class RegisterCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) throws InterruptedException, IOException {
+        GetData getData = new GetData();
+        getData.checkIfContainsData(ctx.getAuthor(), ctx);
+
         if (Data.userUserPhoneUserHashMap.containsKey(ctx.getAuthor())) {
             ctx.getMessage().reply("You are already registered!").queue();
             return;

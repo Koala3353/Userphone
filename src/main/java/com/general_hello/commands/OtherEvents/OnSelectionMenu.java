@@ -1,5 +1,6 @@
 package com.general_hello.commands.OtherEvents;
 
+import com.general_hello.commands.commands.GetData;
 import com.general_hello.commands.commands.Info.InfoUserCommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Emoji;
@@ -8,12 +9,32 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.Button;
 import org.jetbrains.annotations.NotNull;
 
+import java.awt.*;
+
 public class OnSelectionMenu extends ListenerAdapter {
     @Override
     public void onSelectionMenu(@NotNull SelectionMenuEvent event) {
-        event.deferEdit().queue();
-
         switch (event.getSelectedOptions().get(0).getValue()) {
+            case "enableXP":
+                String isEnabled = "Enabled";
+                boolean isEnabledBoolean = true;
+                boolean isDisabledBoolean = false;
+                if (GetData.blackListedGuild.contains(event.getGuild())) {
+                    isEnabled = "Disabled";
+                    isEnabledBoolean = false;
+                    isDisabledBoolean = true;
+                }
+
+                EmbedBuilder embedBuilder = new EmbedBuilder().setTitle(event.getGuild().getName() + "'s settings for XP System").setFooter("Your settings ↔ XP System Setting Page").setColor(Color.ORANGE);
+                embedBuilder.setDescription("XP system - Grants users experience points (XP) and levels based on their activity in a server. Its main purpose is to reward member activity in the community.\n\n" +
+                        "Current setting: **" + isEnabled + "**");
+
+                event.replyEmbeds(embedBuilder.build()).setEphemeral(true)
+                        .addActionRow(
+                                Button.primary(event.getUser().getId() + ":enableXPSystem", "Enable").withDisabled(isEnabledBoolean),
+                                Button.primary(event.getUser().getId() + ":disableXPSystem", "Disable").withDisabled(isDisabledBoolean)
+                        ).queue();
+                return;
             case "reject":
                 event.getUser().openPrivateChannel().complete().sendMessage("Sorry, you are too young to use this bot! (You shouldn't be on Discord!)").queue();
                 event.getMessage().delete().queue();
@@ -21,7 +42,7 @@ public class OnSelectionMenu extends ListenerAdapter {
             case "noice":
             case "oh":
             case "old":
-                EmbedBuilder embedBuilder = new EmbedBuilder().setTitle("Rules").setColor(InfoUserCommand.randomColor());
+                embedBuilder = new EmbedBuilder().setTitle("Rules").setColor(InfoUserCommand.randomColor());
                 String arrow = "<a:arrow_1:862525611465113640>";
                 String message = arrow + " Be respectful to everyone. Do not be disruptive, rude, vulgar or otherwise act inappropriately towards other members in the call.\n" +
                         "\n" +
@@ -45,8 +66,11 @@ public class OnSelectionMenu extends ListenerAdapter {
                 event.getMessage().delete().queue();
                 return;
             case "n/a":
+                return;
             default:
-                event.deferEdit().queue();
+                event.deferReply().queue();
         }
+
+        event.deferEdit().queue();
     }
 }

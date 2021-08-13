@@ -2,6 +2,7 @@ package com.general_hello.commands;
 
 import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.Database.SQLiteDataSource;
+import com.general_hello.commands.commands.Emoji.Emoji;
 import com.general_hello.commands.commands.GetData;
 import com.general_hello.commands.commands.GroupOfGames.Games.TriviaCommand;
 import com.general_hello.commands.commands.PrefixStoring;
@@ -123,8 +124,8 @@ public class Listener extends ListenerAdapter {
         LOGGER.info("The bot " + event.getAuthor().getAsMention() + " is shutting down.\n" +
                 "Thank you for using General_Hello's Code!!!");
 
-        event.getChannel().sendMessage("Shutting down...").queue();
-        event.getChannel().sendMessage("Bot successfully shutdown!").queue();
+        event.getChannel().sendMessage("Shutting down... " + Emoji.LOADING).queue();
+        event.getChannel().sendMessage("Bot successfully shutdown! " + Emoji.USER).queue();
         EmbedBuilder em = new EmbedBuilder().setTitle("Shutdown details!").setColor(Color.red).setFooter("Shutdown on ").setTimestamp(LocalDateTime.now());
         em.addField("Shutdown made by ", event.getAuthor().getName(), false);
         em.addField("Date", LocalDateTime.now().getMonthValue() + "/" + LocalDateTime.now().getDayOfMonth() + "/" + LocalDateTime.now().getYear(), false);

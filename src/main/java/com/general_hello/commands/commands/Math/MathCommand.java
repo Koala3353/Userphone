@@ -60,7 +60,7 @@ public class MathCommand implements ICommand {
                 e.getChannel().sendMessage(Emoji.ERROR + " Do not divide a value by 0.").queue();
             } catch (RuntimeException rte) {
                 e.getChannel().sendMessage(Emoji.ERROR + " Please enter a valid math operation.").queue();
-                LOGGER.info(this.getClass().getName(), "Unvalid operation \"" + input + "\"");
+                LOGGER.info(this.getClass().getName(), "Invalid operation \"" + input + "\"");
             }
         }
     }
