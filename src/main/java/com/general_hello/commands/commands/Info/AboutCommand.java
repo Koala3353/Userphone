@@ -57,14 +57,21 @@ public class AboutCommand implements ICommand {
         for (String feature : features)
             descr.append("\n").append(REPLACEMENT_ICON).append(" ").append(feature);
         descr.append(" ```");
+
+        descr.append("\n");
+        descr.append("Total memory: ").append(Runtime.getRuntime().totalMemory()).append("\n");
+        descr.append("Free memory: ").append(Runtime.getRuntime().freeMemory()).append("\n");
+        descr.append("Max memory: ").append(Runtime.getRuntime().maxMemory()).append("\n");
+        descr.append("Memory Usage: ").append(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory());
+
         builder.setDescription(descr);
         event.getJDA().getShardInfo();
         builder.addField("Stats", (event.getJDA().getGuilds().size() + " Servers\nShard " + (event.getJDA().getShardInfo().getShardId() + 1)
                 + "/" + event.getJDA().getShardInfo().getShardTotal()), true);
         builder.addField("This shard", event.getJDA().getUsers().size() + " Users\n" + event.getJDA().getGuilds().size() + " Servers", true);
         builder.addField("", event.getJDA().getTextChannels().size() + " Text Channels\n" + event.getJDA().getVoiceChannels().size() + " Voice Channels", true);
-        builder.setFooter("Support me on patreon with https://www.patreon.com/plenary", null);
-        event.getMessage().reply(builder.build()).queue();
+        builder.setFooter("Support me on patreon with https://www.patreon.com/nada", null);
+        event.getMessage().replyEmbeds(builder.build()).queue();
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.general_hello.commands;
 
 import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.Database.SQLiteDataSource;
+import com.general_hello.commands.OtherEvents.OtherEvents;
 import com.general_hello.commands.commands.Emoji.Emoji;
 import com.general_hello.commands.commands.GetData;
 import com.general_hello.commands.commands.GroupOfGames.Games.TriviaCommand;
@@ -13,6 +14,7 @@ import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import me.duncte123.botcommons.BotCommons;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -54,6 +56,20 @@ public class Listener extends ListenerAdapter {
         if (event.getAuthor().isBot() || event.isWebhookMessage()) {
             return;
         }
+
+        Message m = (event).getMessage();
+
+        if(!m.getAuthor().isBot()) // ignore bot messages
+        {
+            // Store the message
+            OtherEvents.messageCache.putMessage(m);
+
+            // Run automod on the message
+            OtherEvents.autoMod.performAutomod(m);
+        }
+
+        OtherEvents.messageCache.putMessage(event.getMessage());
+        OtherEvents.autoMod.performAutomod(event.getMessage());
 
         //add xp :D
         LevelPointManager.feed(event.getMember());

@@ -12,9 +12,11 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GetData {
     public static ArrayList<Guild> blackListedGuild = new ArrayList<>();
+    public static HashMap<Member, Long> xpMember = new HashMap<>();
     //get data from the db
 
     public int checkIfContainsData(User user, GuildMessageReceivedEvent ctx) {
@@ -38,6 +40,10 @@ public class GetData {
     }
 
     public static long getLevelPoints(Member member) throws SQLException {
+        if (xpMember.containsKey(member)) {
+            return xpMember.get(member);
+        }
+
         try {
             Thread.sleep(500);
         } catch (Exception ignored) {}
@@ -55,6 +61,7 @@ public class GetData {
         } catch (Exception ignored) {}
 
         DatabaseManager.INSTANCE.setXpPoints(user.getIdLong(), points);
+        xpMember.put(user, points);
     }
 
     public static void getGuildSettings(Member member) throws SQLException {

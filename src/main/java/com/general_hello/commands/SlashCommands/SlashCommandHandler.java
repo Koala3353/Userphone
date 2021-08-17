@@ -4,9 +4,9 @@ import com.general_hello.commands.Bot;
 import com.general_hello.commands.Config;
 import com.general_hello.commands.commands.DefaultCommands.HelpSlashCommand;
 import com.general_hello.commands.commands.DefaultCommands.PingSlashCommand;
+import com.general_hello.commands.commands.Music.*;
 import com.general_hello.commands.commands.RankingSystem.ViewRankSlashCommand;
 import com.general_hello.commands.commands.Register.RegisterSlashCommand;
-import jdk.internal.jline.internal.Nullable;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
@@ -17,6 +17,7 @@ import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,6 +55,12 @@ public class SlashCommandHandler
         registerCommand(new PingSlashCommand());
         registerCommand(new RegisterSlashCommand());
         registerCommand(new HelpSlashCommand());
+        registerCommand(new PauseCommand());
+        registerCommand(new PlayCommand());
+        registerCommand(new QueueCommand());
+        registerCommand(new RepeatCommand());
+        registerCommand(new SkipCommand());
+        registerCommand(new VolumeCommand());
     }
 
     public static void updateCommands(Consumer<List<Command>> success, Consumer<Throwable> failure)
