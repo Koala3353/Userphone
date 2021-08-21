@@ -1,7 +1,7 @@
 package com.general_hello.commands.commands.Logs;
 
 import com.general_hello.commands.Bot;
-import com.general_hello.commands.OtherEvents.OnReadyEvent;
+import com.general_hello.commands.OtherEvents.OtherEvents;
 import com.general_hello.commands.commands.Emoji.Emoji;
 import com.general_hello.commands.commands.Utils.FormatUtil;
 import com.general_hello.commands.commands.Utils.LogUtil;
@@ -58,15 +58,28 @@ public class BasicLogger
 
     private void log(OffsetDateTime now, TextChannel tc, String emote, String message, MessageEmbed embed)
     {
+        if (embed == null) {
+            try
+            {
+                usage.increment(tc.getGuild().getIdLong());
+                tc.sendMessage(new MessageBuilder()
+                        .append(FormatUtil.filterEveryone(LogUtil.basiclogFormat(now, ZoneId.from(OffsetDateTime.now()), emote, message)))
+                        .build()).queue();
+            }
+            catch(PermissionException ignore) {}
+            return;
+        }
+
         try
         {
             usage.increment(tc.getGuild().getIdLong());
             tc.sendMessage(new MessageBuilder()
-                    .append(FormatUtil.filterEveryone(LogUtil.basiclogFormat(now, ZoneId.from(LocalDateTime.now()), emote, message))).setEmbeds(embed)
+                    .append(FormatUtil.filterEveryone(LogUtil.basiclogFormat(now, ZoneId.from(OffsetDateTime.now()), emote, message))).setEmbeds(embed)
                     .build()).queue();
         }
         catch(PermissionException ignore) {}
     }
+
 
     private void logFile(OffsetDateTime now, TextChannel tc, String emote, String message, byte[] file, String filename)
     {
@@ -126,12 +139,17 @@ public class BasicLogger
         String formatted = FormatUtil.formatMessage(oldMessage);
         if(formatted.isEmpty())
             return;
-        EmbedBuilder delete = new EmbedBuilder()
-                .setColor(Color.RED)
-                .appendDescription(formatted);
+
         User author = oldMessage.getAuthor();
         String user = author==null ? FormatUtil.formatCachedMessageFullUser(oldMessage) : FormatUtil.formatFullUser(author);
-        log(OffsetDateTime.now(), tc, DELETE, user+"'s message has been deleted from "+mtc.getAsMention()+":", delete.build());
+
+        EmbedBuilder delete = new EmbedBuilder()
+                .setColor(Color.RED)
+                .setTitle("Message Deleted!")
+                .appendDescription(DELETE + " " + user+"'s message has been deleted from "+mtc.getAsMention()+":\n" + formatted);
+
+        tc.sendMessageEmbeds(delete.build()).queue();
+
     }
 
     public void logMessageBulkDelete(List<MessageCache.CachedMessage> messages, int count, TextChannel text)
@@ -163,27 +181,13 @@ public class BasicLogger
             log(OffsetDateTime.now(), tc, DELETE, user+"'s message has been deleted from "+mtc.getAsMention()+":", delete.build());
             return;
         }
-        OnReadyEvent.uploader.upload(LogUtil.logCachedMessagesForwards("Deleted Messages", messages), "DeletedMessages", (view, download) ->
+        OtherEvents.uploader.upload(LogUtil.logCachedMessagesForwards("Deleted Messages", messages), "DeletedMessages", (view, download) ->
         {
             log(OffsetDateTime.now(), tc, BULK_DELETE, "**"+count+"** messages were deleted from "+text.getAsMention()+" (**"+messages.size()+"** logged):",
                     new EmbedBuilder().setColor(Color.RED.darker().darker())
                             .appendDescription("[`"+VIEW+" View`]("+view+")  |  [`"+DOWNLOAD+" Download`]("+download+")").build());
         });
     }
-
-    public void logRedirectPath(Message message, String link, List<String> redirects)
-    {
-        TextChannel tc = Bot.jda.getTextChannelById(844713439271321610L);
-        if(tc==null)
-            return;
-        StringBuilder sb = new StringBuilder(REDIR_END+" **"+link+"**");
-        for(int i=0; i<redirects.size(); i++)
-            sb.append("\n").append(redirects.size()-1==i ? REDIR_END + " **" : REDIR_MID).append(redirects.get(i)).append(redirects.size()-1==i ? "**" : "");
-        log(OffsetDateTime.now(), tc, REDIRECT,
-                FormatUtil.formatFullUser(message.getAuthor())+"'s message in "+message.getTextChannel().getAsMention()+" contained redirects:",
-                new EmbedBuilder().setColor(Color.BLUE.brighter().brighter()).appendDescription(sb.toString()).build());
-    }
-
 
     // Server Logs
     // Name change logs need to be handled specially because they are not guild-specific events, but only one

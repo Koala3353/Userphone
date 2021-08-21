@@ -2,6 +2,7 @@ package com.general_hello.commands.SlashCommands;
 
 import com.general_hello.commands.Bot;
 import com.general_hello.commands.Config;
+import com.general_hello.commands.OtherEvents.OnReadyEvent;
 import com.general_hello.commands.commands.DefaultCommands.HelpSlashCommand;
 import com.general_hello.commands.commands.DefaultCommands.PingSlashCommand;
 import com.general_hello.commands.commands.Music.*;
@@ -106,7 +107,8 @@ public class SlashCommandHandler
             return;
         }
 
-        commandUpdateAction.addCommands(command.getCommandData());
+        System.out.println("Added " + command.getCommandName() + " to the bot!");
+        commandUpdateAction.addCommands(command.getCommandData()).queue();
         registeredCommands.add(command);
     }
 
@@ -246,5 +248,7 @@ public class SlashCommandHandler
                 event.reply("An unknown error occurred! The owner of the bot has been notified of this!").setEphemeral(true).queue(s -> {}, ex -> {});
             }
         };
+
+        OnReadyEvent.scheduledExecutorService.execute(r);
     }
 }

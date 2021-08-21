@@ -109,7 +109,7 @@ public class Emoji {
     public final static String NITRO = "<a:nitro:870863947241230396>";
     public final static String BABY_YODA = EmojiParser.parseToUnicode("<a:babyyoda:866105061665669140>");
     public final static String LIKE = EmojiParser.parseToUnicode("<a:like:866105060140646410>");
-    public final static String BOOK = EmojiParser.parseToUnicode("<a:book:866105059851239444>");
+    public final static String BOOK = EmojiParser.parseToUnicode("<a:bookmoving:866105059851239444>");
     public final static String THANKS = EmojiParser.parseToUnicode("<a:thanks:863989523461177394>");
     public final static String QUESTION = EmojiParser.parseToUnicode("<a:question:863989523368247346>");
     public final static String VERIFY = EmojiParser.parseToUnicode("<a:verify:863204252188672000>");

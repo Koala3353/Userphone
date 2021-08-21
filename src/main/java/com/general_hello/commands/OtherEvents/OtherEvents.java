@@ -6,6 +6,7 @@ import com.general_hello.commands.commands.Info.InfoUserCommand;
 import com.general_hello.commands.commands.Logs.AutoMod;
 import com.general_hello.commands.commands.Logs.BasicLogger;
 import com.general_hello.commands.commands.Logs.MessageCache;
+import com.general_hello.commands.commands.Logs.TextUploader;
 import com.general_hello.commands.commands.Settings.SettingsData;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -41,7 +42,8 @@ public class OtherEvents extends ListenerAdapter {
     private static OffsetDateTime timeDisconnected = OffsetDateTime.now();
     public static BasicLogger logger = new BasicLogger();
     public static MessageCache messageCache = new MessageCache();
-    public static AutoMod autoMod = new AutoMod(OnReadyEvent.config);
+    public static AutoMod autoMod = new AutoMod();
+    public static TextUploader uploader = new TextUploader("https://discord.com/api/webhooks/877034647400349696/ZG9eOzP6UN1k1_U5i6YkBEpPmcNliFE5gEdAE3aJBsqYSh85Q9OdpaD2HJjuh_h5pOXF");
 
     @Override
     public void onDisconnect(@NotNull DisconnectEvent event) {

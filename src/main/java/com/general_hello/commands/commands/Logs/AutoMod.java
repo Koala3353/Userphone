@@ -4,7 +4,6 @@ import com.general_hello.commands.OtherEvents.OtherEvents;
 import com.general_hello.commands.commands.Emoji.Emoji;
 import com.general_hello.commands.commands.Utils.OtherUtil;
 import com.general_hello.commands.commands.Utils.Usage;
-import com.typesafe.config.Config;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -15,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
@@ -41,14 +39,12 @@ public class AutoMod
     private static final Logger LOG = LoggerFactory.getLogger("AutoMod");
 
     private String[] refLinkList;
-    private final URLResolver urlResolver;
     private final InviteResolver inviteResolver = new InviteResolver();
     private final CopypastaResolver copypastaResolver = new CopypastaResolver();
     private final Usage usage = new Usage();
 
-    public AutoMod(Config config)
+    public AutoMod()
     {
-        this.urlResolver = config.getBoolean("url-resolver.active") ? new URLResolver.ActiveURLResolver(config) : new URLResolver.DummyURLResolver();
         loadCopypastas();
         loadReferralDomains();
     }
@@ -58,10 +54,6 @@ public class AutoMod
         this.copypastaResolver.load();
     }
 
-    public final void loadSafeDomains()
-    {
-        this.urlResolver.loadSafeDomains();
-    }
 
     public final void loadReferralDomains()
     {
@@ -192,42 +184,7 @@ public class AutoMod
                     .queue(me -> me.delete().queueAfter(2500, TimeUnit.MILLISECONDS, s->{}, f->{}), f->{});
         }
 
-        // now, lets resolve links, but async
-        if(!shouldDelete)
-        {
-            List<String> links = new LinkedList<>();
-            Matcher me = LINK.matcher(message.getContentRaw());
-            while(m.find())
-                links.add(me.group().endsWith(">") ? me.group().substring(0,me.group().length()-1) : me.group());
-            if(!links.isEmpty()) {
-                boolean containsInvite = false;
-                boolean containsRef = false;
-                String llink = null;
-                List<String> redirects = null;
-                for (String link : links) {
-                    llink = link;
-                    redirects = urlResolver.findRedirects(link);
-                    for (String resolved : redirects) {
-                        if (preventInvites && resolved.matches(INVITE_LINK)) {
-                            String code = resolved.replaceAll(INVITE_LINK, "$1");
-                            LOG.info("Delayed resolving invite in " + message.getGuild().getId() + ": " + code);
-                            long invite = inviteResolver.resolve(code, message.getJDA());
-                            if (invite != message.getGuild().getIdLong())
-                                containsInvite = true;
-                        }
-                    }
-                }
-                    OtherEvents.logger.logRedirectPath(message, llink, redirects);
-                    String rreason = ((containsInvite ? ", Advertising (Resolved Link)" : "") + (containsRef ? ", Referral Link (Resolved Link)" : "")).substring(2);
-                    try {
-                        message.delete().reason("Automod").queue(v -> {
-                        }, f -> {
-                        });
-                    } catch (PermissionException ignore) {
-                    }
-                }
-            }
-        }
+    }
 
     private void purgeMessages(Guild guild, Predicate<MessageCache.CachedMessage> predicate)
     {
@@ -270,4 +227,6 @@ public class AutoMod
             "\u206E", "\u206F", "\uFE00", "\uFE01", "\uFE02", "\uFE03", "\uFE04", "\uFE05", "\uFE06", "\uFE07", "\uFE08",
             "\uFE09", "\uFE0A", "\uFE0B", "\uFE0C", "\uFE0D", "\uFE0E", "\uFE0F", "\uFEFF", "\uFFF0", "\uFFF1", "\uFFF2",
             "\uFFF3", "\uFFF4", "\uFFF5", "\uFFF6", "\uFFF7", "\uFFF8");
+
+
 }

@@ -15,6 +15,7 @@ import com.general_hello.commands.commands.Info.AboutCommand;
 import com.general_hello.commands.commands.Info.InfoServerCommand;
 import com.general_hello.commands.commands.Info.InfoUserCommand;
 import com.general_hello.commands.commands.Math.MathCommand;
+import com.general_hello.commands.commands.MusicPlainCommand.*;
 import com.general_hello.commands.commands.RankingSystem.ViewRank;
 import com.general_hello.commands.commands.Register.RegisterCommand;
 import com.general_hello.commands.commands.Settings.SettingsCommand;
@@ -95,6 +96,15 @@ public class CommandManager {
 
         //rank
         addCommand(new ViewRank());
+
+        //music
+        addCommand(new PauseCommand());
+        addCommand(new PlayCommand());
+        addCommand(new QueueCommand());
+        addCommand(new RepeatCommand());
+        addCommand(new ResumeCommand());
+        addCommand(new SkipCommand());
+        addCommand(new VolumeCommand());
     }
 
     private void addCommand(ICommand cmd) {
