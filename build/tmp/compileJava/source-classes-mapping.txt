@@ -61,8 +61,8 @@ com/general_hello/commands/commands/GroupOfGames/MiniGames/ConnectFourRequest.ja
  com.general_hello.commands.commands.GroupOfGames.MiniGames.ConnectFourRequest
 com/general_hello/commands/OtherEvents/onCallMessageReceived.java
  com.general_hello.commands.OtherEvents.onCallMessageReceived
-com/general_hello/commands/commands/GroupOfGames/Games/HangManCommand.java
- com.general_hello.commands.commands.GroupOfGames.Games.HangManCommand
+com/general_hello/commands/CommandManager.java
+ com.general_hello.commands.CommandManager
 com/general_hello/commands/commands/Music/CachedMessage.java
  com.general_hello.commands.commands.Music.CachedMessage
 com/general_hello/commands/commands/RankingSystem/ViewRankSlashCommand.java
@@ -223,8 +223,9 @@ com/general_hello/commands/commands/Logs/MessageCache.java
  com.general_hello.commands.commands.Logs.MessageCache$CachedMessage
 com/general_hello/commands/commands/PrefixStoring.java
  com.general_hello.commands.commands.PrefixStoring
-com/general_hello/commands/commands/GroupOfGames/Games/HangMan.java
- com.general_hello.commands.commands.GroupOfGames.Games.HangMan
+com/general_hello/commands/commands/MusicPlainCommand/PlayCommand.java
+ com.general_hello.commands.commands.MusicPlainCommand.PlayCommand
+ com.general_hello.commands.commands.MusicPlainCommand.PlayCommand$1
 com/general_hello/commands/commands/Register/RegisterSlashCommand.java
  com.general_hello.commands.commands.Register.RegisterSlashCommand
 com/general_hello/commands/Config.java
@@ -280,8 +281,7 @@ com/general_hello/commands/commands/MusicPlainCommand/PauseCommand.java
  com.general_hello.commands.commands.MusicPlainCommand.PauseCommand
 com/general_hello/commands/commands/DefaultCommands/HelpCommand.java
  com.general_hello.commands.commands.DefaultCommands.HelpCommand
-com/general_hello/commands/CommandManager.java
- com.general_hello.commands.CommandManager
-com/general_hello/commands/commands/MusicPlainCommand/PlayCommand.java
- com.general_hello.commands.commands.MusicPlainCommand.PlayCommand
- com.general_hello.commands.commands.MusicPlainCommand.PlayCommand$1
+com/general_hello/commands/commands/GroupOfGames/Games/HangMan.java
+ com.general_hello.commands.commands.GroupOfGames.Games.HangMan
+com/general_hello/commands/commands/GroupOfGames/Games/HangManCommand.java
+ com.general_hello.commands.commands.GroupOfGames.Games.HangManCommand

@@ -25,14 +25,14 @@ public class HangMan implements Game{
     private static final EmbedBuilder embedstart = new EmbedBuilder();
     private static final EmbedBuilder embedend = new EmbedBuilder();
     private static final EmbedBuilder embedgame = new EmbedBuilder();
-    public static ArrayList<User> starter;
+    public static ArrayList<User> starter = new ArrayList<>();
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
-    private static String letter;
-    private static HashMap<User, ArrayList<String>> word = new HashMap<>();
-    private static HashMap<User, ArrayList<String>> guess = new HashMap<>(); //All guesses
-    private static HashMap<User, ArrayList<String>> miss = new HashMap<>(); //Wrong guesses
-    private static HashMap<User, ArrayList<String>> rights = new HashMap<>(); //Right guesses
+    public static String letter;
+    public static HashMap<User, ArrayList<String>> word = new HashMap<>();
+    public static HashMap<User, ArrayList<String>> guess = new HashMap<>(); //All guesses
+    public static HashMap<User, ArrayList<String>> miss = new HashMap<>(); //Wrong guesses
+    public static HashMap<User, ArrayList<String>> rights = new HashMap<>(); //Right guesses
 
     private static final int limit = 7;
 
@@ -49,17 +49,17 @@ public class HangMan implements Game{
     {
         e = event;
 
-        starter.add(e.getAuthor());
-
         startGame(event.getAuthor());
     }
 
     @Override
     public void startGame(User user)
     {
+        starter.add(user);
+
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("/home/container/hangman.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("hangman.txt"));
 
             String ranword;
             long random = UtilNum.randomNum(1, 58109);
@@ -70,8 +70,8 @@ public class HangMan implements Game{
                 count++;
                 if(random == count) break;
             }
+
             reader.close();
-            System.out.println(ranword);
 
             //Clear Last GAME's data
             clear(user);
@@ -86,6 +86,8 @@ public class HangMan implements Game{
                 rightsss.add("_");
             }
 
+            System.out.println(rightsss.toString());
+
             word.put(user, words);
             rights.put(user, rightsss);
 
@@ -95,7 +97,7 @@ public class HangMan implements Game{
 
         embedstart.setColor(Color.green);
         embedstart.addField("🎮 Hang Man: Game Started!",
-                "Starter: " + user
+                "Starter: " + user.getName()
                         + "\nWord length: " + word.size()
                         + "\n" + hangman, true);
         MessageEmbed me = embedstart.build();
@@ -134,7 +136,7 @@ public class HangMan implements Game{
         else if(!Character.isLetter(in.get(0).charAt(0)))
             e.getChannel().sendMessage("🛑 Please enter a valid letter.").queue();
 
-        else if(word.size() == 0)
+        else if(word.get(event.getAuthor()).size() == 0)
             e.getChannel().sendMessage("🛑 Game haven't started yet!").queue();
 
         else
