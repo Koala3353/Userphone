@@ -20,9 +20,9 @@ import java.util.concurrent.TimeUnit;
 
 public class ButtonPaginator
 {
-    private static final Button previous = Button.secondary("previous", Emoji.fromUnicode("⬅"));
-    private static final Button stop = Button.danger("stop", Emoji.fromUnicode("⏹"));
-    private static final Button next = Button.secondary("next", Emoji.fromUnicode("➡"));
+    private static final Button previous = Button.secondary("0000:previous", Emoji.fromUnicode("⬅"));
+    private static final Button stop = Button.danger("0000:stop", Emoji.fromUnicode("⏹"));
+    private static final Button next = Button.secondary("0000:next", Emoji.fromUnicode("➡"));
 
     private final EventWaiter waiter;
     private final int itemsPerPage;

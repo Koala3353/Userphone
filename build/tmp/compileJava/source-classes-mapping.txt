@@ -27,9 +27,8 @@ com/general_hello/commands/commands/Others/PingCommand.java
 com/general_hello/commands/commands/Emoji/Emoji.java
  com.general_hello.commands.commands.Emoji.Emoji
  com.general_hello.commands.commands.Emoji.Emoji$Unicode
-com/general_hello/commands/commands/Music/PlayCommand.java
- com.general_hello.commands.commands.Music.PlayCommand
- com.general_hello.commands.commands.Music.PlayCommand$1
+com/general_hello/commands/commands/RankingSystem/ViewRankSlashCommand.java
+ com.general_hello.commands.commands.RankingSystem.ViewRankSlashCommand
 com/general_hello/commands/commands/Utils/MCColor.java
  com.general_hello.commands.commands.Utils.MCColor
 com/general_hello/commands/commands/Utils/Util.java
@@ -61,12 +60,12 @@ com/general_hello/commands/commands/GroupOfGames/MiniGames/ConnectFourRequest.ja
  com.general_hello.commands.commands.GroupOfGames.MiniGames.ConnectFourRequest
 com/general_hello/commands/OtherEvents/onCallMessageReceived.java
  com.general_hello.commands.OtherEvents.onCallMessageReceived
-com/general_hello/commands/CommandManager.java
- com.general_hello.commands.CommandManager
+com/general_hello/commands/OtherEvents/OnReadyEvent.java
+ com.general_hello.commands.OtherEvents.OnReadyEvent
 com/general_hello/commands/commands/Music/CachedMessage.java
  com.general_hello.commands.commands.Music.CachedMessage
-com/general_hello/commands/commands/RankingSystem/ViewRankSlashCommand.java
- com.general_hello.commands.commands.RankingSystem.ViewRankSlashCommand
+com/general_hello/commands/CommandManager.java
+ com.general_hello.commands.CommandManager
 com/general_hello/commands/commands/Call/JoinCallQueueCommand.java
  com.general_hello.commands.commands.Call.JoinCallQueueCommand
 com/general_hello/commands/commands/VoiceCall/AudioHandler2.java
@@ -91,12 +90,12 @@ com/general_hello/commands/commands/Others/BadDesign.java
  com.general_hello.commands.commands.Others.BadDesign
 com/general_hello/commands/commands/GroupOfGames/Entertainments/EntertainmentListener.java
  com.general_hello.commands.commands.GroupOfGames.Entertainments.EntertainmentListener
-com/general_hello/commands/OtherEvents/OnReadyEvent.java
- com.general_hello.commands.OtherEvents.OnReadyEvent
+com/general_hello/commands/commands/DefaultCommands/HelpCommand.java
+ com.general_hello.commands.commands.DefaultCommands.HelpCommand
 com/general_hello/commands/commands/Utils/OtherUtil.java
  com.general_hello.commands.commands.Utils.OtherUtil
-com/general_hello/commands/commands/Music/SkipCommand.java
- com.general_hello.commands.commands.Music.SkipCommand
+com/general_hello/commands/commands/DefaultCommands/HelpSlashCommand.java
+ com.general_hello.commands.commands.DefaultCommands.HelpSlashCommand
 com/general_hello/commands/commands/GroupOfGames/Blackjack/Card.java
  com.general_hello.commands.commands.GroupOfGames.Blackjack.Card
  com.general_hello.commands.commands.GroupOfGames.Blackjack.Card$Face
@@ -141,8 +140,8 @@ com/general_hello/commands/commands/Logs/AutoMod.java
  com.general_hello.commands.commands.Logs.AutoMod
 com/general_hello/commands/commands/GroupOfGames/Blackjack/HitCommand.java
  com.general_hello.commands.commands.GroupOfGames.Blackjack.HitCommand
-com/general_hello/commands/commands/Music/QueueCommand.java
- com.general_hello.commands.commands.Music.QueueCommand
+com/general_hello/commands/commands/GroupOfGames/Games/HangMan.java
+ com.general_hello.commands.commands.GroupOfGames.Games.HangMan
 com/general_hello/commands/commands/Others/BugCommand.java
  com.general_hello.commands.commands.Others.BugCommand
 com/general_hello/commands/commands/Music/GuildAudioPlayer.java
@@ -223,9 +222,8 @@ com/general_hello/commands/commands/Logs/MessageCache.java
  com.general_hello.commands.commands.Logs.MessageCache$CachedMessage
 com/general_hello/commands/commands/PrefixStoring.java
  com.general_hello.commands.commands.PrefixStoring
-com/general_hello/commands/commands/MusicPlainCommand/PlayCommand.java
- com.general_hello.commands.commands.MusicPlainCommand.PlayCommand
- com.general_hello.commands.commands.MusicPlainCommand.PlayCommand$1
+com/general_hello/commands/Bot.java
+ com.general_hello.commands.Bot
 com/general_hello/commands/commands/Register/RegisterSlashCommand.java
  com.general_hello.commands.commands.Register.RegisterSlashCommand
 com/general_hello/commands/Config.java
@@ -245,43 +243,45 @@ com/general_hello/commands/commands/GroupOfGames/Entertainments/Read.java
  com.general_hello.commands.commands.GroupOfGames.Entertainments.Read
 com/general_hello/commands/commands/GetData.java
  com.general_hello.commands.commands.GetData
-com/general_hello/commands/commands/Music/RepeatCommand.java
- com.general_hello.commands.commands.Music.RepeatCommand
-com/general_hello/commands/commands/Music/AudioManager.java
- com.general_hello.commands.commands.Music.AudioManager
-com/general_hello/commands/commands/Music/ResumeCommand.java
- com.general_hello.commands.commands.Music.ResumeCommand
-com/general_hello/commands/SlashCommands/SlashCommandHandler.java
- com.general_hello.commands.SlashCommands.SlashCommandHandler
-com/general_hello/commands/Bot.java
- com.general_hello.commands.Bot
-com/general_hello/commands/commands/Music/PauseCommand.java
- com.general_hello.commands.commands.Music.PauseCommand
-com/general_hello/commands/commands/Music/VolumeCommand.java
- com.general_hello.commands.commands.Music.VolumeCommand
+com/general_hello/commands/SlashCommands/OnSlashCommand.java
+ com.general_hello.commands.SlashCommands.OnSlashCommand
+com/general_hello/commands/commands/GroupOfGames/Games/HangManCommand.java
+ com.general_hello.commands.commands.GroupOfGames.Games.HangManCommand
 com/general_hello/commands/commands/DefaultCommands/UpdateSlashCommand.java
  com.general_hello.commands.commands.DefaultCommands.UpdateSlashCommand
+com/general_hello/commands/SlashCommands/SlashCommandHandler.java
+ com.general_hello.commands.SlashCommands.SlashCommandHandler
+com/general_hello/commands/Listener.java
+ com.general_hello.commands.Listener
+com/general_hello/commands/commands/Music/RepeatCommand.java
+ com.general_hello.commands.commands.Music.RepeatCommand
+com/general_hello/commands/commands/MusicPlainCommand/RepeatCommand.java
+ com.general_hello.commands.commands.MusicPlainCommand.RepeatCommand
+com/general_hello/commands/commands/MusicPlainCommand/SkipCommand.java
+ com.general_hello.commands.commands.MusicPlainCommand.SkipCommand
+com/general_hello/commands/commands/MusicPlainCommand/QueueCommand.java
+ com.general_hello.commands.commands.MusicPlainCommand.QueueCommand
+com/general_hello/commands/commands/Music/AudioManager.java
+ com.general_hello.commands.commands.Music.AudioManager
+com/general_hello/commands/commands/MusicPlainCommand/PauseCommand.java
+ com.general_hello.commands.commands.MusicPlainCommand.PauseCommand
+com/general_hello/commands/commands/Music/ResumeCommand.java
+ com.general_hello.commands.commands.Music.ResumeCommand
+com/general_hello/commands/commands/Music/PauseCommand.java
+ com.general_hello.commands.commands.Music.PauseCommand
 com/general_hello/commands/commands/MusicPlainCommand/ResumeCommand.java
  com.general_hello.commands.commands.MusicPlainCommand.ResumeCommand
 com/general_hello/commands/commands/MusicPlainCommand/VolumeCommand.java
  com.general_hello.commands.commands.MusicPlainCommand.VolumeCommand
-com/general_hello/commands/commands/MusicPlainCommand/RepeatCommand.java
- com.general_hello.commands.commands.MusicPlainCommand.RepeatCommand
-com/general_hello/commands/commands/DefaultCommands/HelpSlashCommand.java
- com.general_hello.commands.commands.DefaultCommands.HelpSlashCommand
-com/general_hello/commands/commands/MusicPlainCommand/SkipCommand.java
- com.general_hello.commands.commands.MusicPlainCommand.SkipCommand
-com/general_hello/commands/Listener.java
- com.general_hello.commands.Listener
-com/general_hello/commands/commands/MusicPlainCommand/QueueCommand.java
- com.general_hello.commands.commands.MusicPlainCommand.QueueCommand
-com/general_hello/commands/SlashCommands/OnSlashCommand.java
- com.general_hello.commands.SlashCommands.OnSlashCommand
-com/general_hello/commands/commands/MusicPlainCommand/PauseCommand.java
- com.general_hello.commands.commands.MusicPlainCommand.PauseCommand
-com/general_hello/commands/commands/DefaultCommands/HelpCommand.java
- com.general_hello.commands.commands.DefaultCommands.HelpCommand
-com/general_hello/commands/commands/GroupOfGames/Games/HangMan.java
- com.general_hello.commands.commands.GroupOfGames.Games.HangMan
-com/general_hello/commands/commands/GroupOfGames/Games/HangManCommand.java
- com.general_hello.commands.commands.GroupOfGames.Games.HangManCommand
+com/general_hello/commands/commands/Music/VolumeCommand.java
+ com.general_hello.commands.commands.Music.VolumeCommand
+com/general_hello/commands/commands/Music/SkipCommand.java
+ com.general_hello.commands.commands.Music.SkipCommand
+com/general_hello/commands/commands/MusicPlainCommand/PlayCommand.java
+ com.general_hello.commands.commands.MusicPlainCommand.PlayCommand
+ com.general_hello.commands.commands.MusicPlainCommand.PlayCommand$1
+com/general_hello/commands/commands/Music/PlayCommand.java
+ com.general_hello.commands.commands.Music.PlayCommand
+ com.general_hello.commands.commands.Music.PlayCommand$1
+com/general_hello/commands/commands/Music/QueueCommand.java
+ com.general_hello.commands.commands.Music.QueueCommand

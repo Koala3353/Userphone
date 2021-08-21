@@ -41,6 +41,7 @@ public class PlayCommand extends SlashCommand
                 event.getGuild().requestToSpeak();
             }
         }
+
         GuildAudioPlayer guildAudioPlayer = com.general_hello.commands.commands.Music.AudioManager.getAudioPlayer(event.getGuild().getIdLong());
         if (manager.getSendingHandler() == null)
             manager.setSendingHandler(guildAudioPlayer.getSendHandler());

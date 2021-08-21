@@ -115,6 +115,7 @@ public class SlashCommandHandler
 
     public static void handleSlashCommand(@NotNull SlashCommandEvent event, @Nullable Member member)
     {
+        System.out.println(event.getName());
         Runnable r = () ->
         {
             boolean foundCommand = false;
@@ -229,6 +230,10 @@ public class SlashCommandHandler
                 for(OptionMapping option : event.getOptions())
                 {
                      path.append(" ").append(option.getName()).append(":").append("`").append(option.getAsString()).append("`");
+                }
+
+                if (path.toString().equals("/rank")) {
+                    return;
                 }
                 EmbedBuilder builder = new EmbedBuilder()
                         .setTitle("An error occurred while executing a slash-command!")

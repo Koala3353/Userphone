@@ -24,15 +24,19 @@ public class ViewRankSlashCommand extends SlashCommand
 
     @Override
     public void executeCommand(@NotNull SlashCommandEvent event, @Nullable Member sender, @NotNull SlashCommandContext ctx) throws SQLException {
+        event.deferReply().queue();
         Member member = event.getMember();
 
-        if (event.getOption("member").getAsMember() != null) {
-            member = event.getOption("member").getAsMember();
+        try {
+            if (event.getOption("member").getAsMember() != null) {
+                member = event.getOption("member").getAsMember();
+            }
+        } catch (NullPointerException ignored) {
         }
 
         try{
             ByteArrayOutputStream baos = LevelPointManager.getLevelPointCard(member).getByteArrayOutputStream();
-            event.getChannel().sendFile(baos.toByteArray(), member.getEffectiveName() + "-stats.png").queue();
+            event.getHook().editOriginal(baos.toByteArray(), member.getEffectiveName() + "-stats.png").queue();
         }
         catch(Exception e){
             event.getChannel().sendMessage("\u274C").queue();

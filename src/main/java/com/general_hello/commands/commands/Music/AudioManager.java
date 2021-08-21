@@ -45,6 +45,9 @@ public class AudioManager
 
     public static synchronized GuildAudioPlayer getAudioPlayer(long guildId)
     {
+        if (audioPlayers == null) {
+            new AudioManager();
+        }
         if (audioPlayers.containsKey(guildId))
             return audioPlayers.get(guildId);
         GuildAudioPlayer player = new GuildAudioPlayer(playerManager, guildId);

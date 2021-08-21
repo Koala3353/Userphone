@@ -88,7 +88,6 @@ public class PlayCommand implements ICommand
                     .addField("Guild", (event.getGuild() == null ? "None (Direct message)" : event.getGuild().getIdLong()+" ("+event.getGuild().getName()+")"),true)
                     .addField("User", event.getAuthor().getAsMention()+" ("+event.getAuthor().getAsTag()+")", true)
                     .addField("Command", "u?play", false)
-                    .addField("Cause", e.getCause().getLocalizedMessage(), false)
                     .setDescription("```\n"+ e.getLocalizedMessage() +"\n```")
                     .setColor(Color.RED);
             event.getJDA().openPrivateChannelById(Config.get("owner_id"))
