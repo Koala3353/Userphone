@@ -43,7 +43,7 @@ public class Colour {
 				.setDescription("Hex: #" + hex + "\nRGB: " + r + ", " + g + ", " + b)
 				.setColor(Integer.parseInt(hex, 16));
 			event.getChannel().sendTyping().queue();
-			event.getChannel().sendMessage(Color.build()).queue();
+			event.getChannel().sendMessageEmbeds(Color.build()).queue();
 		}
 	}
 }

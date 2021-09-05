@@ -64,6 +64,7 @@ public class Bot {
                 .addEventListeners(new OnSlashCommand())
                 .addEventListeners(new OnButtonClick())
                 .addEventListeners(new OnPrivateMessage())
+                .addEventListeners(new OnButtonClick())
                 .addEventListeners(new OtherEvents())
                 .addEventListeners(new OnSelectionMenu())
                 .addEventListeners(new onCallMessageReceived())

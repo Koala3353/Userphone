@@ -2,6 +2,7 @@ package com.general_hello.commands.commands.Call;
 
 import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.commands.CommandContext;
+import com.general_hello.commands.commands.GetData;
 import com.general_hello.commands.commands.ICommand;
 import com.general_hello.commands.commands.PrefixStoring;
 import com.general_hello.commands.commands.Register.Data;
@@ -20,6 +21,8 @@ public class JoinCallQueueCommand implements ICommand {
         final long guildID = ctx.getGuild().getIdLong();
         String prefix = PrefixStoring.PREFIXES.computeIfAbsent(guildID, DatabaseManager.INSTANCE::getPrefix);
 
+        GetData getData = new GetData();
+        getData.checkIfContainsData(ctx.getAuthor(), ctx);
         if (!Data.userUserPhoneUserHashMap.containsKey(user)) {
             ctx.getChannel().sendMessage("Kindly register first before calling! Use ***" + prefix + "register*** to register").queue();
             return;

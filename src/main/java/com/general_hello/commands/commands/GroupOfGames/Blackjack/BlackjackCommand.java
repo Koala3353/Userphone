@@ -1,11 +1,14 @@
 package com.general_hello.commands.commands.GroupOfGames.Blackjack;
 
 import com.general_hello.commands.commands.CommandContext;
+import com.general_hello.commands.commands.GetData;
 import com.general_hello.commands.commands.ICommand;
+import com.general_hello.commands.commands.RankingSystem.LevelPointManager;
 import com.general_hello.commands.commands.Utils.MoneyData;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 
 public class BlackjackCommand implements ICommand {
@@ -17,7 +20,7 @@ public class BlackjackCommand implements ICommand {
 
 
     @Override
-    public void handle(CommandContext e) throws InterruptedException {
+    public void handle(CommandContext e) throws InterruptedException, SQLException {
         User author = e.getAuthor();
         long playerId = author.getIdLong();
         int bet = e.getArgs().size() == 0 ? 0 : getInt(e.getArgs().get(0));
@@ -25,11 +28,12 @@ public class BlackjackCommand implements ICommand {
             e.getChannel().sendMessage("Are you gonna bet on nothing!!!!").queue();
             return;
         }
+
         if (e.getArgs().size() != 0 && e.getArgs().get(0).matches("(?i)all(-?in)?")) {
-            bet = (int) Math.round(MoneyData.money.get(author));
+            bet = (int) Math.round(GetData.getLevelPoints(author));
         }
         if (bet >= 10) {
-            if (MoneyData.money.get(author) - bet >= 0) {
+            if (GetData.getLevelPoints(author) - bet >= 0) {
                 BlackjackGame objg = GameHandler.getBlackJackGame(playerId);
                 if (objg == null) {
                     BlackjackGame bjg = new BlackjackGame(bet);
@@ -37,9 +41,8 @@ public class BlackjackCommand implements ICommand {
                     if (!bjg.hasEnded()) {
                         GameHandler.putBlackJackGame(playerId, bjg);
                     } else {
-                        Double d = (double) bjg.getWonCreds();
-                        final Double money = MoneyData.money.get(author);
-                        MoneyData.money.put(author, money + d);
+                        double d = bjg.getWonCreds();
+                        LevelPointManager.feed(author, (long) d);
                         int credits = (int) Math.round(MoneyData.money.get(author));
                         DecimalFormat formatter = new DecimalFormat("#,###.00");
                         eb.addField("Credits", String.format("You now have %s credits", formatter.format(credits)), false);

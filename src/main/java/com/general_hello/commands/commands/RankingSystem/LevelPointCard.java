@@ -2,7 +2,7 @@ package com.general_hello.commands.commands.RankingSystem;
 
 
 import com.general_hello.commands.commands.GetData;
-import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -40,8 +40,8 @@ public class LevelPointCard{
     }
     private ByteArrayOutputStream baos;
 
-    public LevelPointCard(Member member) throws SQLException {
-        String name = member.getEffectiveName();
+    public LevelPointCard(User member) throws SQLException {
+        String name = member.getName();
 
         long levelI = LevelPointManager.calculateLevel(member);
         long min = LevelPointManager.calculateLevelMin(levelI);
@@ -57,7 +57,7 @@ public class LevelPointCard{
             // draw random background
             drawBackground(cardGraphics, CARD_WIDTH, CARD_HEIGHT);
             // draw avatar
-            drawAvatar(cardGraphics, member.getUser().getAvatarUrl(), CARD_BORDER * 3, CARD_HEIGHT / 2 - AVATAR_SIZE / 2, AVATAR_SIZE);
+            drawAvatar(cardGraphics, member.getAvatarUrl(), CARD_BORDER * 3, CARD_HEIGHT / 2 - AVATAR_SIZE / 2, AVATAR_SIZE);
             // draw name
             drawText(cardGraphics, FONT, Font.BOLD, calculateFontSize(FONT_SIZE, 25, name), new Color(230, 230, 230), name, CARD_WIDTH - 2 * CARD_BORDER - 490, CARD_HEIGHT / 4 + CARD_HEIGHT / 8, Position.Center);
             // draw ground

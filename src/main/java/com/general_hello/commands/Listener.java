@@ -4,7 +4,6 @@ import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.Database.SQLiteDataSource;
 import com.general_hello.commands.OtherEvents.OtherEvents;
 import com.general_hello.commands.commands.Emoji.Emoji;
-import com.general_hello.commands.commands.GetData;
 import com.general_hello.commands.commands.GroupOfGames.Games.TriviaCommand;
 import com.general_hello.commands.commands.PrefixStoring;
 import com.general_hello.commands.commands.RankingSystem.LevelPointManager;
@@ -47,12 +46,6 @@ public class Listener extends ListenerAdapter {
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         EmbedBuilder em;
 
-        try {
-            GetData.getGuildSettings(event.getMember());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
         if (event.getAuthor().isBot() || event.isWebhookMessage()) {
             return;
         }
@@ -72,7 +65,7 @@ public class Listener extends ListenerAdapter {
         OtherEvents.autoMod.performAutomod(event.getMessage());
 
         //add xp :D
-        LevelPointManager.feed(event.getMember());
+        LevelPointManager.feed(event.getAuthor());
 
         final long guildID = event.getGuild().getIdLong();
         String prefix = PrefixStoring.PREFIXES.computeIfAbsent(guildID, DatabaseManager.INSTANCE::getPrefix);

@@ -3,6 +3,7 @@ package com.general_hello.commands.commands.RankingSystem;
 import com.general_hello.commands.SlashCommands.SlashCommand;
 import com.general_hello.commands.SlashCommands.SlashCommandContext;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
@@ -25,18 +26,18 @@ public class ViewRankSlashCommand extends SlashCommand
     @Override
     public void executeCommand(@NotNull SlashCommandEvent event, @Nullable Member sender, @NotNull SlashCommandContext ctx) throws SQLException {
         event.deferReply().queue();
-        Member member = event.getMember();
+        User member = event.getUser();
 
         try {
-            if (event.getOption("member").getAsMember() != null) {
-                member = event.getOption("member").getAsMember();
+            if (event.getOption("member").getAsUser() != null) {
+                member = event.getOption("member").getAsUser();
             }
         } catch (NullPointerException ignored) {
         }
 
         try{
             ByteArrayOutputStream baos = LevelPointManager.getLevelPointCard(member).getByteArrayOutputStream();
-            event.getHook().editOriginal(baos.toByteArray(), member.getEffectiveName() + "-stats.png").queue();
+            event.getHook().editOriginal(baos.toByteArray(), member.getName() + "-stats.png").queue();
         }
         catch(Exception e){
             event.getChannel().sendMessage("\u274C").queue();

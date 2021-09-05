@@ -33,7 +33,7 @@ public class Read {
 						unboxed[i] = arr.get(i);
 					String s = String.valueOf(unboxed);
 					EmbedBuilder text = new EmbedBuilder()
-							.setTitle("Recieved a file! \nBytes read:")
+							.setTitle("Received a file! \nBytes read:")
 							.setColor(0x7289DA)
 							.setDescription(s);
 					event.getChannel().sendMessageEmbeds(text.build()).queue();

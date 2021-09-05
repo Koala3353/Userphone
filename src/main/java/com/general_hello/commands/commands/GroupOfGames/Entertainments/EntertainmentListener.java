@@ -11,15 +11,15 @@ public class EntertainmentListener extends ListenerAdapter{
 		String prefix = PrefixStoring.PREFIXES.computeIfAbsent(guildID, DatabaseManager.INSTANCE::getPrefix);
 		String[] args = event.getMessage().getContentRaw().split("\\s+");
 
-		if(args[0].equalsIgnoreCase(prefix + "clap ")) {
+		if(args[0].equalsIgnoreCase(prefix + "clap")) {
 			Clap.clap(event, args);
 			return;
 		}
-		if(args[0].equalsIgnoreCase(prefix + "colour ")) {
+		if(args[0].equalsIgnoreCase(prefix + "colour") || args[0].equalsIgnoreCase(prefix + "color")) {
 			Colour.colour(event, args);
 			return;
 		}
-		if(args[0].equalsIgnoreCase(prefix + "echo ")) {
+		if(args[0].equalsIgnoreCase(prefix + "echo")) {
 			Echo.echo(event, args);
 			return;
 		}

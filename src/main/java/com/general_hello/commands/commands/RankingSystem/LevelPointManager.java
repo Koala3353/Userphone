@@ -1,8 +1,7 @@
 package com.general_hello.commands.commands.RankingSystem;
 
 import com.general_hello.commands.commands.GetData;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 
 import java.sql.SQLException;
 import java.time.OffsetDateTime;
@@ -17,9 +16,9 @@ public class LevelPointManager{
     private static final Function<Long, Long> CALCULATE_LEVEL = ep -> (long) (1 / (float) (8) * Math.sqrt(ep));
     private static final Function<Long, Long> CALCULATE_EP = level -> (long) 64 * (long) Math.pow(level, 2);
 
-    public static final HashMap<Guild, HashMap<Member, OffsetDateTime>> accessMap = new HashMap<>();
+    public static final HashMap<User, OffsetDateTime> accessMap = new HashMap<>();
 
-    public static long calculateLevel(Member member) throws SQLException {
+    public static long calculateLevel(User member) throws SQLException {
         return calculateLevel(GetData.getLevelPoints(member));
     }
 
@@ -35,77 +34,56 @@ public class LevelPointManager{
         return CALCULATE_EP.apply(level + 1);
     }
 
-    public static LevelPointCard getLevelPointCard(Member member) throws SQLException {
+    public static LevelPointCard getLevelPointCard(User member) throws SQLException {
         return new LevelPointCard(member);
     }
 
-    public static void trackGuild(Guild guild){
-        accessMap.put(guild, new HashMap<>());
-    }
-
-    public static void unTrackGuild(Guild guild){
-        accessMap.remove(guild);
-    }
-
-    public static void trackMember(Member member){
-        try{
-            if(!accessMap.containsKey(member.getGuild())){
-                return;
-            }
+    public static void trackMember(User member) {
+        try {
             OffsetDateTime min = OffsetDateTime.MIN;
 
-            accessMap.get(member.getGuild()).put(member, min);
-        }
-        catch(Exception ignore){
+            accessMap.put(member, min);
+        } catch (Exception ignore) {
 
         }
     }
 
-    public void unTrackMember(Member member){
+    public static synchronized void feed(User member){
         try{
-            if(!accessMap.containsKey(member.getGuild())){
-                return;
-            }
-            accessMap.get(member.getGuild()).remove(member);
-        }
-        catch(Exception ignore){
-
-        }
-    }
-
-    public static synchronized void feed(Member member){
-        try{
-            Guild g = member.getGuild();
-
-            if(!accessMap.containsKey(g)){
-                return;
-            }
-
-            HashMap<Member, OffsetDateTime> gM = accessMap.get(g);
-            if(!gM.containsKey(member)){
+            if(!accessMap.containsKey(member)){
                 System.out.println("Added member :)");
                 trackMember(member);
             }
-            OffsetDateTime last = gM.get(member);
+
+            OffsetDateTime last = accessMap.get(member);
             if(OffsetDateTime.now().isBefore(last.plusMinutes(DELAY))){
-                System.out.println("Did not add xp to " + member.getEffectiveName() + " due to delay!");
+                System.out.println("Did not add xp to " + member.getName() + " due to delay!");
                 return;
             }
 
-            System.out.println(g.getName());
 
-            System.out.println(last.plusMinutes(DELAY));
-            gM.put(member, OffsetDateTime.now());
-            System.out.println(gM.get(member));
-            accessMap.remove(g);
-            accessMap.put(g, gM);
+            accessMap.put(member, OffsetDateTime.now());
 
             Thread.sleep(10);
             GetData.setLevelPoints(member, GetData.getLevelPoints(member) + POINTS_PER_MESSAGE);
-            System.out.println("Added xp to " + member.getEffectiveName() + "!");
+            System.out.println("Added xp to " + member.getName() + "!");
         }
         catch(Exception ignore){
         }
     }
 
+    public static synchronized void feed(User member, long xpToAdd){
+        try{
+            if(!accessMap.containsKey(member)){
+                System.out.println("Added member :)");
+                trackMember(member);
+            }
+
+            Thread.sleep(10);
+            GetData.setLevelPoints(member, GetData.getLevelPoints(member) + xpToAdd);
+            System.out.println("Added xp to " + member.getName() + "!");
+        }
+        catch(Exception ignore){
+        }
+    }
 }

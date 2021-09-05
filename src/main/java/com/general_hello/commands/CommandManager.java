@@ -9,7 +9,7 @@ import com.general_hello.commands.commands.GroupOfGames.Blackjack.*;
 import com.general_hello.commands.commands.GroupOfGames.Games.GuessNumberCommand;
 import com.general_hello.commands.commands.GroupOfGames.Games.HangManCommand;
 import com.general_hello.commands.commands.GroupOfGames.Games.TriviaCommand;
-import com.general_hello.commands.commands.GroupOfGames.MiniGames.ConnectFourRequest;
+import com.general_hello.commands.commands.GroupOfGames.MiniGames.ChessRequest;
 import com.general_hello.commands.commands.ICommand;
 import com.general_hello.commands.commands.Info.AboutCommand;
 import com.general_hello.commands.commands.Info.InfoServerCommand;
@@ -64,7 +64,7 @@ public class CommandManager {
         addCommand(new JoinCallQueueCommand());
 
         //mini Games
-        addCommand(new ConnectFourRequest());
+        addCommand(new ChessRequest());
 
         //voice call commands
         addCommand(new onCallCommand());

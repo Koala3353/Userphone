@@ -1,11 +1,9 @@
 package com.general_hello.commands.commands;
 
 import com.general_hello.commands.Database.DatabaseManager;
-import com.general_hello.commands.commands.RankingSystem.LevelPointManager;
 import com.general_hello.commands.commands.Register.Data;
 import com.general_hello.commands.commands.User.UserPhoneUser;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -16,7 +14,7 @@ import java.util.HashMap;
 
 public class GetData {
     public static ArrayList<Guild> blackListedGuild = new ArrayList<>();
-    public static HashMap<Member, Long> xpMember = new HashMap<>();
+    public static HashMap<User, Long> xpMember = new HashMap<>();
     //get data from the db
 
     public int checkIfContainsData(User user, GuildMessageReceivedEvent ctx) {
@@ -39,7 +37,7 @@ public class GetData {
         }
     }
 
-    public static long getLevelPoints(Member member) throws SQLException {
+    public static long getLevelPoints(User member) throws SQLException {
         if (xpMember.containsKey(member)) {
             return xpMember.get(member);
         }
@@ -48,14 +46,10 @@ public class GetData {
             Thread.sleep(500);
         } catch (Exception ignored) {}
 
-        if(!LevelPointManager.accessMap.containsKey(member.getGuild())){
-            LevelPointManager.trackGuild(member.getGuild());
-        }
-
         return DatabaseManager.INSTANCE.getXpPoints(member.getIdLong());
     }
 
-    public static void setLevelPoints(Member user, long points) {
+    public static void setLevelPoints(User user, long points) {
         try {
             Thread.sleep(500);
         } catch (Exception ignored) {}
@@ -64,31 +58,6 @@ public class GetData {
         xpMember.put(user, points);
     }
 
-    public static void getGuildSettings(Member member) throws SQLException {
-        if (member == null) return;
-        if (blackListedGuild.contains(member.getGuild())) return;
-
-        try {
-            Thread.sleep(500);
-        } catch (Exception ignored) {}
-
-        if(!LevelPointManager.accessMap.containsKey(member.getGuild())){
-            Integer guildSettings = DatabaseManager.INSTANCE.getGuildSettings(member.getGuild().getIdLong());
-
-            if (guildSettings == 1) {
-                System.out.println("Tracking.....");
-                LevelPointManager.trackGuild(member.getGuild());
-            }
-            if (guildSettings == 0){
-                blackListedGuild.add(member.getGuild());
-            }
-        }
-    }
-
-    public static void setGuildSettings(Member user, long onOrOff) {
-        blackListedGuild.add(user.getGuild());
-        DatabaseManager.INSTANCE.setGuildSettings(user.getGuild().getIdLong(), onOrOff);
-    }
 
     private int retrieveData(Long userId, GuildMessageReceivedEvent ctx) {
         String name = DatabaseManager.INSTANCE.getName(userId);
