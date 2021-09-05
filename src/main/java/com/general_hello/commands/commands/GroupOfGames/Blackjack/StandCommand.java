@@ -5,6 +5,7 @@ import com.general_hello.commands.Database.DatabaseManager;
 import com.general_hello.commands.commands.CommandContext;
 import com.general_hello.commands.commands.ICommand;
 import com.general_hello.commands.commands.PrefixStoring;
+import com.general_hello.commands.commands.RankingSystem.LevelPointManager;
 import com.general_hello.commands.commands.Utils.MoneyData;
 import net.dv8tion.jda.api.EmbedBuilder;
 
@@ -33,7 +34,7 @@ public class StandCommand implements ICommand {
                     if (bjg.hasEnded()) {
                         int won_lose = bjg.getWonCreds();
                         final Double money = MoneyData.money.get(e.getAuthor());
-                        MoneyData.money.put(e.getAuthor(), money + won_lose);
+                        LevelPointManager.feed(e.getAuthor(), (long) (money + won_lose));
                         DecimalFormat formatter = new DecimalFormat("#,###.00");
                         eb.addField("Credits", String.format("You now have %s credits", formatter.format(((int) Math.round(MoneyData.money.get(e.getAuthor()))))), false);
                         GameHandler.removeBlackJackGame(e.getAuthor().getIdLong());
