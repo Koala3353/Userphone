@@ -87,6 +87,7 @@ public class Bot {
     public static void commandPrompt() throws LoginException {
         boolean question = false;
         boolean question1 = false;
+        boolean channel = false;
         TextChannel textChannel = null;
 
         Scanner scanner = new Scanner(System.in);
@@ -150,6 +151,7 @@ public class Bot {
                 System.out.println("Starting the bot up!");
                 new Bot();
             }
+        
 
             if (s.equalsIgnoreCase("botinfo")) {
                 String asTag = jda.getSelfUser().getAsTag();
