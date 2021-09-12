@@ -78,6 +78,7 @@ public class OnButtonClick extends ListenerAdapter {
                 Board board = new Board();
                 ChessStoring.userToBoard.put(event.getUser(), board);
                 ChessStoring.userToBoard.put(ChessStoring.userToUser.get(event.getUser()), board);
+                event.getInteraction().editButton(event.getButton().asDisabled()).queue();
                 break;
             case "ownersetting":
                 EmbedBuilder embedBuilder = new EmbedBuilder().setTitle(event.getUser().getName() + "'s settings for " + event.getJDA().getSelfUser().getName()).setFooter("Your settings ↔ Owner Main Page").setColor(Color.ORANGE);

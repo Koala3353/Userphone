@@ -55,8 +55,8 @@ com/general_hello/commands/Bot.java
  com.general_hello.commands.Bot
 com/general_hello/commands/commands/Music/PauseCommand.java
  com.general_hello.commands.commands.Music.PauseCommand
-com/general_hello/commands/commands/DefaultCommands/HelpSlashCommand.java
- com.general_hello.commands.commands.DefaultCommands.HelpSlashCommand
+com/general_hello/commands/commands/GroupOfGames/Blackjack/BlackjackCommand.java
+ com.general_hello.commands.commands.GroupOfGames.Blackjack.BlackjackCommand
 com/general_hello/commands/Database/FilePath.java
  com.general_hello.commands.Database.FilePath
 com/general_hello/commands/OtherEvents/onCallMessageReceived.java
@@ -124,8 +124,8 @@ com/general_hello/commands/commands/Logs/InviteResolver.java
  com.general_hello.commands.commands.Logs.InviteResolver
 com/general_hello/commands/commands/Music/AudioPlayerSendHandler.java
  com.general_hello.commands.commands.Music.AudioPlayerSendHandler
-com/general_hello/commands/commands/Music/GuildAudioPlayer.java
- com.general_hello.commands.commands.Music.GuildAudioPlayer
+com/general_hello/commands/commands/Uno/UnoCommand.java
+ com.general_hello.commands.commands.Uno.UnoCommand
 com/general_hello/commands/commands/GroupOfGames/Entertainments/Echo.java
  com.general_hello.commands.commands.GroupOfGames.Entertainments.Echo
 com/general_hello/commands/commands/User/UserPhoneUser.java
@@ -148,9 +148,8 @@ com/general_hello/commands/commands/Logs/AutoMod.java
  com.general_hello.commands.commands.Logs.AutoMod
 com/general_hello/commands/commands/GroupOfGames/Blackjack/HitCommand.java
  com.general_hello.commands.commands.GroupOfGames.Blackjack.HitCommand
-com/general_hello/commands/commands/Utils/UtilBot.java
- com.general_hello.commands.commands.Utils.UtilBot
- com.general_hello.commands.commands.Utils.UtilBot$1
+com/general_hello/commands/CommandManager.java
+ com.general_hello.commands.CommandManager
 com/general_hello/commands/commands/Others/BugCommand.java
  com.general_hello.commands.commands.Others.BugCommand
 com/general_hello/commands/commands/Music/ResumeCommand.java
@@ -188,6 +187,8 @@ com/general_hello/commands/commands/GroupOfGames/Games/Game.java
  com.general_hello.commands.commands.GroupOfGames.Games.Game
 com/general_hello/commands/commands/Logs/BasicLogger.java
  com.general_hello.commands.commands.Logs.BasicLogger
+com/general_hello/commands/commands/GroupOfGames/MiniGames/AlphaBetaChess.java
+ com.general_hello.commands.commands.GroupOfGames.MiniGames.AlphaBetaChess
 com/general_hello/commands/commands/Logs/CopypastaResolver.java
  com.general_hello.commands.commands.Logs.CopypastaResolver
 com/general_hello/commands/SlashCommands/SlashCommandContext.java
@@ -226,6 +227,8 @@ com/general_hello/commands/commands/Settings/SettingsCommand.java
  com.general_hello.commands.commands.Settings.SettingsCommand
 com/general_hello/commands/commands/GroupOfGames/Games/GuessNumber.java
  com.general_hello.commands.commands.GroupOfGames.Games.GuessNumber
+com/general_hello/commands/commands/GroupOfGames/MiniGames/Rating.java
+ com.general_hello.commands.commands.GroupOfGames.MiniGames.Rating
 com/general_hello/commands/commands/Logs/MessageCache.java
  com.general_hello.commands.commands.Logs.MessageCache
  com.general_hello.commands.commands.Logs.MessageCache$1
@@ -284,9 +287,10 @@ com/general_hello/commands/commands/GroupOfGames/Entertainments/Clap.java
  com.general_hello.commands.commands.GroupOfGames.Entertainments.Clap
 com/general_hello/commands/commands/Music/VolumeCommand.java
  com.general_hello.commands.commands.Music.VolumeCommand
-com/general_hello/commands/commands/GroupOfGames/Blackjack/BlackjackCommand.java
- com.general_hello.commands.commands.GroupOfGames.Blackjack.BlackjackCommand
-com/general_hello/commands/CommandManager.java
- com.general_hello.commands.CommandManager
-com/general_hello/commands/commands/Uno/UnoCommand.java
- com.general_hello.commands.commands.Uno.UnoCommand
+com/general_hello/commands/commands/Music/GuildAudioPlayer.java
+ com.general_hello.commands.commands.Music.GuildAudioPlayer
+com/general_hello/commands/commands/Utils/UtilBot.java
+ com.general_hello.commands.commands.Utils.UtilBot
+ com.general_hello.commands.commands.Utils.UtilBot$1
+com/general_hello/commands/commands/DefaultCommands/HelpSlashCommand.java
+ com.general_hello.commands.commands.DefaultCommands.HelpSlashCommand
