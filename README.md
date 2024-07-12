@@ -1,5 +1,4 @@
 <h1 align="center">
-  <img src="/assets/icon.png" alt="Icon" width="100" height="100">
   <br>
   Userphone-Bot
   <br>
